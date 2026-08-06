@@ -49,8 +49,9 @@ export default defineType({
       options: { collapsible: true, collapsed: false },
       fields: [
         { name: 'instagram', title: 'Instagram URL', type: 'url' },
-        { name: 'facebook', title: 'Facebook URL', type: 'url' },
         { name: 'tiktok', title: 'TikTok URL', type: 'url' },
+        { name: 'facebookGroup', title: 'Facebook Group URL (e.g. The Buriers)', type: 'url' },
+        { name: 'facebook', title: 'Facebook URL', type: 'url' },
         { name: 'twitter', title: 'X / Twitter URL', type: 'url' },
         { name: 'goodreads', title: 'Goodreads URL', type: 'url' },
         { name: 'bookbub', title: 'BookBub URL', type: 'url' },

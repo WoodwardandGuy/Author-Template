@@ -149,6 +149,11 @@ export default async function BookPage({
             </div>
 
             <div>
+              {book.editionNote && (
+                <span className="inline-block bg-brand/10 text-brand text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full mb-3">
+                  {book.editionNote}
+                </span>
+              )}
               {book.series && (
                 <p className="text-sm font-semibold uppercase tracking-wide text-brand mb-2">
                   {book.series}

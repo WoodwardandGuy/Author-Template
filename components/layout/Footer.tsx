@@ -2,8 +2,8 @@ import Image from 'next/image';
 import {
   Instagram,
   Facebook,
-  Twitter,
   Music2,
+  Users,
   BookOpen,
   type LucideIcon,
 } from 'lucide-react';
@@ -32,9 +32,9 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
 
   const socialLinks: { url?: string; label: string; Icon: LucideIcon }[] = [
     { url: s.instagram, label: 'Instagram', Icon: Instagram },
-    { url: s.facebook, label: 'Facebook', Icon: Facebook },
     { url: s.tiktok, label: 'TikTok', Icon: Music2 },
-    { url: s.twitter, label: 'X', Icon: Twitter },
+    { url: s.facebookGroup, label: 'The Buriers (Facebook group)', Icon: Users },
+    { url: s.facebook, label: 'Facebook', Icon: Facebook },
     { url: s.goodreads, label: 'Goodreads', Icon: BookOpen },
     { url: s.bookbub, label: 'BookBub', Icon: BookOpen },
   ];

@@ -14,8 +14,9 @@ export interface SanityImage {
 
 export interface Socials {
   instagram?: string;
-  facebook?: string;
   tiktok?: string;
+  facebookGroup?: string;
+  facebook?: string;
   twitter?: string;
   goodreads?: string;
   bookbub?: string;
@@ -71,6 +72,7 @@ export interface Book {
   id: string;
   title: string;
   subtitle?: string;
+  editionNote?: string;
   slug: string;
   cover?: SanityImage;
   genre?: string;

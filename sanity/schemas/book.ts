@@ -17,6 +17,12 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'editionNote',
+      title: 'Edition Note',
+      type: 'string',
+      description: 'Short edition callout shown as a badge, e.g. "Now with a new bonus chapter!"',
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',

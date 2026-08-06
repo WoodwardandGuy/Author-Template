@@ -6,6 +6,7 @@ const bookFields = `
   "id": _id,
   title,
   subtitle,
+  editionNote,
   "slug": slug.current,
   cover ${imageFields},
   genre,
