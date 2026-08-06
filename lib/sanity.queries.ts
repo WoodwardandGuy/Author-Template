@@ -21,7 +21,33 @@ export const authorInfoQuery = groq`
     name,
     tagline,
     email,
+    shortBio,
+    longBio,
     socials,
+    logo ${imageFields},
+    portrait ${imageFields}
+  }
+`;
+
+// Only approved photos render publicly — the approval toggle gates the gallery.
+export const bookClubQuery = groq`
+  *[_type == "bookClubPhoto" && approved == true] | order(date desc) {
+    "id": _id,
+    image ${imageFields},
+    clubName,
+    location,
+    date,
+    caption
+  }
+`;
+
+export const pressQuery = groq`
+  *[_type == "press"] | order(date desc) {
+    "id": _id,
+    outlet,
+    headline,
+    url,
+    date,
     logo ${imageFields}
   }
 `;

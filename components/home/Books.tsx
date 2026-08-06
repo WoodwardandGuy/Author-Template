@@ -35,7 +35,7 @@ export function Books({ books, content }: BooksProps) {
                 <Link
                   key={book.id}
                   href={`/books/${book.slug}`}
-                  className="group flex flex-col"
+                  className="group flex flex-col w-full max-w-[300px] mx-auto"
                 >
                   <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-md bg-gray-100 group-hover:shadow-xl transition-shadow">
                     {coverUrl ? (

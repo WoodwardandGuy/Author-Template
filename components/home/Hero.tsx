@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { urlFor } from '@/lib/sanity.image';
+import { SignatureAnimation } from '@/components/home/SignatureAnimation';
 import { HeroContent } from '@/lib/types';
 
 interface HeroProps {
@@ -35,6 +36,8 @@ export function Hero({ content }: HeroProps) {
 
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="max-w-2xl">
+          <SignatureAnimation className="text-white w-32 md:w-40 h-auto mb-8" />
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
             {content.headline}
           </h1>

@@ -77,20 +77,21 @@ export default async function AboutPage() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-6 tracking-tight">
                 About {authorInfo.name}
               </h1>
-              <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-                <p>{authorInfo.tagline}.</p>
-                <p>
-                  {/* Replace this placeholder bio in the CMS. Write in the first or third
-                      person — whatever suits the brand. */}
-                  This is where the author&rsquo;s story goes: how they came to writing,
-                  the themes they return to, and what readers can expect from the work.
-                  Keep it warm and personal — a few short paragraphs is plenty.
-                </p>
-                <p>
-                  Add a note about background, awards, or life beyond the page. Edit all
-                  of this from the Studio; nothing here is hard-coded to the template.
-                </p>
-              </div>
+              {/* Bios come from the CMS (Author Information). When absent, the section
+                  simply hides — no placeholder copy can ship to production. */}
+              {(authorInfo.shortBio || authorInfo.longBio) && (
+                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                  {authorInfo.shortBio && (
+                    <p className="text-xl text-gray-800">{authorInfo.shortBio}</p>
+                  )}
+                  {authorInfo.longBio
+                    ?.split('\n\n')
+                    .filter(Boolean)
+                    .map((paragraph, i) => (
+                      <p key={i}>{paragraph}</p>
+                    ))}
+                </div>
+              )}
             </div>
 
             {portraitUrl && (

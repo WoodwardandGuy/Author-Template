@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import {
   Instagram,
@@ -9,6 +8,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { urlFor } from '@/lib/sanity.image';
+import { FooterNewsletter } from '@/components/layout/FooterNewsletter';
 import type { AuthorInfo, SiteContent } from '@/lib/types';
 
 interface FooterProps {
@@ -20,7 +20,8 @@ const quickLinks = [
   { href: '/books', label: 'Books' },
   { href: '/about', label: 'About' },
   { href: '/events', label: 'Events' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/press', label: 'Press' },
+  { href: '/book-club', label: 'Book Club' },
   { href: '/#contact', label: 'Contact' },
 ];
 
@@ -99,12 +100,7 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
             <p className="text-white/70 mb-4">
               Join the mailing list for new releases and events.
             </p>
-            <Link
-              href="/#newsletter"
-              className="inline-flex items-center bg-brand hover:bg-brand-dark text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
-            >
-              Sign up
-            </Link>
+            <FooterNewsletter />
           </div>
         </div>
 

@@ -26,11 +26,31 @@ export interface AuthorInfo {
   name: string;
   tagline: string;
   email: string;
+  shortBio?: string;
+  longBio?: string;
   socials?: Socials;
   logo?: SanityImage;
   portrait?: SanityImage;
   booksImage?: SanityImage;
   aboutImage?: SanityImage;
+}
+
+export interface BookClubPhoto {
+  id: string;
+  image: SanityImage;
+  clubName: string;
+  location?: string;
+  date?: string;
+  caption?: string;
+}
+
+export interface PressItem {
+  id: string;
+  outlet: string;
+  headline: string;
+  url?: string;
+  date?: string;
+  logo?: SanityImage;
 }
 
 export interface HeroContent {

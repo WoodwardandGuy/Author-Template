@@ -1,6 +1,8 @@
 import authorInfo from './authorInfo';
 import heroContent from './heroContent';
 import book from './book';
+import bookClubPhoto from './bookClubPhoto';
+import press from './press';
 import praise from './praise';
 import event from './event';
 import featuredRelease from './featuredRelease';
@@ -13,6 +15,8 @@ export const schemaTypes = [
   authorInfo,
   heroContent,
   book,
+  bookClubPhoto,
+  press,
   praise,
   event,
   featuredRelease,

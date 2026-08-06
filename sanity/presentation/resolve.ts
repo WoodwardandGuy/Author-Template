@@ -41,6 +41,24 @@ export const resolve: PresentationPluginOptions['resolve'] = {
         ],
       }),
     }),
+    bookClubPhoto: defineLocations({
+      select: { clubName: 'clubName' },
+      resolve: (doc) => ({
+        locations: [
+          { title: doc?.clubName || 'Book Club Gallery', href: '/book-club' },
+          { title: 'Book Club', href: '/book-club' },
+        ],
+      }),
+    }),
+    press: defineLocations({
+      select: { outlet: 'outlet' },
+      resolve: (doc) => ({
+        locations: [
+          { title: doc?.outlet || 'Press', href: '/press' },
+          { title: 'Press', href: '/press' },
+        ],
+      }),
+    }),
     featuredRelease: defineLocations({
       select: { label: 'label' },
       resolve: () => ({

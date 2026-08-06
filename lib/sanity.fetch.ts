@@ -10,6 +10,8 @@ import {
   praiseQuery,
   upcomingEventsQuery,
   featuredReleaseQuery,
+  bookClubQuery,
+  pressQuery,
   blogPostsQuery,
   blogPostBySlugQuery,
   blogPostCountQuery,
@@ -23,6 +25,8 @@ import type {
   Praise,
   AppearanceEvent,
   FeaturedRelease,
+  BookClubPhoto,
+  PressItem,
   BrandStatementContent,
   FAQItem,
   SiteContent,
@@ -118,4 +122,14 @@ export async function getUpcomingEvents(): Promise<AppearanceEvent[]> {
 export async function getFeaturedRelease(): Promise<FeaturedRelease | null> {
   const { data } = await sanityFetch({ query: featuredReleaseQuery });
   return data as FeaturedRelease | null;
+}
+
+export async function getBookClubPhotos(): Promise<BookClubPhoto[]> {
+  const { data } = await sanityFetch({ query: bookClubQuery });
+  return data as BookClubPhoto[];
+}
+
+export async function getPress(): Promise<PressItem[]> {
+  const { data } = await sanityFetch({ query: pressQuery });
+  return data as PressItem[];
 }

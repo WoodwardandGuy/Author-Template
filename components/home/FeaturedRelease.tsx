@@ -66,9 +66,9 @@ export function FeaturedRelease({ content }: FeaturedReleaseProps) {
                 <Image
                   src={coverUrl}
                   alt={book.cover?.alt || book.title}
-                  width={340}
-                  height={510}
-                  className="rounded-lg shadow-2xl w-auto h-auto max-h-[500px]"
+                  width={300}
+                  height={450}
+                  className="rounded-lg shadow-2xl w-auto h-auto max-w-[300px]"
                   priority
                 />
               </Link>

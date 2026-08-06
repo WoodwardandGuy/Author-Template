@@ -16,7 +16,8 @@ const navLinks = [
   { href: '/books', label: 'Books' },
   { href: '/about', label: 'About' },
   { href: '/events', label: 'Events' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/press', label: 'Press' },
+  { href: '/book-club', label: 'Book Club' },
   { href: '/#contact', label: 'Contact' },
 ];
 

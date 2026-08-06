@@ -28,6 +28,20 @@ export default defineType({
       validation: (Rule) => Rule.required().email(),
     }),
     defineField({
+      name: 'shortBio',
+      title: 'Short Bio',
+      type: 'text',
+      rows: 3,
+      description: 'One or two sentences — used as the intro on the About page',
+    }),
+    defineField({
+      name: 'longBio',
+      title: 'Long Bio',
+      type: 'text',
+      rows: 12,
+      description: 'The full story. Separate paragraphs with a blank line.',
+    }),
+    defineField({
       name: 'socials',
       title: 'Social Links',
       type: 'object',
