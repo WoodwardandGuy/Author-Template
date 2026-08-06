@@ -26,7 +26,8 @@ async function getAuthor(): Promise<Partial<AuthorInfo>> {
 
 export default async function ComingSoonPage() {
   const author = await getAuthor();
-  const name = author.name && author.name !== 'Your Name' ? author.name : 'El Westbury';
+  const name =
+    author.name && author.name !== 'Your Name' ? author.name : 'E.L. Westbury';
   const tagline =
     author.tagline && author.tagline !== 'Author' ? author.tagline : 'Author';
   const instagram = author.socials?.instagram;
