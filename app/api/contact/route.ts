@@ -1,8 +1,6 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // Addresses are configured via env so no inbox is ever exposed in the client bundle.
 // CONTACT_FROM_EMAIL must be on a domain verified in your Resend account.
 const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
@@ -26,6 +24,14 @@ export async function POST(request: Request) {
       console.error('CONTACT_TO_EMAIL is not configured.');
       return NextResponse.json({ error: 'Contact is not configured' }, { status: 500 });
     }
+
+    // Instantiate lazily so `next build` can import this route without the key set.
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('RESEND_API_KEY is not configured.');
+      return NextResponse.json({ error: 'Email is not configured' }, { status: 500 });
+    }
+    const resend = new Resend(apiKey);
 
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
