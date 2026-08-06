@@ -33,10 +33,12 @@ import type {
   BlogPost,
   BlogPostFull,
 } from './types';
+import { FALLBACK_AUTHOR, FALLBACK_HERO } from './placeholders';
 
 export async function getAuthorInfo(): Promise<AuthorInfo> {
   const { data } = await sanityFetch({ query: authorInfoQuery });
-  return data as AuthorInfo;
+  // Fall back to a neutral placeholder when the CMS is empty so pages don't crash.
+  return (data as AuthorInfo | null) ?? FALLBACK_AUTHOR;
 }
 
 interface HomePageData {
@@ -53,7 +55,19 @@ interface HomePageData {
 
 export async function getHomePageData(): Promise<HomePageData> {
   const { data } = await sanityFetch({ query: homePageQuery });
-  return data as HomePageData;
+  const d = (data ?? {}) as Partial<HomePageData>;
+  // Singletons can be null on an empty dataset — coalesce the ones pages read directly.
+  return {
+    authorInfo: d.authorInfo ?? FALLBACK_AUTHOR,
+    heroContent: d.heroContent ?? FALLBACK_HERO,
+    books: d.books ?? [],
+    praise: d.praise ?? [],
+    events: d.events ?? [],
+    featuredRelease: d.featuredRelease ?? null,
+    brandStatement: d.brandStatement ?? null,
+    faqItems: d.faqItems ?? [],
+    siteContent: d.siteContent ?? null,
+  };
 }
 
 const POSTS_PER_PAGE = 9;
