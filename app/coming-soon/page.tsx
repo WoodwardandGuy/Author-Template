@@ -57,7 +57,7 @@ export default async function ComingSoonPage() {
         <div className="mt-10 h-px w-16 bg-brand/50" />
 
         <p className="mt-10 max-w-md text-pretty text-sm leading-relaxed text-white/50 sm:text-base">
-          The new site is on its way. Check back soon — there&rsquo;s something
+          The new site is on its way. Check back soon. There&rsquo;s something
           worth waiting for.
         </p>
 
