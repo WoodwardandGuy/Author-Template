@@ -18,29 +18,25 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'phoneNumber',
-      title: 'Phone Number',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'ctaText',
       title: 'CTA Button Text',
       type: 'string',
+      description: 'e.g. "Explore the books"',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'ctaLink',
+      title: 'CTA Button Link',
+      type: 'string',
+      description: 'e.g. "/books" or "#books"',
+      initialValue: '/books',
     }),
     defineField({
       name: 'backgroundImage',
       title: 'Background Image',
       type: 'image',
       options: { hotspot: true },
-      fields: [
-        {
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-        },
-      ],
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
   ],
   preview: {

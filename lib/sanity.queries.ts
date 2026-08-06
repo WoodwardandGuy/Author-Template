@@ -1,22 +1,28 @@
 import { groq } from 'next-sanity';
 
-export const companyInfoQuery = groq`
-  *[_type == "companyInfo"][0] {
+const imageFields = `{ asset->, alt }`;
+
+const bookFields = `
+  "id": _id,
+  title,
+  subtitle,
+  "slug": slug.current,
+  cover ${imageFields},
+  genre,
+  series,
+  seriesOrder,
+  publicationDate,
+  description,
+  retailers[] { store, label, url }
+`;
+
+export const authorInfoQuery = groq`
+  *[_type == "authorInfo"][0] {
     name,
-    phone,
-    email,
-    address {
-      street,
-      city,
-      state,
-      zip
-    },
-    hours {
-      weekday,
-      weekend
-    },
     tagline,
-    logo { asset->, alt }
+    email,
+    socials,
+    logo ${imageFields}
   }
 `;
 
@@ -24,147 +30,128 @@ export const heroContentQuery = groq`
   *[_type == "heroContent"][0] {
     headline,
     subheadline,
-    phoneNumber,
-    ctaText
+    ctaText,
+    ctaLink,
+    backgroundImage ${imageFields}
   }
 `;
 
-export const servicesQuery = groq`
-  *[_type == "service"] | order(order asc) {
+export const booksQuery = groq`
+  *[_type == "book"] | order(order asc, publicationDate desc) {
+    ${bookFields}
+  }
+`;
+
+export const bookBySlugQuery = groq`
+  *[_type == "book" && slug.current == $slug][0] {
+    ${bookFields},
+    isbn,
+    longDescription,
+    metaDescription
+  }
+`;
+
+export const bookSlugsQuery = groq`
+  *[_type == "book"] { "slug": slug.current }
+`;
+
+export const praiseQuery = groq`
+  *[_type == "praise"] | order(order asc) {
+    "id": _id,
+    quote,
+    attribution,
+    source
+  }
+`;
+
+// Only events dated today or later, soonest first.
+export const upcomingEventsQuery = groq`
+  *[_type == "event" && date >= now()] | order(date asc) {
     "id": _id,
     title,
-    description,
-    icon,
-    "slug": slug.current
+    date,
+    venue,
+    city,
+    region,
+    url,
+    description
   }
 `;
 
-export const testimonialsQuery = groq`
-  *[_type == "testimonial"] | order(order asc, date desc) {
-    "id": _id,
-    name,
-    location,
-    rating,
-    text,
-    date
+export const featuredReleaseQuery = groq`
+  *[_type == "featuredRelease"][0] {
+    enabled,
+    label,
+    headline,
+    ctaText,
+    book-> { ${bookFields} }
   }
 `;
 
-export const serviceAreasQuery = groq`
-  *[_type == "serviceArea"] | order(order asc, name asc) {
-    "id": _id,
-    name,
-    state
+export const faqQuery = groq`
+  *[_type == "faqItem"] | order(order asc) {
+    "id": _id, question, answer
   }
 `;
 
-export const whyChooseUsQuery = groq`
-  *[_type == "whyChooseUsItem"] | order(order asc) {
-    "id": _id,
-    title,
-    description,
-    icon
+export const siteContentQuery = groq`
+  *[_type == "siteContent"][0] {
+    booksHeadline, booksSubtext, booksFooterText,
+    praiseHeadline,
+    eventsHeadline, eventsSubtext, eventsEmptyText,
+    faqHeadline, faqSubtext,
+    contactHeadline, contactSubtext, contactButtonText,
+    newsletterHeadline, newsletterSubtext, newsletterButtonText,
+    blogHeadline, blogSubtext, blogFeaturedLabel, blogReadMoreText,
+    blogMoreArticlesText, blogViewAllText, blogEmptyText, blogBackText,
+    blogAllArticlesHeadline,
+    footerTagline, footerCopyrightText
   }
 `;
 
 export const homePageQuery = groq`{
-  "companyInfo": *[_type == "companyInfo"][0] {
-    name, phone, email,
-    address { street, city, state, zip },
-    hours { weekday, weekend },
-    tagline,
-    logo { asset->, alt },
-    servicesImage { asset->, alt },
-    brandImage { asset->, alt }
+  "authorInfo": *[_type == "authorInfo"][0] {
+    name, tagline, email, socials,
+    logo ${imageFields},
+    booksImage ${imageFields},
+    aboutImage ${imageFields}
   },
   "heroContent": *[_type == "heroContent"][0] {
-    headline, subheadline, phoneNumber, ctaText,
-    backgroundImage { asset->, alt }
+    headline, subheadline, ctaText, ctaLink,
+    backgroundImage ${imageFields}
   },
-  "services": *[_type == "service"] | order(order asc) {
-    "id": _id, title, description, icon, "slug": slug.current
+  "books": *[_type == "book"] | order(order asc, publicationDate desc) {
+    ${bookFields}
   },
-  "testimonials": *[_type == "testimonial"] | order(order asc, date desc) {
-    "id": _id, name, location, rating, text, date
+  "praise": *[_type == "praise"] | order(order asc) {
+    "id": _id, quote, attribution, source
+  },
+  "events": *[_type == "event" && date >= now()] | order(date asc) {
+    "id": _id, title, date, venue, city, region, url, description
+  },
+  "featuredRelease": *[_type == "featuredRelease"][0] {
+    enabled, label, headline, ctaText,
+    book-> { ${bookFields} }
   },
   "brandStatement": *[_type == "brandStatement"][0] {
     tagline, headline, body
-  },
-  "emergencyCTA": *[_type == "emergencyCTA"][0] {
-    headline, subtext, buttonText
   },
   "faqItems": *[_type == "faqItem"] | order(order asc) {
     "id": _id, question, answer
   },
   "siteContent": *[_type == "siteContent"][0] {
-    servicesHeadline, servicesSubtext, servicesFooterText,
-    testimonialsHeadline, testimonialsRatingText,
+    booksHeadline, booksSubtext, booksFooterText,
+    praiseHeadline,
+    eventsHeadline, eventsSubtext, eventsEmptyText,
     faqHeadline, faqSubtext,
-    contactHeadline, contactSubtext, contactInfoTitle, contactButtonText,
+    contactHeadline, contactSubtext, contactButtonText,
+    newsletterHeadline, newsletterSubtext, newsletterButtonText,
     blogHeadline, blogSubtext, blogFeaturedLabel, blogReadMoreText,
     blogMoreArticlesText, blogViewAllText, blogEmptyText, blogBackText,
     blogAllArticlesHeadline,
-    footerEmergencyText, footerCopyrightText
+    footerTagline, footerCopyrightText
   }
 }`;
-
-export const siteContentQuery = groq`
-  *[_type == "siteContent"][0] {
-    servicesHeadline, servicesSubtext, servicesFooterText,
-    testimonialsHeadline, testimonialsRatingText,
-    faqHeadline, faqSubtext,
-    contactHeadline, contactSubtext, contactInfoTitle, contactButtonText,
-    blogHeadline, blogSubtext, blogFeaturedLabel, blogReadMoreText,
-    blogMoreArticlesText, blogViewAllText, blogEmptyText, blogBackText,
-    blogAllArticlesHeadline,
-    footerEmergencyText, footerCopyrightText
-  }
-`;
-
-export const serviceBySlugQuery = groq`
-  *[_type == "service" && slug.current == $slug][0] {
-    "id": _id,
-    title,
-    description,
-    icon,
-    "slug": slug.current,
-    metaDescription,
-    longDescription,
-    featuredImage { asset->, alt }
-  }
-`;
-
-export const serviceSlugsQuery = groq`
-  *[_type == "service"] { "slug": slug.current }
-`;
-
-export const serviceAreaBySlugQuery = groq`
-  *[_type == "serviceArea" && slug.current == $slug][0] {
-    "id": _id,
-    name,
-    state,
-    "slug": slug.current,
-    metaDescription,
-    description,
-    latitude,
-    longitude
-  }
-`;
-
-export const serviceAreaSlugsQuery = groq`
-  *[_type == "serviceArea"] { "slug": slug.current }
-`;
-
-export const serviceAreasWithSlugsQuery = groq`
-  *[_type == "serviceArea"] | order(order asc, name asc) {
-    "id": _id,
-    name,
-    state,
-    "slug": slug.current,
-    latitude,
-    longitude
-  }
-`;
 
 export const blogPostsQuery = groq`
   *[_type == "blogPost"] | order(publishedDate desc) [$start...$end] {
@@ -173,10 +160,7 @@ export const blogPostsQuery = groq`
     "slug": slug.current,
     publishedDate,
     excerpt,
-    featuredImage {
-      asset->,
-      alt
-    },
+    featuredImage ${imageFields},
     author,
     readingTime
   }
@@ -189,10 +173,7 @@ export const blogPostBySlugQuery = groq`
     "slug": slug.current,
     publishedDate,
     excerpt,
-    featuredImage {
-      asset->,
-      alt
-    },
+    featuredImage ${imageFields},
     author,
     readingTime,
     body[] {

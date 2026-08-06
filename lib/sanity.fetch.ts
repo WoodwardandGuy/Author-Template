@@ -1,48 +1,48 @@
 import { sanityFetch } from './sanity.live';
 import { client } from './sanity.client';
 import {
-  companyInfoQuery,
+  authorInfoQuery,
   homePageQuery,
   siteContentQuery,
-  servicesQuery,
-  serviceBySlugQuery,
-  serviceSlugsQuery,
-  serviceAreaBySlugQuery,
-  serviceAreaSlugsQuery,
-  serviceAreasWithSlugsQuery,
+  booksQuery,
+  bookBySlugQuery,
+  bookSlugsQuery,
+  praiseQuery,
+  upcomingEventsQuery,
+  featuredReleaseQuery,
   blogPostsQuery,
   blogPostBySlugQuery,
   blogPostCountQuery,
   blogPostSlugsQuery,
 } from './sanity.queries';
 import type {
-  CompanyInfo,
+  AuthorInfo,
   HeroContent,
-  Service,
-  ServiceFull,
-  ServiceArea,
-  ServiceAreaFull,
-  Testimonial,
+  Book,
+  BookFull,
+  Praise,
+  AppearanceEvent,
+  FeaturedRelease,
   BrandStatementContent,
-  EmergencyCTAContent,
   FAQItem,
   SiteContent,
   BlogPost,
   BlogPostFull,
 } from './types';
 
-export async function getCompanyInfo(): Promise<CompanyInfo> {
-  const { data } = await sanityFetch({ query: companyInfoQuery });
-  return data as CompanyInfo;
+export async function getAuthorInfo(): Promise<AuthorInfo> {
+  const { data } = await sanityFetch({ query: authorInfoQuery });
+  return data as AuthorInfo;
 }
 
 interface HomePageData {
-  companyInfo: CompanyInfo;
+  authorInfo: AuthorInfo;
   heroContent: HeroContent;
-  services: Service[];
-  testimonials: Testimonial[];
+  books: Book[];
+  praise: Praise[];
+  events: AppearanceEvent[];
+  featuredRelease: FeaturedRelease | null;
   brandStatement: BrandStatementContent | null;
-  emergencyCTA: EmergencyCTAContent | null;
   faqItems: FAQItem[];
   siteContent: SiteContent | null;
 }
@@ -91,30 +91,31 @@ export async function getBlogPostSlugs(): Promise<{ slug: string }[]> {
   return client.fetch(blogPostSlugsQuery);
 }
 
-export async function getServices(): Promise<Service[]> {
-  const { data } = await sanityFetch({ query: servicesQuery });
-  return data as Service[];
+export async function getBooks(): Promise<Book[]> {
+  const { data } = await sanityFetch({ query: booksQuery });
+  return data as Book[];
 }
 
-export async function getServiceBySlug(slug: string): Promise<ServiceFull | null> {
-  const { data } = await sanityFetch({ query: serviceBySlugQuery, params: { slug } });
-  return data as ServiceFull | null;
+export async function getBookBySlug(slug: string): Promise<BookFull | null> {
+  const { data } = await sanityFetch({ query: bookBySlugQuery, params: { slug } });
+  return data as BookFull | null;
 }
 
-export async function getServiceSlugs(): Promise<{ slug: string }[]> {
-  return client.fetch(serviceSlugsQuery);
+export async function getBookSlugs(): Promise<{ slug: string }[]> {
+  return client.fetch(bookSlugsQuery);
 }
 
-export async function getServiceAreaBySlug(slug: string): Promise<ServiceAreaFull | null> {
-  const { data } = await sanityFetch({ query: serviceAreaBySlugQuery, params: { slug } });
-  return data as ServiceAreaFull | null;
+export async function getPraise(): Promise<Praise[]> {
+  const { data } = await sanityFetch({ query: praiseQuery });
+  return data as Praise[];
 }
 
-export async function getServiceAreaSlugs(): Promise<{ slug: string }[]> {
-  return client.fetch(serviceAreaSlugsQuery);
+export async function getUpcomingEvents(): Promise<AppearanceEvent[]> {
+  const { data } = await sanityFetch({ query: upcomingEventsQuery });
+  return data as AppearanceEvent[];
 }
 
-export async function getServiceAreasWithSlugs(): Promise<ServiceArea[]> {
-  const { data } = await sanityFetch({ query: serviceAreasWithSlugsQuery });
-  return data as ServiceArea[];
+export async function getFeaturedRelease(): Promise<FeaturedRelease | null> {
+  const { data } = await sanityFetch({ query: featuredReleaseQuery });
+  return data as FeaturedRelease | null;
 }

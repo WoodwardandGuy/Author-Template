@@ -60,14 +60,15 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        'tree-green': {
-          DEFAULT: '#2D5016',
-          dark: '#1E3610',
+        // Brand palette — swap these two for the author's colors.
+        // (Named `brand`, not `accent`, to avoid clashing with the shadcn/ui `accent` token.)
+        ink: {
+          DEFAULT: '#2A2733',
+          dark: '#1A1822',
         },
-        'tree-brown': '#8B4513',
-        'accent-orange': {
-          DEFAULT: '#FF8C00',
-          dark: '#CC7000',
+        brand: {
+          DEFAULT: '#9A7B4F',
+          dark: '#7C6340',
         },
       },
       keyframes: {

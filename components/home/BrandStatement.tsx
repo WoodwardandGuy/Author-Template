@@ -18,22 +18,22 @@ export function BrandStatement({ content, image }: BrandStatementProps) {
         <>
           <Image
             src={imageUrl}
-            alt={image?.alt || 'Tree Professionals of Harrisburg'}
+            alt={image?.alt || ''}
             fill
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-tree-green/70" />
+          <div className="absolute inset-0 bg-ink/75" />
         </>
       ) : (
-        <div className="absolute inset-0 bg-tree-green" />
+        <div className="absolute inset-0 bg-ink" />
       )}
 
       <div className="container mx-auto px-4 relative z-10 text-center">
-        <p className="text-accent-orange font-semibold tracking-wide uppercase text-sm mb-4">
+        <p className="text-brand font-semibold tracking-[0.2em] uppercase text-sm mb-4">
           {content.tagline}
         </p>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto mb-6">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto mb-6 tracking-tight">
           {content.headline}
         </h2>
         <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">

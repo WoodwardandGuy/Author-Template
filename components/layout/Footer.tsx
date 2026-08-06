@@ -1,169 +1,120 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  Facebook,
   Instagram,
+  Facebook,
+  Twitter,
+  Music2,
+  BookOpen,
+  type LucideIcon,
 } from 'lucide-react';
 import { urlFor } from '@/lib/sanity.image';
-import type { CompanyInfo, SiteContent } from '@/lib/types';
+import type { AuthorInfo, SiteContent } from '@/lib/types';
 
 interface FooterProps {
-  companyInfo: CompanyInfo;
+  authorInfo: AuthorInfo;
   siteContent?: SiteContent | null;
 }
 
-export function Footer({ companyInfo, siteContent }: FooterProps) {
+const quickLinks = [
+  { href: '/books', label: 'Books' },
+  { href: '/about', label: 'About' },
+  { href: '/events', label: 'Events' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/#contact', label: 'Contact' },
+];
+
+export function Footer({ authorInfo, siteContent }: FooterProps) {
   const currentYear = new Date().getFullYear();
+  const hasLogo = authorInfo.logo?.asset;
+  const s = authorInfo.socials || {};
+
+  const socialLinks: { url?: string; label: string; Icon: LucideIcon }[] = [
+    { url: s.instagram, label: 'Instagram', Icon: Instagram },
+    { url: s.facebook, label: 'Facebook', Icon: Facebook },
+    { url: s.tiktok, label: 'TikTok', Icon: Music2 },
+    { url: s.twitter, label: 'X', Icon: Twitter },
+    { url: s.goodreads, label: 'Goodreads', Icon: BookOpen },
+    { url: s.bookbub, label: 'BookBub', Icon: BookOpen },
+  ];
+  const activeSocials = socialLinks.filter((l) => l.url);
 
   return (
-    <footer className="bg-tree-green text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-ink text-white">
+      <div className="container mx-auto px-4 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <Image
-                src={urlFor(companyInfo.logo).width(128).height(128).url()}
-                alt={companyInfo.logo?.alt || companyInfo.name}
-                width={48}
-                height={48}
-                className="rounded-full"
-              />
-              <span className="text-xl font-bold">{companyInfo.name}</span>
-            </div>
-            <p className="text-gray-300 mb-4">{companyInfo.tagline}</p>
-            {/* Social links — uncomment and add real URLs when client has business pages
-            <div className="flex space-x-4">
-              <a
-                href="https://facebook.com/REAL-PAGE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a
-                href="https://instagram.com/REAL-PAGE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-white transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-6 w-6" />
-              </a>
-            </div>
-            */}
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href={`tel:${companyInfo.phone.replace(/\D/g, '')}`}
-                  className="flex items-start space-x-2 text-gray-300 hover:text-white transition-colors"
-                >
-                  <Phone className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                  <span>{companyInfo.phone}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${companyInfo.email}`}
-                  className="flex items-start space-x-2 text-gray-300 hover:text-white transition-colors"
-                >
-                  <Mail className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                  <span>{companyInfo.email}</span>
-                </a>
-              </li>
-              {companyInfo.address?.street && (
-                <li className="flex items-start space-x-2 text-gray-300">
-                  <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                  <span>
-                    {companyInfo.address.street}
-                    <br />
-                    {companyInfo.address.city}, {companyInfo.address.state}{' '}
-                    {companyInfo.address.zip}
-                  </span>
-                </li>
+            <div className="flex items-center gap-2 mb-4">
+              {hasLogo && (
+                <Image
+                  src={urlFor(authorInfo.logo).width(96).height(96).url()}
+                  alt={authorInfo.logo?.alt || authorInfo.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
               )}
-            </ul>
+              <span className="text-xl font-bold tracking-tight">{authorInfo.name}</span>
+            </div>
+            <p className="text-white/70">
+              {siteContent?.footerTagline || authorInfo.tagline}
+            </p>
+
+            {activeSocials.length > 0 && (
+              <div className="flex gap-4 mt-6">
+                {activeSocials.map(({ url, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="text-white/70 hover:text-white transition-colors"
+                  >
+                    <Icon className="h-6 w-6" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Business Hours</h3>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-start space-x-2">
-                <Clock className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p>{companyInfo.hours.weekday}</p>
-                  <p className="mt-1">{companyInfo.hours.weekend}</p>
-                  <p className="mt-2 text-accent-orange font-semibold">
-                    {siteContent?.footerEmergencyText || '24/7 Emergency Service'}
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">Explore</h3>
             <ul className="space-y-2">
-              <li>
-                <a
-                  href="/services"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Our Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/about"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Testimonials
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/areas"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Service Areas
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/#contact"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Contact Us
-                </a>
-              </li>
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-white/70 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Stay in touch</h3>
+            <p className="text-white/70 mb-4">
+              Join the mailing list for new releases and events.
+            </p>
+            <Link
+              href="/#newsletter"
+              className="inline-flex items-center bg-brand hover:bg-brand-dark text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
+            >
+              Sign up
+            </Link>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+        <div className="border-t border-white/15 mt-10 pt-8 text-center text-white/70">
           <p>
-            &copy; {currentYear} {companyInfo.name}. All rights reserved.
+            &copy; {currentYear} {authorInfo.name}. All rights reserved.
           </p>
-          <p className="mt-2 text-sm">
-            {siteContent?.footerCopyrightText || 'Licensed and Insured Tree Service Professionals'}
-          </p>
+          {siteContent?.footerCopyrightText && (
+            <p className="mt-2 text-sm">{siteContent.footerCopyrightText}</p>
+          )}
         </div>
       </div>
     </footer>

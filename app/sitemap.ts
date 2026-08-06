@@ -1,63 +1,54 @@
 import type { MetadataRoute } from 'next';
-import { getBlogPostSlugs, getServiceSlugs, getServiceAreaSlugs } from '@/lib/sanity.fetch';
-
-const BASE_URL = 'https://www.treeprofessionalsofharrisburg.com';
+import { getBlogPostSlugs, getBookSlugs } from '@/lib/sanity.fetch';
+import { SITE_URL } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [blogSlugs, serviceSlugs, areaSlugs] = await Promise.all([
+  const [blogSlugs, bookSlugs] = await Promise.all([
     getBlogPostSlugs(),
-    getServiceSlugs(),
-    getServiceAreaSlugs(),
+    getBookSlugs(),
   ]);
 
   const blogPosts: MetadataRoute.Sitemap = blogSlugs.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
+    url: `${SITE_URL}/blog/${post.slug}`,
     changeFrequency: 'monthly',
     priority: 0.6,
   }));
 
-  const services: MetadataRoute.Sitemap = serviceSlugs.map((s) => ({
-    url: `${BASE_URL}/services/${s.slug}`,
+  const books: MetadataRoute.Sitemap = bookSlugs.map((b) => ({
+    url: `${SITE_URL}/books/${b.slug}`,
     changeFrequency: 'monthly',
     priority: 0.9,
   }));
 
-  const areas: MetadataRoute.Sitemap = areaSlugs.map((a) => ({
-    url: `${BASE_URL}/areas/${a.slug}`,
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
-
   return [
     {
-      url: BASE_URL,
+      url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${BASE_URL}/services`,
+      url: `${SITE_URL}/books`,
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/areas`,
+      url: `${SITE_URL}/events`,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/about`,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/about`,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/blog`,
+      url: `${SITE_URL}/blog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
-    ...services,
-    ...areas,
+    ...books,
     ...blogPosts,
   ];
 }

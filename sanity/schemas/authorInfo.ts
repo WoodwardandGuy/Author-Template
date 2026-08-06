@@ -1,95 +1,79 @@
 import { defineType, defineField } from 'sanity';
 
 export default defineType({
-  name: 'companyInfo',
-  title: 'Company Information',
+  name: 'authorInfo',
+  title: 'Author Information',
   type: 'document',
   fields: [
     defineField({
       name: 'name',
-      title: 'Company Name',
+      title: 'Author Name',
       type: 'string',
+      description: 'The name displayed across the site (usually the pen name)',
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: 'phone',
-      title: 'Phone Number',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'email',
-      title: 'Email Address',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'address',
-      title: 'Address',
-      type: 'object',
-      fields: [
-        { name: 'street', title: 'Street', type: 'string', validation: (Rule: any) => Rule.required() },
-        { name: 'city', title: 'City', type: 'string', validation: (Rule: any) => Rule.required() },
-        { name: 'state', title: 'State', type: 'string', validation: (Rule: any) => Rule.required() },
-        { name: 'zip', title: 'ZIP Code', type: 'string', validation: (Rule: any) => Rule.required() },
-      ],
-    } as any),
-    defineField({
-      name: 'hours',
-      title: 'Business Hours',
-      type: 'object',
-      fields: [
-        { name: 'weekday', title: 'Weekday Hours', type: 'string', validation: (Rule: any) => Rule.required() },
-        { name: 'weekend', title: 'Weekend Hours', type: 'string', validation: (Rule: any) => Rule.required() },
-      ],
-    } as any),
     defineField({
       name: 'tagline',
       title: 'Tagline',
       type: 'string',
+      description: 'Short descriptor, e.g. "Author of psychological suspense"',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'email',
+      title: 'Contact Email',
+      type: 'string',
+      description:
+        'Where contact-form messages are forwarded. Never displayed on the site.',
+      validation: (Rule) => Rule.required().email(),
+    }),
+    defineField({
+      name: 'socials',
+      title: 'Social Links',
+      type: 'object',
+      description: 'Leave any field blank to hide that icon',
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        { name: 'instagram', title: 'Instagram URL', type: 'url' },
+        { name: 'facebook', title: 'Facebook URL', type: 'url' },
+        { name: 'tiktok', title: 'TikTok URL', type: 'url' },
+        { name: 'twitter', title: 'X / Twitter URL', type: 'url' },
+        { name: 'goodreads', title: 'Goodreads URL', type: 'url' },
+        { name: 'bookbub', title: 'BookBub URL', type: 'url' },
+        { name: 'newsletter', title: 'Newsletter Signup URL', type: 'url' },
+      ],
+    } as any),
+    defineField({
       name: 'logo',
-      title: 'Logo',
+      title: 'Logo / Wordmark',
       type: 'image',
-      description: 'Company logo displayed in the header and footer',
+      description: 'Displayed in the header and footer',
       options: { hotspot: true },
-      fields: [
-        {
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-        },
-      ],
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
     defineField({
-      name: 'servicesImage',
-      title: 'Services Section Image',
+      name: 'portrait',
+      title: 'Author Portrait',
       type: 'image',
-      description: 'Photo displayed in the services section on the home page',
+      description: 'Photo of the author for the About section',
       options: { hotspot: true },
-      fields: [
-        {
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-        },
-      ],
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
     defineField({
-      name: 'brandImage',
-      title: 'Brand Statement Image',
+      name: 'booksImage',
+      title: 'Books Section Image',
       type: 'image',
-      description: 'Background photo for the brand statement section on the home page',
+      description: 'Optional image beside the books list on the home page',
       options: { hotspot: true },
-      fields: [
-        {
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-        },
-      ],
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+    }),
+    defineField({
+      name: 'aboutImage',
+      title: 'About Section Background',
+      type: 'image',
+      description: 'Background photo for the about statement on the home page',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
   ],
   preview: {

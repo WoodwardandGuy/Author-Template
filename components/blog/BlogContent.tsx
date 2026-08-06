@@ -32,12 +32,12 @@ const components: PortableTextComponents = {
   },
   block: {
     h2: ({ children }) => (
-      <h2 className="text-2xl md:text-3xl font-bold text-tree-green-dark mt-10 mb-4">
+      <h2 className="text-2xl md:text-3xl font-bold text-ink-dark mt-10 mb-4">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-xl md:text-2xl font-semibold text-tree-green-dark mt-8 mb-3">
+      <h3 className="text-xl md:text-2xl font-semibold text-ink-dark mt-8 mb-3">
         {children}
       </h3>
     ),
@@ -50,7 +50,7 @@ const components: PortableTextComponents = {
       <p className="text-gray-700 leading-relaxed mb-4">{children}</p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-tree-green pl-4 italic text-gray-600 my-6">
+      <blockquote className="border-l-4 border-ink pl-4 italic text-gray-600 my-6">
         {children}
       </blockquote>
     ),
@@ -77,7 +77,7 @@ const components: PortableTextComponents = {
         href={value?.href}
         target={value?.href?.startsWith('http') ? '_blank' : undefined}
         rel={value?.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-        className="text-tree-green hover:text-tree-green-dark underline transition-colors"
+        className="text-ink hover:text-ink-dark underline transition-colors"
       >
         {children}
       </a>

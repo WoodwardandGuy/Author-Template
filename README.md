@@ -1,190 +1,88 @@
-# Harrisburg Tree Service Website
+# Author Website Template
 
-A modern, SEO-optimized website for a local tree service company built with Next.js, TypeScript, and Tailwind CSS.
+A modern, SEO-optimized website template for authors, built with Next.js, TypeScript, Tailwind CSS, and Sanity CMS. All content is editable from the Sanity Studio at `/studio` — no code changes needed to launch a new author.
 
 ## Features
 
-- **Server-Side Rendering (SSR)** for optimal SEO performance
-- **Responsive Design** that works perfectly on all devices
-- **Schema.org JSON-LD** structured data for enhanced search visibility
-- **Google Analytics 4** and **Meta Pixel** integration
-- **Headless CMS Ready** - structured to easily integrate with Sanity CMS
-- **Professional Design** with tree service color palette (forest green, earth brown, accent orange)
-- **Lead Capture Form** for free quote requests
-- **Mobile-First** approach for local service traffic
-
-## Pages & Sections
-
-### Home Page
-- Hero section with clear call-to-action
-- Services showcase (Tree Removal, Trimming, Stump Grinding, Emergency Service, etc.)
-- Why Choose Us section (Licensed & Insured, 24/7 Emergency, Experience, Equipment)
-- Service Areas (Harrisburg and surrounding Pennsylvania communities)
-- Customer Testimonials with 5-star ratings
-- Contact Form for free quotes
-
-### Global Components
-- Sticky header with click-to-call phone number
-- Footer with NAP data (Name, Address, Phone), business hours, and quick links
+- **Next.js App Router** with server-side rendering for SEO
+- **Sanity CMS** with live preview, draft mode, and visual editing
+- **Books** collection with covers, blurbs, genre/series grouping, and retailer links
+- **Featured Release** module to spotlight a new or upcoming title
+- **Events & Appearances** — time-based; past events auto-hide
+- **Blog** with pagination, portable-text content, and Article schema
+- **Praise / blurbs** carousel and an FAQ accordion
+- **Contact form** (via Resend) that forwards to a private inbox
+- **Newsletter signup** (provider-agnostic; see launch notes)
+- **Schema.org JSON-LD**: Person site-wide, Book on book pages
+- **Responsive, theme-neutral design** — swap two brand colors to rebrand
 
 ## Tech Stack
 
-- **Framework**: Next.js 13+ (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS + shadcn/ui
+- **CMS**: Sanity
+- **Email**: Resend
 - **Icons**: Lucide React
-- **Analytics**: Google Analytics 4, Meta Pixel
 
 ## Getting Started
 
-### Installation
-
 ```bash
 npm install
-```
-
-### Environment Variables
-
-Create a `.env.local` file in the root directory:
-
-```bash
-# Google Analytics 4
-NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-
-# Meta Pixel
-NEXT_PUBLIC_META_PIXEL_ID=123456789012345
-```
-
-See `.env.example` for reference.
-
-### Development
-
-```bash
+cp .env.example .env.local   # then fill in the values
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000](http://localhost:3000) for the site and
+[http://localhost:3000/studio](http://localhost:3000/studio) for the CMS.
 
-### Build
+### Environment Variables
 
-```bash
-npm run build
-```
+See `.env.example`. At minimum you need a Sanity project (`NEXT_PUBLIC_SANITY_PROJECT_ID`)
+and `NEXT_PUBLIC_SITE_URL`. Resend and newsletter keys are optional until you wire up
+those forms.
 
-### Production
+## Content Model (Sanity)
 
-```bash
-npm start
-```
+Singletons (edited in place): **Author Information**, **Hero Section**,
+**Featured Release**, **Site Content**.
 
-## CMS Integration (Future)
-
-The project is structured to easily integrate with Sanity CMS:
-
-1. **Mock Data Location**: `lib/sanity-mocks.ts`
-2. **Data Types**: Defined interfaces for all content (Services, Testimonials, Service Areas, etc.)
-3. **Component Props**: All components accept data via props for easy swapping
-
-### To integrate Sanity CMS:
-
-1. Install Sanity client: `npm install @sanity/client`
-2. Create `lib/sanity.ts` with your Sanity configuration
-3. Write GROQ queries to fetch data
-4. Replace mock data imports in `app/page.tsx` with real Sanity queries
-
-Example:
-```typescript
-// Replace this:
-import { services } from '@/lib/sanity-mocks';
-
-// With this:
-import { getServices } from '@/lib/sanity';
-const services = await getServices();
-```
-
-## SEO Features
-
-- **Semantic HTML5**: Proper use of header, main, section, article, footer tags
-- **Meta Tags**: Comprehensive title, description, and Open Graph tags
-- **Schema.org**: LocalBusiness structured data with services, hours, and ratings
-- **Image Optimization**: Using next/image for Core Web Vitals
-- **Mobile Responsive**: Perfect mobile experience for local search traffic
+Collections: **Book**, **Praise / Blurb**, **Event**, **FAQ Item**, **Blog Post**,
+plus the **About Statement** used on the home page.
 
 ## Customization
 
-### Company Information
+### Brand colors
 
-Update company details in `lib/sanity-mocks.ts`:
-- Company name, phone, email, address
-- Business hours
-- Service areas
+Edit the two color tokens in `tailwind.config.ts`:
 
-### Colors
-
-The color palette is defined in:
-- `tailwind.config.ts` - Theme configuration
-- `app/globals.css` - Custom utility classes
-
-Default colors:
-- Tree Green: `#2D5016`
-- Tree Brown: `#8B4513`
-- Accent Orange: `#FF8C00`
-
-### Content
-
-All content is centralized in `lib/sanity-mocks.ts` for easy editing:
-- Hero content
-- Services list
-- Why Choose Us items
-- Service areas
-- Testimonials
-
-## Project Structure
-
-```
-├── app/
-│   ├── layout.tsx          # Root layout with SEO & marketing scripts
-│   ├── page.tsx            # Home page
-│   └── globals.css         # Global styles & custom colors
-├── components/
-│   ├── home/               # Home page sections
-│   │   ├── Hero.tsx
-│   │   ├── Services.tsx
-│   │   ├── WhyChooseUs.tsx
-│   │   ├── ServiceAreas.tsx
-│   │   ├── Testimonials.tsx
-│   │   └── ContactForm.tsx
-│   ├── layout/             # Global layout components
-│   │   ├── Header.tsx
-│   │   └── Footer.tsx
-│   ├── marketing/          # Marketing technology
-│   │   ├── GoogleAnalytics.tsx
-│   │   └── MetaPixel.tsx
-│   └── ui/                 # shadcn/ui components
-├── lib/
-│   ├── sanity-mocks.ts     # Mock CMS data (replace with Sanity later)
-│   ├── schema.ts           # Schema.org structured data
-│   └── utils.ts            # Utility functions
-└── tailwind.config.ts      # Tailwind configuration
+```ts
+ink:   { DEFAULT: '#2A2733', dark: '#1A1822' },  // primary / dark surfaces
+brand: { DEFAULT: '#9A7B4F', dark: '#7C6340' },  // buttons / highlights
 ```
 
-## Marketing Technology
+Everything else (headings, buttons, footer, hero) derives from these.
 
-The site includes infrastructure for:
+### Fonts
 
-1. **Google Analytics 4**: Tracks page views, user behavior, and conversions
-2. **Meta Pixel**: Tracks Facebook/Instagram ad performance and retargeting
+The base font is Inter (`app/layout.tsx`). Swap it for a serif display face if the
+brand calls for it.
 
-Both are implemented using environment variables and will only load when IDs are provided.
+## Launch checklist / known blockers
 
-## Performance
+- **Newsletter signup is a stub.** `/api/newsletter` returns `501` until an email
+  provider (Flodesk, MailerLite, Kit, …) is chosen and its keys are set. Implement
+  the provider call in `app/api/newsletter/route.ts`.
+- **Contact form** needs `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` (verified domain),
+  and `CONTACT_TO_EMAIL`. The destination inbox is never rendered client-side.
+- Replace the favicon set in `public/` and the placeholder About bio.
 
-- Static generation for fast page loads
-- Image optimization with next/image
-- Minimal JavaScript bundle size
-- Lighthouse score optimized for SEO and performance
+## Scripts
 
-## License
-
-All rights reserved.
+```bash
+npm run dev        # start dev server
+npm run build      # production build
+npm start          # run production build
+npm run lint       # eslint
+npm run typecheck  # tsc --noEmit
+```

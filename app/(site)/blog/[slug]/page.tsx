@@ -6,6 +6,7 @@ import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { getBlogPostBySlug, getBlogPostSlugs, getSiteContent } from '@/lib/sanity.fetch';
 import { urlFor } from '@/lib/sanity.image';
 import { BlogContent } from '@/components/blog/BlogContent';
+import { SITE_URL } from '@/lib/site';
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -31,7 +32,7 @@ export async function generateMetadata({
     : null;
 
   return {
-    title: `${post.title} | Harrisburg Tree Service Blog`,
+    title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -40,7 +41,7 @@ export async function generateMetadata({
       type: 'article',
       publishedTime: post.publishedDate,
       authors: [post.author],
-      url: `https://www.treeprofessionalsofharrisburg.com/blog/${post.slug}`,
+      url: `${SITE_URL}/blog/${post.slug}`,
       ...(imageUrl && {
         images: [
           {
@@ -61,7 +62,7 @@ export async function generateMetadata({
   };
 }
 
-const BASE_URL = 'https://www.treeprofessionalsofharrisburg.com';
+const BASE_URL = SITE_URL;
 
 function generateBreadcrumbSchema(post: { title: string; slug: string }) {
   return {
@@ -91,13 +92,12 @@ function generateArticleSchema(
       name: post.author,
     },
     publisher: {
-      '@type': 'Organization',
-      name: 'Tree Professionals of Harrisburg',
-      url: 'https://www.treeprofessionalsofharrisburg.com',
+      '@type': 'Person',
+      name: post.author,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://www.treeprofessionalsofharrisburg.com/blog/${post.slug}`,
+      '@id': `${SITE_URL}/blog/${post.slug}`,
     },
   };
 }
@@ -140,14 +140,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container mx-auto px-4">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-tree-green hover:text-tree-green-dark font-medium transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-ink hover:text-ink-dark font-medium transition-colors mb-8"
           >
             <ArrowLeft className="h-4 w-4" />
             {siteContent?.blogBackText || 'Back to Blog'}
           </Link>
 
           <header className="max-w-3xl mx-auto text-center mb-10">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-tree-green-dark mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink-dark mb-6">
               {post.title}
             </h1>
 
@@ -189,7 +189,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="max-w-3xl mx-auto mt-12 pt-8 border-t border-gray-200">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-tree-green hover:text-tree-green-dark font-medium transition-colors"
+              className="inline-flex items-center gap-2 text-ink hover:text-ink-dark font-medium transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               {siteContent?.blogBackText || 'Back to Blog'}

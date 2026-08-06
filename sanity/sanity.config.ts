@@ -5,12 +5,21 @@ import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemas';
 import { resolve } from './presentation/resolve';
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ubvlqnqq';
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id';
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
+// Documents that should exist only once (edited in place, not created as a list).
+const singletons = ['authorInfo', 'heroContent', 'featuredRelease', 'siteContent'];
+const singletonTitles: Record<string, string> = {
+  authorInfo: 'Author Information',
+  heroContent: 'Hero Section',
+  featuredRelease: 'Featured Release',
+  siteContent: 'Site Content',
+};
+
 export default defineConfig({
-  name: 'hbg-tree-service',
-  title: 'Harrisburg Tree Service CMS',
+  name: 'author-website',
+  title: 'Author Website CMS',
   projectId,
   dataset,
   basePath: '/studio',
@@ -20,22 +29,15 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            S.listItem()
-              .title('Company Information')
-              .id('companyInfo')
-              .child(
-                S.documentTypeList('companyInfo').title('Company Information')
-              ),
-            S.listItem()
-              .title('Hero Section')
-              .id('heroContent')
-              .child(
-                S.documentTypeList('heroContent').title('Hero Section')
-              ),
+            ...singletons.map((id) =>
+              S.listItem()
+                .title(singletonTitles[id])
+                .id(id)
+                .child(S.document().schemaType(id).documentId(id)),
+            ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (listItem) =>
-                !['companyInfo', 'heroContent'].includes(listItem.getId()!)
+              (listItem) => !singletons.includes(listItem.getId()!),
             ),
           ]),
     }),

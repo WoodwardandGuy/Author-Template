@@ -3,54 +3,34 @@ import { VisualEditing } from 'next-sanity/visual-editing';
 import { draftMode } from 'next/headers';
 import { SanityLive } from '@/lib/sanity.live';
 import { DisableDraftMode } from '@/components/DisableDraftMode';
-import { GoogleTagManager, GoogleTagManagerNoScript } from '@/components/marketing/GoogleTagManager';
-import { MetaPixel } from '@/components/marketing/MetaPixel';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { generateLocalBusinessSchema } from '@/lib/schema';
-import { getCompanyInfo, getSiteContent, getServices, getServiceAreasWithSlugs } from '@/lib/sanity.fetch';
+import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema';
+import { getAuthorInfo, getSiteContent } from '@/lib/sanity.fetch';
+import { SITE_URL } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const companyInfo = await getCompanyInfo();
+  const authorInfo = await getAuthorInfo();
 
   return {
-    title: `${companyInfo.name} | Professional Tree Services in Harrisburg, PA`,
-    description:
-      'Expert tree removal, trimming, and emergency services in Harrisburg, PA. Licensed, insured, and available 24/7. Get your free quote today!',
-    keywords: [
-      'tree service',
-      'tree removal',
-      'tree trimming',
-      'stump grinding',
-      'emergency tree service',
-      'Harrisburg PA',
-      'arborist',
-      'tree care',
-    ],
-    authors: [{ name: companyInfo.name }],
+    title: {
+      default: `${authorInfo.name} | ${authorInfo.tagline}`,
+      template: `%s | ${authorInfo.name}`,
+    },
+    description: authorInfo.tagline,
+    authors: [{ name: authorInfo.name }],
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: 'https://www.treeprofessionalsofharrisburg.com',
-      siteName: companyInfo.name,
-      title: `${companyInfo.name} | Professional Tree Services in Harrisburg, PA`,
-      description:
-        'Expert tree removal, trimming, and emergency services in Harrisburg, PA. Licensed, insured, and available 24/7.',
-      images: [
-        {
-          url: 'https://www.treeprofessionalsofharrisburg.com/og-image.jpg',
-          width: 1200,
-          height: 630,
-          alt: `${companyInfo.name}`,
-        },
-      ],
+      url: SITE_URL,
+      siteName: authorInfo.name,
+      title: `${authorInfo.name} | ${authorInfo.tagline}`,
+      description: authorInfo.tagline,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${companyInfo.name} | Professional Tree Services`,
-      description:
-        'Expert tree removal, trimming, and emergency services in Harrisburg, PA. Available 24/7.',
-      images: ['https://www.treeprofessionalsofharrisburg.com/og-image.jpg'],
+      title: authorInfo.name,
+      description: authorInfo.tagline,
     },
     icons: {
       icon: [
@@ -61,9 +41,6 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
     },
     manifest: '/site.webmanifest',
-    appleWebApp: {
-      title: 'Tree Professionals of Harrisburg',
-    },
     robots: {
       index: true,
       follow: true,
@@ -83,26 +60,27 @@ export default async function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [companyInfo, siteContent, services, serviceAreas] = await Promise.all([
-    getCompanyInfo(),
+  const [authorInfo, siteContent] = await Promise.all([
+    getAuthorInfo(),
     getSiteContent(),
-    getServices(),
-    getServiceAreasWithSlugs(),
   ]);
-  const schema = generateLocalBusinessSchema(companyInfo, services, serviceAreas);
+
+  const personSchema = generatePersonSchema(authorInfo);
+  const websiteSchema = generateWebsiteSchema(authorInfo);
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <GoogleTagManager />
-      <GoogleTagManagerNoScript />
-      <MetaPixel />
-      <Header companyInfo={companyInfo} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <Header authorInfo={authorInfo} />
       <main>{children}</main>
-      <Footer companyInfo={companyInfo} siteContent={siteContent} />
+      <Footer authorInfo={authorInfo} siteContent={siteContent} />
       <SanityLive />
       {(await draftMode()).isEnabled && (
         <>

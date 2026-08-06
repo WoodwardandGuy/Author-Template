@@ -7,20 +7,19 @@ import { urlFor } from '@/lib/sanity.image';
 import { BlogCard } from '@/components/blog/BlogCard';
 import { BlogPagination } from '@/components/blog/BlogPagination';
 import type { BlogPost, SiteContent } from '@/lib/types';
+import { SITE_URL } from '@/lib/site';
 
 const POSTS_PER_PAGE = 9;
 
 export const metadata: Metadata = {
-  title: 'Tree Care Blog | Harrisburg Tree Service',
-  description:
-    'Expert tips, advice, and insights on tree care, removal, trimming, and maintenance from the professionals at Harrisburg Tree Service.',
+  title: 'Blog',
+  description: 'News, essays, and behind-the-scenes notes from the author.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Tree Care Blog | Harrisburg Tree Service',
-    description:
-      'Expert tips and insights on tree care from Harrisburg Tree Service.',
+    title: 'Blog',
+    description: 'News, essays, and behind-the-scenes notes from the author.',
     type: 'website',
-    url: 'https://www.treeprofessionalsofharrisburg.com/blog',
+    url: `${SITE_URL}/blog`,
   },
 };
 
@@ -55,10 +54,10 @@ function FeaturedPost({ post, content }: { post: BlogPost; content: SiteContent 
           )}
         </div>
         <div className="p-8 lg:p-10">
-          <span className="inline-block bg-tree-green/10 text-tree-green text-sm font-semibold px-3 py-1 rounded-full mb-4">
+          <span className="inline-block bg-ink/10 text-ink text-sm font-semibold px-3 py-1 rounded-full mb-4">
             {content?.blogFeaturedLabel || 'Latest Post'}
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-tree-green-dark group-hover:text-tree-green transition-colors mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-ink-dark group-hover:text-ink transition-colors mb-4">
             {post.title}
           </h2>
           <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
@@ -78,7 +77,7 @@ function FeaturedPost({ post, content }: { post: BlogPost; content: SiteContent 
               {post.readingTime} min read
             </span>
           </div>
-          <span className="inline-flex items-center gap-2 text-tree-green font-semibold group-hover:gap-3 transition-all">
+          <span className="inline-flex items-center gap-2 text-ink font-semibold group-hover:gap-3 transition-all">
             {content?.blogReadMoreText || 'Read Article'}
             <ArrowRight className="h-4 w-4" />
           </span>
@@ -111,14 +110,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   return (
     <>
       {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-tree-green via-tree-green-dark to-tree-brown pt-16 pb-16 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-ink via-ink-dark to-ink-dark pt-16 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {siteContent?.blogHeadline || 'Tree Care Blog'}
+            {siteContent?.blogHeadline || 'Blog'}
           </h1>
           <p className="text-lg text-gray-100 max-w-2xl mx-auto">
-            {siteContent?.blogSubtext || 'Tips, advice, and insights from our certified arborists to help you care for your trees and property.'}
+            {siteContent?.blogSubtext || 'News, essays, and behind-the-scenes notes from the writing desk.'}
           </p>
         </div>
       </section>
@@ -140,12 +139,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 <>
                   {featuredPost && (
                     <div className="flex items-center justify-between mb-8">
-                      <h2 className="text-2xl font-bold text-tree-green-dark">
+                      <h2 className="text-2xl font-bold text-ink-dark">
                         {siteContent?.blogMoreArticlesText || 'More Articles'}
                       </h2>
                       <Link
                         href="/blog/all"
-                        className="inline-flex items-center gap-2 text-tree-green hover:text-tree-green-dark font-semibold transition-colors"
+                        className="inline-flex items-center gap-2 text-ink hover:text-ink-dark font-semibold transition-colors"
                       >
                         {siteContent?.blogViewAllText || 'View All Articles'}
                         <ArrowRight className="h-4 w-4" />

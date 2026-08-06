@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Phone, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -10,33 +9,28 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { getServices, getCompanyInfo } from '@/lib/sanity.fetch';
-
-const BASE_URL = 'https://www.treeprofessionalsofharrisburg.com';
+import { urlFor } from '@/lib/sanity.image';
+import { getBooks, getSiteContent } from '@/lib/sanity.fetch';
+import { SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: 'Tree Services in Harrisburg, PA | Tree Professionals of Harrisburg',
-  description:
-    'Professional tree removal, trimming, stump grinding, emergency service, and land clearing in Harrisburg, PA. Licensed, insured, free estimates. Call today.',
-  alternates: { canonical: '/services' },
+  title: 'Books',
+  description: 'Browse the complete list of books, novels, and stories.',
+  alternates: { canonical: '/books' },
   openGraph: {
-    title: 'Tree Services in Harrisburg, PA | Tree Professionals of Harrisburg',
-    description:
-      'Professional tree removal, trimming, stump grinding, emergency service, and land clearing in Harrisburg, PA.',
-    url: `${BASE_URL}/services`,
+    title: 'Books',
+    description: 'Browse the complete list of books, novels, and stories.',
+    url: `${SITE_URL}/books`,
     type: 'website',
   },
 };
 
-export default async function ServicesPage() {
-  const [services, companyInfo] = await Promise.all([
-    getServices(),
-    getCompanyInfo(),
-  ]);
+export default async function BooksPage() {
+  const [books, siteContent] = await Promise.all([getBooks(), getSiteContent()]);
 
   return (
     <>
-      <div className="bg-tree-green/5 py-4">
+      <div className="bg-ink/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -45,7 +39,7 @@ export default async function ServicesPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Services</BreadcrumbPage>
+                <BreadcrumbPage>Books</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -53,65 +47,76 @@ export default async function ServicesPage() {
       </div>
 
       <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-tree-green mb-6">
-            Tree Care Services in Harrisburg, PA
+        <div className="container mx-auto px-4 max-w-5xl">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
+            {siteContent?.booksHeadline || 'Books'}
           </h1>
-          <p className="text-xl text-gray-600 leading-relaxed mb-12">
-            From a dead limb hanging over your roof to a full property clearing, we handle every type of tree work in the greater Harrisburg area. Every job includes full cleanup and debris removal.
-          </p>
-
-          <div className="space-y-6">
-            {services.map((service) => (
-              <Link
-                key={service.id}
-                href={`/services/${service.slug}`}
-                className="block bg-white border border-gray-200 rounded-xl p-8 hover:border-tree-green hover:shadow-lg transition-all group"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold text-tree-green-dark group-hover:text-tree-green transition-colors mb-3">
-                      {service.title}
-                    </h2>
-                    <p className="text-gray-600 leading-relaxed">
-                      {service.description}
-                    </p>
-                  </div>
-                  <ArrowRight className="h-6 w-6 text-gray-300 group-hover:text-accent-orange transition-colors shrink-0 mt-1" />
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-16 bg-accent-orange/10 border border-accent-orange/20 rounded-2xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-tree-green mb-3">
-              Not Sure What You Need?
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Call us or send a message. We&apos;ll come take a look at your property and tell you exactly what needs to be done — and what doesn&apos;t.
+          {siteContent?.booksSubtext && (
+            <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-2xl">
+              {siteContent.booksSubtext}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                className="bg-accent-orange hover:bg-accent-orange-dark text-white h-12 px-8 text-lg"
-              >
-                <Link href="/#contact">
-                  Get a Free Quote
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="h-12 px-8 text-lg border-tree-green text-tree-green hover:bg-tree-green hover:text-white"
-              >
-                <a href={`tel:${companyInfo.phone.replace(/\D/g, '')}`}>
-                  <Phone className="mr-2 h-5 w-5" />
-                  {companyInfo.phone}
-                </a>
-              </Button>
+          )}
+
+          {books.length > 0 ? (
+            <div className="space-y-12">
+              {books.map((book) => {
+                const coverUrl = book.cover?.asset
+                  ? urlFor(book.cover).width(400).height(600).url()
+                  : null;
+                return (
+                  <article
+                    key={book.id}
+                    className="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-6 md:gap-8 items-start"
+                  >
+                    <Link href={`/books/${book.slug}`} className="block group">
+                      <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-md bg-gray-100">
+                        {coverUrl ? (
+                          <Image
+                            src={coverUrl}
+                            alt={book.cover?.alt || book.title}
+                            fill
+                            className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                            sizes="180px"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center h-full text-gray-400 text-sm px-3 text-center">
+                            {book.title}
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                    <div>
+                      {book.series && (
+                        <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1">
+                          {book.series}
+                          {book.seriesOrder ? ` · Book ${book.seriesOrder}` : ''}
+                        </p>
+                      )}
+                      <h2 className="text-2xl font-bold text-ink-dark mb-1">
+                        <Link href={`/books/${book.slug}`} className="hover:text-ink transition-colors">
+                          {book.title}
+                        </Link>
+                      </h2>
+                      {book.subtitle && (
+                        <p className="text-lg text-gray-500 mb-3">{book.subtitle}</p>
+                      )}
+                      <p className="text-gray-600 leading-relaxed mb-4 line-clamp-4">
+                        {book.description}
+                      </p>
+                      <Link
+                        href={`/books/${book.slug}`}
+                        className="text-ink font-semibold hover:text-brand transition-colors"
+                      >
+                        Read more →
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
-          </div>
+          ) : (
+            <p className="text-gray-600 text-lg py-12">No books published yet.</p>
+          )}
         </div>
       </section>
     </>

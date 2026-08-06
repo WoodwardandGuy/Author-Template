@@ -38,7 +38,7 @@ export function BlogCard({ post }: BlogCardProps) {
           )}
         </div>
         <div className="p-6 flex flex-col flex-1">
-          <h3 className="text-lg font-bold text-tree-green-dark group-hover:text-tree-green transition-colors line-clamp-2 mb-3">
+          <h3 className="text-lg font-bold text-ink-dark group-hover:text-ink transition-colors line-clamp-2 mb-3">
             {post.title}
           </h3>
           <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
@@ -55,7 +55,7 @@ export function BlogCard({ post }: BlogCardProps) {
                 {post.readingTime} min
               </span>
             </div>
-            <ArrowRight className="h-4 w-4 text-tree-green opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="h-4 w-4 text-ink opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
           </div>
         </div>
       </article>

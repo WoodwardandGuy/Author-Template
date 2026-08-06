@@ -1,33 +1,24 @@
-import type { Metadata } from 'next';
 import { Hero } from '@/components/home/Hero';
-import { Services } from '@/components/home/Services';
+import { FeaturedRelease } from '@/components/home/FeaturedRelease';
+import { Books } from '@/components/home/Books';
 import { BrandStatement } from '@/components/home/BrandStatement';
-import { EmergencyCTA } from '@/components/home/EmergencyCTA';
-import { Testimonials } from '@/components/home/Testimonials';
+import { Praise } from '@/components/home/Praise';
+import { Events } from '@/components/home/Events';
 import { FAQ } from '@/components/home/FAQ';
+import { Newsletter } from '@/components/home/Newsletter';
 import { ContactForm } from '@/components/home/ContactForm';
-import { getHomePageData, getCompanyInfo } from '@/lib/sanity.fetch';
+import { getHomePageData } from '@/lib/sanity.fetch';
 import { generateFAQPageSchema } from '@/lib/schema';
-
-export async function generateMetadata(): Promise<Metadata> {
-  const companyInfo = await getCompanyInfo();
-
-  return {
-    title: `Tree Service Harrisburg PA | Tree Removal & Trimming | ${companyInfo.name}`,
-    description:
-      'Top-rated tree service in Harrisburg, PA. Professional tree removal, trimming, stump grinding, and 24/7 emergency service. Licensed & insured. Free estimates — call today!',
-    alternates: { canonical: '/' },
-  };
-}
 
 export default async function Home() {
   const {
-    companyInfo,
+    authorInfo,
     heroContent,
-    services,
-    testimonials,
+    books,
+    praise,
+    events,
+    featuredRelease,
     brandStatement,
-    emergencyCTA,
     faqItems,
     siteContent,
   } = await getHomePageData();
@@ -43,19 +34,16 @@ export default async function Home() {
         />
       )}
       <Hero content={heroContent} />
-      <Services services={services} image={companyInfo.servicesImage} content={siteContent} />
+      {featuredRelease && <FeaturedRelease content={featuredRelease} />}
+      <Books books={books} content={siteContent} />
       {brandStatement && (
-        <BrandStatement
-          content={brandStatement}
-          image={companyInfo.brandImage}
-        />
+        <BrandStatement content={brandStatement} image={authorInfo.aboutImage} />
       )}
-      {emergencyCTA && (
-        <EmergencyCTA content={emergencyCTA} phone={companyInfo.phone} />
-      )}
-      <Testimonials testimonials={testimonials} content={siteContent} />
+      <Praise praise={praise} content={siteContent} />
+      <Events events={events} content={siteContent} />
       <FAQ items={faqItems} content={siteContent} />
-      <ContactForm companyInfo={companyInfo} content={siteContent} />
+      <Newsletter content={siteContent} />
+      <ContactForm content={siteContent} />
     </>
   );
 }

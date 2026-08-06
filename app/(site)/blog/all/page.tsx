@@ -8,9 +8,8 @@ import { BlogPagination } from '@/components/blog/BlogPagination';
 const POSTS_PER_PAGE = 12;
 
 export const metadata: Metadata = {
-  title: 'All Articles | Harrisburg Tree Service Blog',
-  description:
-    'Browse all tree care articles from the Harrisburg Tree Service team. Expert advice on tree removal, trimming, storm damage, and more.',
+  title: 'All Articles',
+  description: 'Browse every article, essay, and update from the author.',
 };
 
 interface AllArticlesPageProps {
@@ -34,7 +33,7 @@ export default async function AllArticlesPage({
   return (
     <>
       {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-tree-green via-tree-green-dark to-tree-brown pt-16 pb-12 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-ink via-ink-dark to-ink-dark pt-16 pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <Link
@@ -48,8 +47,7 @@ export default async function AllArticlesPage({
             {siteContent?.blogAllArticlesHeadline || 'All Articles'}
           </h1>
           <p className="text-lg text-gray-100">
-            {totalCount} article{totalCount !== 1 ? 's' : ''} on tree care,
-            maintenance, and more.
+            {totalCount} article{totalCount !== 1 ? 's' : ''} and counting.
           </p>
         </div>
       </section>

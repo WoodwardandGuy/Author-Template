@@ -1,8 +1,8 @@
 import { defineType, defineField } from 'sanity';
 
 export default defineType({
-  name: 'service',
-  title: 'Service',
+  name: 'book',
+  title: 'Book',
   type: 'document',
   fields: [
     defineField({
@@ -12,30 +12,9 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'icon',
-      title: 'Icon Name',
+      name: 'subtitle',
+      title: 'Subtitle',
       type: 'string',
-      description: 'Lucide icon component name',
-      options: {
-        list: [
-          { title: 'Axe', value: 'Axe' },
-          { title: 'Scissors', value: 'Scissors' },
-          { title: 'Drill', value: 'Drill' },
-          { title: 'Siren', value: 'Siren' },
-          { title: 'Heart', value: 'Heart' },
-          { title: 'Trash2', value: 'Trash2' },
-          { title: 'TreeDeciduous', value: 'TreeDeciduous' },
-          { title: 'Leaf', value: 'Leaf' },
-          { title: 'Shovel', value: 'Shovel' },
-        ],
-      },
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
@@ -45,22 +24,8 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'metaDescription',
-      title: 'Meta Description',
-      type: 'string',
-      description: 'SEO description for the service page (max 160 characters)',
-      validation: (Rule) => Rule.max(160),
-    }),
-    defineField({
-      name: 'longDescription',
-      title: 'Long Description',
-      type: 'text',
-      description: 'Detailed description for the individual service page (500+ words recommended for SEO)',
-      rows: 12,
-    }),
-    defineField({
-      name: 'featuredImage',
-      title: 'Featured Image',
+      name: 'cover',
+      title: 'Cover Image',
       type: 'image',
       options: { hotspot: true },
       fields: [
@@ -68,16 +33,127 @@ export default defineType({
           name: 'alt',
           title: 'Alt Text',
           type: 'string',
-          description: 'Describe the image for SEO and accessibility',
+          description: 'Describe the cover for accessibility and SEO',
           validation: (Rule) => Rule.required(),
         }),
       ],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'genre',
+      title: 'Genre',
+      type: 'string',
+      options: {
+        list: [
+          'Thriller',
+          'Mystery',
+          'Suspense',
+          'Romance',
+          'Literary Fiction',
+          'Historical Fiction',
+          'Fantasy',
+          'Science Fiction',
+          'Young Adult',
+          'Nonfiction',
+          'Memoir',
+          'Other',
+        ],
+      },
+    }),
+    defineField({
+      name: 'series',
+      title: 'Series',
+      type: 'string',
+      description: 'Series name, if this book belongs to one',
+    }),
+    defineField({
+      name: 'seriesOrder',
+      title: 'Series Order',
+      type: 'number',
+      description: 'Position within the series (e.g. 1, 2, 3)',
+    }),
+    defineField({
+      name: 'publicationDate',
+      title: 'Publication Date',
+      type: 'date',
+    }),
+    defineField({
+      name: 'isbn',
+      title: 'ISBN',
+      type: 'string',
+    }),
+    defineField({
+      name: 'description',
+      title: 'Jacket Copy',
+      type: 'text',
+      description: 'The blurb shown on cards and at the top of the book page',
+      rows: 6,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'longDescription',
+      title: 'Extended Description',
+      type: 'text',
+      description: 'Optional longer copy for the individual book page',
+      rows: 12,
+    }),
+    defineField({
+      name: 'retailers',
+      title: 'Retailer Links',
+      type: 'array',
+      description: 'Buy / pre-order links shown as buttons',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'store',
+              title: 'Store',
+              type: 'string',
+              options: {
+                list: [
+                  'Amazon',
+                  'Barnes & Noble',
+                  'Bookshop.org',
+                  'BookBub',
+                  'Apple Books',
+                  'Kobo',
+                  'Audible',
+                  'Google Play',
+                  'Other',
+                ],
+              },
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'label',
+              title: 'Custom Label',
+              type: 'string',
+              description: 'Overrides the store name on the button (optional)',
+            },
+            {
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule: any) => Rule.required(),
+            },
+          ],
+          preview: { select: { title: 'store', subtitle: 'url' } },
+        },
+      ],
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'string',
+      description: 'SEO description for the book page (max 160 characters)',
+      validation: (Rule) => Rule.max(160),
     }),
     defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',
-      description: 'Controls the order services appear on the page',
+      description: 'Controls the order books appear (lower shows first)',
     }),
   ],
   orderings: [
@@ -88,6 +164,6 @@ export default defineType({
     },
   ],
   preview: {
-    select: { title: 'title', subtitle: 'icon' },
+    select: { title: 'title', subtitle: 'series', media: 'cover' },
   },
 });

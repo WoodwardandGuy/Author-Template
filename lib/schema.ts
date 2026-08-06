@@ -1,79 +1,67 @@
-import type { CompanyInfo, FAQItem, Service, ServiceArea } from './types';
+import type { AuthorInfo, Book, FAQItem, Socials } from './types';
+import { SITE_URL } from './site';
 
-export function generateLocalBusinessSchema(
-  companyInfo: CompanyInfo,
-  services: Service[] = [],
-  serviceAreas: ServiceArea[] = [],
-) {
+function socialUrls(socials?: Socials): string[] {
+  if (!socials) return [];
+  return Object.values(socials).filter(
+    (v): v is string => typeof v === 'string' && v.length > 0,
+  );
+}
+
+/**
+ * Person schema for the author — rendered site-wide.
+ */
+export function generatePersonSchema(authorInfo: AuthorInfo) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    '@id': 'https://www.treeprofessionalsofharrisburg.com',
-    name: companyInfo.name,
-    image: 'https://www.treeprofessionalsofharrisburg.com/og-image.jpg',
-    url: 'https://www.treeprofessionalsofharrisburg.com',
-    telephone: companyInfo.phone,
-    email: companyInfo.email,
-    ...(companyInfo.address?.street && {
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: companyInfo.address.street,
-        addressLocality: companyInfo.address.city,
-        addressRegion: companyInfo.address.state,
-        postalCode: companyInfo.address.zip,
-        addressCountry: 'US',
-      },
-    }),
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 40.2732,
-      longitude: -76.8867,
+    '@type': 'Person',
+    '@id': `${SITE_URL}/#person`,
+    name: authorInfo.name,
+    description: authorInfo.tagline,
+    url: SITE_URL,
+    jobTitle: 'Author',
+    sameAs: socialUrls(authorInfo.socials),
+  };
+}
+
+/**
+ * Book / WebSite schema for the home page.
+ */
+export function generateWebsiteSchema(authorInfo: AuthorInfo) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: authorInfo.name,
+    url: SITE_URL,
+    author: { '@id': `${SITE_URL}/#person` },
+  };
+}
+
+/**
+ * Book schema for an individual book page.
+ */
+export function generateBookSchema(book: Book, authorName: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    name: book.title,
+    ...(book.subtitle && { alternativeHeadline: book.subtitle }),
+    description: book.description,
+    url: `${SITE_URL}/books/${book.slug}`,
+    author: {
+      '@type': 'Person',
+      name: authorName,
     },
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: [
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-        ],
-        opens: '07:00',
-        closes: '18:00',
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Saturday', 'Sunday'],
-        opens: '08:00',
-        closes: '17:00',
-      },
-    ],
-    priceRange: '$$',
-    areaServed: serviceAreas.length > 0
-      ? serviceAreas.map((area) => ({
-          '@type': 'City',
-          name: area.name,
-          containedInPlace: { '@type': 'State', name: area.state || 'Pennsylvania' },
-        }))
-      : [
-          { '@type': 'City', name: 'Harrisburg', containedInPlace: { '@type': 'State', name: 'Pennsylvania' } },
-        ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Tree Services',
-      itemListElement: services.length > 0
-        ? services.map((service) => ({
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: service.title,
-              description: service.description,
-              url: `https://www.treeprofessionalsofharrisburg.com/services/${service.slug}`,
-            },
-          }))
-        : [],
-    },
+    ...(book.genre && { genre: book.genre }),
+    ...(book.publicationDate && { datePublished: book.publicationDate }),
+    ...(book.retailers &&
+      book.retailers.length > 0 && {
+        offers: book.retailers.map((r) => ({
+          '@type': 'Offer',
+          url: r.url,
+          seller: { '@type': 'Organization', name: r.label || r.store },
+        })),
+      }),
   };
 }
 

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Sanity Studio | Harrisburg Tree Service',
+  title: 'Sanity Studio | Author Website',
   robots: 'noindex',
   referrer: 'same-origin',
 };

@@ -1,49 +1,30 @@
 import { defineType, defineField } from 'sanity';
 
 export default defineType({
-  name: 'testimonial',
-  title: 'Testimonial',
+  name: 'praise',
+  title: 'Praise / Blurb',
   type: 'document',
   fields: [
     defineField({
-      name: 'name',
-      title: 'Customer Name',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-      description: 'e.g., Harrisburg, PA',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'rating',
-      title: 'Rating',
-      type: 'number',
-      validation: (Rule) => Rule.required().min(1).max(5).integer(),
-      options: {
-        list: [
-          { title: '1 Star', value: 1 },
-          { title: '2 Stars', value: 2 },
-          { title: '3 Stars', value: 3 },
-          { title: '4 Stars', value: 4 },
-          { title: '5 Stars', value: 5 },
-        ],
-      },
-    }),
-    defineField({
-      name: 'text',
-      title: 'Testimonial Text',
+      name: 'quote',
+      title: 'Quote',
       type: 'text',
+      description: 'The review excerpt or blurb',
+      rows: 4,
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'date',
+      name: 'attribution',
+      title: 'Attribution',
+      type: 'string',
+      description: 'Who said it — reviewer, author, or reader name',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'source',
+      title: 'Source',
+      type: 'string',
+      description: 'Publication or context, e.g. "The New York Times" or a book title',
     }),
     defineField({
       name: 'order',
@@ -53,12 +34,12 @@ export default defineType({
   ],
   orderings: [
     {
-      title: 'Date (newest first)',
-      name: 'dateDesc',
-      by: [{ field: 'date', direction: 'desc' }],
+      title: 'Display Order',
+      name: 'orderAsc',
+      by: [{ field: 'order', direction: 'asc' }],
     },
   ],
   preview: {
-    select: { title: 'name', subtitle: 'location' },
+    select: { title: 'attribution', subtitle: 'source' },
   },
 });

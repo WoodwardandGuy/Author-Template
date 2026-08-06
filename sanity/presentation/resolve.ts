@@ -2,10 +2,10 @@ import { defineLocations, type PresentationPluginOptions } from 'sanity/presenta
 
 export const resolve: PresentationPluginOptions['resolve'] = {
   locations: {
-    companyInfo: defineLocations({
+    authorInfo: defineLocations({
       select: { name: 'name' },
       resolve: (doc) => ({
-        locations: [{ title: doc?.name || 'Company Info', href: '/' }],
+        locations: [{ title: doc?.name || 'Author Info', href: '/' }],
       }),
     }),
     heroContent: defineLocations({
@@ -14,28 +14,43 @@ export const resolve: PresentationPluginOptions['resolve'] = {
         locations: [{ title: doc?.headline || 'Hero', href: '/' }],
       }),
     }),
-    service: defineLocations({
-      select: { title: 'title' },
+    book: defineLocations({
+      select: { title: 'title', slug: 'slug.current' },
       resolve: (doc) => ({
-        locations: [{ title: doc?.title || 'Service', href: '/' }],
+        locations: [
+          {
+            title: doc?.title || 'Book',
+            href: doc?.slug ? `/books/${doc.slug}` : '/books',
+          },
+          { title: 'All books', href: '/books' },
+        ],
       }),
     }),
-    testimonial: defineLocations({
-      select: { name: 'name' },
+    praise: defineLocations({
+      select: { attribution: 'attribution' },
       resolve: (doc) => ({
-        locations: [{ title: doc?.name || 'Testimonial', href: '/' }],
+        locations: [{ title: doc?.attribution || 'Praise', href: '/' }],
+      }),
+    }),
+    event: defineLocations({
+      select: { title: 'title' },
+      resolve: (doc) => ({
+        locations: [
+          { title: doc?.title || 'Event', href: '/events' },
+          { title: 'Events', href: '/events' },
+        ],
+      }),
+    }),
+    featuredRelease: defineLocations({
+      select: { label: 'label' },
+      resolve: () => ({
+        locations: [{ title: 'Featured Release', href: '/' }],
       }),
     }),
     brandStatement: defineLocations({
       select: { headline: 'headline' },
       resolve: (doc) => ({
-        locations: [{ title: doc?.headline || 'Brand Statement', href: '/' }],
-      }),
-    }),
-    emergencyCTA: defineLocations({
-      select: { headline: 'headline' },
-      resolve: (doc) => ({
-        locations: [{ title: doc?.headline || 'Emergency CTA', href: '/' }],
+        locations: [{ title: doc?.headline || 'About Statement', href: '/' }],
       }),
     }),
     siteContent: defineLocations({

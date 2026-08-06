@@ -4,5 +4,7 @@ export const apiVersion =
 export const dataset =
   process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
+// Set NEXT_PUBLIC_SANITY_PROJECT_ID in your environment. The placeholder keeps
+// local builds from crashing before Sanity is configured.
 export const projectId =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ubvlqnqq';
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'your-project-id';
