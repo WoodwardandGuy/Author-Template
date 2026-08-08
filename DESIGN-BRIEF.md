@@ -6,9 +6,11 @@ system, and a page-by-page "current state → intended state" map so the design 
 starts from context, not reconstruction.
 
 **Status of the live site:** the production site (elwestbury.com, deployed from
-`main` on Vercel) is currently hidden behind a coming-soon gate (`proxy.ts` →
-`/coming-soon`). All design/build work happens on branches; nothing public changes
-until `COMING_SOON=false` is set in Vercel. Design freely.
+`main` on Vercel) is hidden behind a coming-soon gate (`proxy.ts` → `/coming-soon`).
+The gate **locks production only** — local dev and Vercel preview deploys (this and
+other branches) render the real site, so design/build work is fully visible while the
+public stays gated. Nothing public unlocks until `COMING_SOON=false` is set in Vercel
+production. Design freely.
 
 **How to use this doc:** Sections 1–4 are the brand and visual starting point.
 Section 5 is the content the design must lay out (real, not lorem). Section 6 is

@@ -6,12 +6,15 @@ import { NextResponse, type NextRequest } from 'next/server';
  * While active, every public request is rewritten to `/coming-soon`. The site is
  * still fully built and deployed — it's just hidden behind this one page.
  *
- * Toggling:
- *   - ACTIVE BY DEFAULT. Deploying this file locks the site immediately, with no
- *     dashboard step required.
- *   - To go live, set `COMING_SOON=false` in the Vercel project env and redeploy.
+ * When it's active:
+ *   - LOCKS PRODUCTION ONLY by default. The public production site (main → Vercel
+ *     production) is gated; local dev and Vercel *preview* deploys (feature/design
+ *     branches) stay open, so we can build and preview in peace.
+ *   - `COMING_SOON=true`  → force the gate on everywhere (e.g. to test it locally).
+ *   - `COMING_SOON=false` → force the gate off everywhere (set this in Vercel
+ *     production when we're ready to actually launch).
  *
- * Previewing the real site while locked:
+ * Previewing the locked production site:
  *   - Set `COMING_SOON_BYPASS=<some-secret>` in Vercel, then visit any URL with
  *     `?preview=<some-secret>`. That drops a cookie so you browse the real site
  *     normally. Clear the cookie (or use a private window) to see the gate again.
@@ -24,9 +27,16 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 const BYPASS_COOKIE = 'coming-soon-bypass';
 
+function isGateActive(): boolean {
+  // Explicit switch wins in either direction.
+  if (process.env.COMING_SOON === 'false') return false;
+  if (process.env.COMING_SOON === 'true') return true;
+  // Default: only the public production deployment is gated.
+  return process.env.VERCEL_ENV === 'production';
+}
+
 export function proxy(request: NextRequest) {
-  // Explicit opt-out disables the gate entirely.
-  if (process.env.COMING_SOON === 'false') {
+  if (!isGateActive()) {
     return NextResponse.next();
   }
 
