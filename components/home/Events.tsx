@@ -23,7 +23,7 @@ export function Events({ events, content }: EventsProps) {
 
   return (
     <section id="events" className="bg-ivory">
-      <div className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)] pb-[clamp(64px,9vw,96px)]">
+      <div className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)] py-[clamp(64px,9vw,96px)]">
         <div className="mb-8 flex items-end justify-between gap-6">
           <h2 className="font-display text-[clamp(30px,5vw,42px)] leading-tight text-ink">
             {content?.eventsHeadline || 'Events & Appearances'}
