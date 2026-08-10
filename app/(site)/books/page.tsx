@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 const UNGROUPED = 'More Books';
 
-/** Group by genre, then order within a genre by series → series order → title. */
+/** Group by genre, then order within a genre by the manual `order` field → series → series order → title. */
 function groupByGenre(books: Book[]): [string, Book[]][] {
   const groups = new Map<string, Book[]>();
   books.forEach((book) => {
@@ -41,6 +41,7 @@ function groupByGenre(books: Book[]): [string, Book[]][] {
   groups.forEach((list) => {
     list.sort(
       (a, b) =>
+        (a.order ?? 0) - (b.order ?? 0) ||
         (a.series || '').localeCompare(b.series || '') ||
         (a.seriesOrder ?? 0) - (b.seriesOrder ?? 0) ||
         a.title.localeCompare(b.title),

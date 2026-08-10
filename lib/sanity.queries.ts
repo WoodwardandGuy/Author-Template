@@ -9,6 +9,7 @@ const bookFields = `
   editionNote,
   "slug": slug.current,
   cover ${imageFields},
+  order,
   genre,
   series,
   seriesOrder,

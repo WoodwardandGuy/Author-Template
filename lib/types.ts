@@ -75,6 +75,7 @@ export interface Book {
   editionNote?: string;
   slug: string;
   cover?: SanityImage;
+  order?: number;
   genre?: string;
   series?: string;
   seriesOrder?: number;
