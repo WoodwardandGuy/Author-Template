@@ -30,7 +30,7 @@ export default async function PressPage() {
 
   return (
     <>
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -48,15 +48,15 @@ export default async function PressPage() {
 
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone mb-4 tracking-tight">
             Press
           </h1>
-          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+          <p className="text-xl text-bone-dim leading-relaxed mb-12">
             Interviews, features, and coverage.
           </p>
 
           {press.length > 0 ? (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-line">
               {press.map((item) => {
                 const logoUrl = item.logo?.asset
                   ? urlFor(item.logo).width(240).url()
@@ -84,17 +84,17 @@ export default async function PressPage() {
                           className="h-8 w-auto object-contain mb-3 opacity-80"
                         />
                       ) : (
-                        <p className="text-sm font-semibold uppercase tracking-wide text-brand mb-2">
+                        <p className="text-sm font-semibold uppercase tracking-wide text-moss mb-2">
                           {item.outlet}
                         </p>
                       )}
-                      <p className="text-lg md:text-xl text-ink-dark leading-relaxed group-hover:text-ink">
+                      <p className="text-lg md:text-xl text-bone leading-relaxed group-hover:text-bone">
                         {item.headline}
                       </p>
-                      <div className="flex items-center gap-3 text-sm text-gray-500 mt-2">
+                      <div className="flex items-center gap-3 text-sm text-bone-dim mt-2">
                         {dateLabel && <span>{dateLabel}</span>}
                         {item.url && (
-                          <span className="inline-flex items-center gap-1 text-ink font-medium group-hover:text-brand transition-colors">
+                          <span className="inline-flex items-center gap-1 text-bone font-medium group-hover:text-brand transition-colors">
                             Read
                             <ExternalLink className="h-3.5 w-3.5" />
                           </span>
@@ -106,7 +106,7 @@ export default async function PressPage() {
               })}
             </ul>
           ) : (
-            <p className="text-gray-600 text-lg py-8">
+            <p className="text-bone-dim text-lg py-8">
               Coverage will appear here as it comes in.
             </p>
           )}

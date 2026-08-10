@@ -21,20 +21,20 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
   if (events.length === 0 && !showWhenEmpty) return null;
 
   return (
-    <section id="events" className="py-20 bg-white">
+    <section id="events" className="py-20 border-t border-line">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink tracking-tight mb-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-bone tracking-tight mb-3">
               {content?.eventsHeadline || 'Events & Appearances'}
             </h2>
             {content?.eventsSubtext && (
-              <p className="text-gray-600 text-lg">{content.eventsSubtext}</p>
+              <p className="text-bone-dim text-lg">{content.eventsSubtext}</p>
             )}
           </div>
 
           {events.length > 0 ? (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-line">
               {events.map((event) => {
                 const place = [event.venue, event.city, event.region]
                   .filter(Boolean)
@@ -46,17 +46,17 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
                       <time dateTime={event.date}>{formatDate(event.date)}</time>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-ink-dark">
+                      <h3 className="text-lg font-semibold text-bone">
                         {event.title}
                       </h3>
                       {place && (
-                        <p className="flex items-center gap-1.5 text-gray-600 text-sm mt-1">
+                        <p className="flex items-center gap-1.5 text-bone-dim text-sm mt-1">
                           <MapPin className="h-4 w-4 shrink-0" />
                           {place}
                         </p>
                       )}
                       {event.description && (
-                        <p className="text-gray-600 text-sm mt-2 leading-relaxed">
+                        <p className="text-bone-dim text-sm mt-2 leading-relaxed">
                           {event.description}
                         </p>
                       )}
@@ -65,7 +65,7 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
                           href={event.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-ink font-medium text-sm mt-2 hover:text-brand transition-colors"
+                          className="inline-flex items-center gap-1 text-bone font-medium text-sm mt-2 hover:text-brand transition-colors"
                         >
                           Details & tickets
                           <ExternalLink className="h-3.5 w-3.5" />
@@ -77,7 +77,7 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
               })}
             </ul>
           ) : (
-            <p className="text-gray-600 text-lg py-8">
+            <p className="text-bone-dim text-lg py-8">
               {content?.eventsEmptyText || 'No upcoming events right now — check back soon.'}
             </p>
           )}

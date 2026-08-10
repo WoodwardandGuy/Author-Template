@@ -23,14 +23,14 @@ export function BrandStatement({ content, image }: BrandStatementProps) {
             className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-ink/75" />
+          <div className="absolute inset-0 bg-soil-2/75" />
         </>
       ) : (
-        <div className="absolute inset-0 bg-ink" />
+        <div className="absolute inset-0 bg-soil-2" />
       )}
 
       <div className="container mx-auto px-4 relative z-10 text-center">
-        <p className="text-brand font-semibold tracking-[0.2em] uppercase text-sm mb-4">
+        <p className="text-moss font-semibold tracking-[0.2em] uppercase text-sm mb-4">
           {content.tagline}
         </p>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto mb-6 tracking-tight">

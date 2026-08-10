@@ -31,7 +31,7 @@ export default async function EventsPage() {
 
   return (
     <>
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>

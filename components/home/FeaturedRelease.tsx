@@ -17,12 +17,12 @@ export function FeaturedRelease({ content }: FeaturedReleaseProps) {
   const retailers = book.retailers || [];
 
   return (
-    <section className="bg-ink text-white py-20 md:py-28">
+    <section className="bg-soil-2 text-white py-20 md:py-28">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center max-w-5xl mx-auto">
           <div className="order-2 md:order-1">
             {content.label && (
-              <p className="text-brand font-semibold tracking-[0.2em] uppercase text-sm mb-4">
+              <p className="text-moss font-semibold tracking-[0.2em] uppercase text-sm mb-4">
                 {content.label}
               </p>
             )}

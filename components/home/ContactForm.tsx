@@ -65,14 +65,14 @@ export function ContactForm({ content }: ContactFormProps) {
   };
 
   return (
-    <section id="contact" className="py-20 bg-ink/[0.03]">
+    <section id="contact" className="py-20 bg-white/[0.03]">
       <div className="container mx-auto px-4">
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-bone tracking-tight mb-4">
               {content?.contactHeadline || 'Get in touch'}
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-bone-dim">
               {content?.contactSubtext ||
                 'Questions, book club invitations, or just a hello — send a note and it will land in my inbox.'}
             </p>
@@ -80,7 +80,7 @@ export function ContactForm({ content }: ContactFormProps) {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-bone-dim mb-2">
                 Name *
               </label>
               <Input
@@ -95,7 +95,7 @@ export function ContactForm({ content }: ContactFormProps) {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-bone-dim mb-2">
                 Email *
               </label>
               <Input
@@ -110,7 +110,7 @@ export function ContactForm({ content }: ContactFormProps) {
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="subject" className="block text-sm font-medium text-bone-dim mb-2">
                 Subject
               </label>
               <Select
@@ -131,7 +131,7 @@ export function ContactForm({ content }: ContactFormProps) {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-bone-dim mb-2">
                 Message *
               </label>
               <Textarea

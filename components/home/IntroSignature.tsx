@@ -57,7 +57,7 @@ export function IntroSignature() {
   return (
     <div
       aria-hidden
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-ink text-white transition-opacity duration-[900ms] ease-out ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-soil text-bone transition-opacity duration-[900ms] ease-out ${
         phase === 'leaving' ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >

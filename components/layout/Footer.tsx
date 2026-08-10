@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import {
   Instagram,
   Facebook,
@@ -7,7 +6,7 @@ import {
   BookOpen,
   type LucideIcon,
 } from 'lucide-react';
-import { urlFor } from '@/lib/sanity.image';
+import { QuillSignature } from '@/components/home/QuillSignature';
 import { FooterNewsletter } from '@/components/layout/FooterNewsletter';
 import type { AuthorInfo, SiteContent } from '@/lib/types';
 
@@ -27,7 +26,6 @@ const quickLinks = [
 
 export function Footer({ authorInfo, siteContent }: FooterProps) {
   const currentYear = new Date().getFullYear();
-  const hasLogo = authorInfo.logo?.asset;
   const s = authorInfo.socials || {};
 
   const socialLinks: { url?: string; label: string; Icon: LucideIcon }[] = [
@@ -41,23 +39,15 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
   const activeSocials = socialLinks.filter((l) => l.url);
 
   return (
-    <footer className="bg-ink text-white">
+    <footer className="border-t border-line bg-soil text-bone-dim">
       <div className="container mx-auto px-4 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              {hasLogo && (
-                <Image
-                  src={urlFor(authorInfo.logo).width(96).height(96).url()}
-                  alt={authorInfo.logo?.alt || authorInfo.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                />
-              )}
-              <span className="text-xl font-bold tracking-tight">{authorInfo.name}</span>
-            </div>
-            <p className="text-white/70">
+            <QuillSignature
+              className="mb-4 h-8 w-auto text-bone"
+              title={authorInfo.name}
+            />
+            <p className="text-bone-dim">
               {siteContent?.footerTagline || authorInfo.tagline}
             </p>
 
@@ -70,7 +60,7 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="text-white/70 hover:text-white transition-colors"
+                    className="text-bone-dim hover:text-bone transition-colors"
                   >
                     <Icon className="h-6 w-6" />
                   </a>
@@ -80,13 +70,13 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Explore</h3>
+            <h3 className="text-lg font-semibold mb-4 text-bone">Explore</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors"
+                    className="text-bone-dim hover:text-bone transition-colors"
                   >
                     {link.label}
                   </a>
@@ -96,15 +86,15 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4">Stay in touch</h3>
-            <p className="text-white/70 mb-4">
+            <h3 className="text-lg font-semibold mb-4 text-bone">Stay in touch</h3>
+            <p className="text-bone-dim mb-4">
               Join the mailing list for new releases and events.
             </p>
             <FooterNewsletter />
           </div>
         </div>
 
-        <div className="border-t border-white/15 mt-10 pt-8 text-center text-white/70">
+        <div className="border-t border-line mt-10 pt-8 text-center text-bone-dim">
           <p>
             &copy; {currentYear} {authorInfo.name}. All rights reserved.
           </p>

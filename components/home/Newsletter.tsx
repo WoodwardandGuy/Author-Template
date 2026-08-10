@@ -42,7 +42,7 @@ export function Newsletter({ content }: NewsletterProps) {
   };
 
   return (
-    <section id="newsletter" className="py-20 bg-ink text-white">
+    <section id="newsletter" className="py-20 bg-soil-2 text-white">
       <div className="container mx-auto px-4">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">

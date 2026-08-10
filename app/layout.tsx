@@ -1,9 +1,20 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Fraunces, Karla } from 'next/font/google';
 import { SITE_URL } from '@/lib/site';
 
-const inter = Inter({ subsets: ['latin'] });
+// Fraunces for headings (serif), Karla for body (sans) — the prototype's pairing.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+});
+const karla = Karla({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-karla',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -23,8 +34,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth overflow-x-hidden">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en"
+      className={`scroll-smooth overflow-x-hidden ${fraunces.variable} ${karla.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

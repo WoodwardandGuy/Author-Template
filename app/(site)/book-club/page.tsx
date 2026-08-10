@@ -30,7 +30,7 @@ export default async function BookClubPage() {
 
   return (
     <>
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -49,13 +49,13 @@ export default async function BookClubPage() {
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="max-w-2xl mb-10">
-            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-brand mb-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-moss mb-3">
               For the Buriers
             </p>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone mb-4 tracking-tight">
               The Burier Book Club
             </h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-xl text-bone-dim leading-relaxed">
               Reading one of my books with your club? I want to see it. Send your
               book club photos and they might land right here — wine glasses,
               snack spreads, and heated theories encouraged.
@@ -83,7 +83,7 @@ export default async function BookClubPage() {
                 return (
                   <figure
                     key={photo.id}
-                    className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-ink/[0.04] shadow-sm"
+                    className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-white/[0.04] shadow-sm"
                   >
                     <Image
                       src={url}
@@ -101,7 +101,7 @@ export default async function BookClubPage() {
               })}
             </div>
           ) : (
-            <p className="text-gray-600 text-lg py-8">
+            <p className="text-bone-dim text-lg py-8">
               No photos yet — be the first to share one.
             </p>
           )}
@@ -110,11 +110,11 @@ export default async function BookClubPage() {
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <Link
               href="/contact"
-              className="inline-flex items-center rounded-full border border-ink px-6 py-3 font-medium text-ink transition-colors hover:bg-ink hover:text-white"
+              className="inline-flex items-center rounded-full border border-line px-6 py-3 font-medium text-bone transition-colors hover:bg-soil-2 hover:text-white"
             >
               Send your book club photos
             </Link>
-            <p className="max-w-sm text-sm text-gray-500 leading-relaxed">
+            <p className="max-w-sm text-sm text-bone-dim leading-relaxed">
               By sending a photo, you&rsquo;re giving E.L. the okay to share it
               here and on her socials.
             </p>

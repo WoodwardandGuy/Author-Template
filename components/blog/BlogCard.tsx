@@ -21,7 +21,7 @@ export function BlogCard({ post }: BlogCardProps) {
 
   return (
     <Link href={`/blog/${post.slug}`} className="group block">
-      <article className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-full flex flex-col border border-gray-100">
+      <article className="bg-soil-2 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-full flex flex-col border border-line">
         <div className="relative aspect-[3/2] overflow-hidden">
           {imageUrl ? (
             <Image
@@ -32,20 +32,20 @@ export function BlogCard({ post }: BlogCardProps) {
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
-            <div className="flex items-center justify-center h-full bg-gray-100 text-gray-400">
+            <div className="flex items-center justify-center h-full bg-soil-2 text-bone-dim">
               <Calendar className="h-12 w-12" />
             </div>
           )}
         </div>
         <div className="p-6 flex flex-col flex-1">
-          <h3 className="text-lg font-bold text-ink-dark group-hover:text-ink transition-colors line-clamp-2 mb-3">
+          <h3 className="text-lg font-bold text-bone group-hover:text-bone transition-colors line-clamp-2 mb-3">
             {post.title}
           </h3>
-          <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
+          <p className="text-bone-dim text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
             {post.excerpt}
           </p>
-          <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-            <div className="flex items-center gap-3 text-xs text-gray-500">
+          <div className="flex items-center justify-between pt-4 border-t border-line">
+            <div className="flex items-center gap-3 text-xs text-bone-dim">
               <span className="flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5" />
                 {formattedDate}
@@ -55,7 +55,7 @@ export function BlogCard({ post }: BlogCardProps) {
                 {post.readingTime} min
               </span>
             </div>
-            <ArrowRight className="h-4 w-4 text-ink opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="h-4 w-4 text-bone opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
           </div>
         </div>
       </article>

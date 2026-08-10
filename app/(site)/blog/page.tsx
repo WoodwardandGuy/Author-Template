@@ -36,7 +36,7 @@ function FeaturedPost({ post, content }: { post: BlogPost; content: SiteContent 
 
   return (
     <Link href={`/blog/${post.slug}`} className="group block">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-soil-2 rounded-2xl shadow-lg overflow-hidden border border-line hover:shadow-xl transition-shadow duration-300">
         <div className="relative aspect-[16/10] lg:aspect-auto lg:h-full overflow-hidden">
           {imageUrl ? (
             <Image
@@ -48,22 +48,22 @@ function FeaturedPost({ post, content }: { post: BlogPost; content: SiteContent 
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           ) : (
-            <div className="flex items-center justify-center h-full min-h-[300px] bg-gray-100 text-gray-400">
+            <div className="flex items-center justify-center h-full min-h-[300px] bg-soil-2 text-bone-dim">
               <Calendar className="h-16 w-16" />
             </div>
           )}
         </div>
         <div className="p-8 lg:p-10">
-          <span className="inline-block bg-ink/10 text-ink text-sm font-semibold px-3 py-1 rounded-full mb-4">
+          <span className="inline-block bg-soil-2/10 text-bone text-sm font-semibold px-3 py-1 rounded-full mb-4">
             {content?.blogFeaturedLabel || 'Latest Post'}
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-ink-dark group-hover:text-ink transition-colors mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-bone group-hover:text-bone transition-colors mb-4">
             {post.title}
           </h2>
-          <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+          <p className="text-bone-dim leading-relaxed mb-6 line-clamp-3">
             {post.excerpt}
           </p>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-bone-dim mb-6">
             <span className="flex items-center gap-1">
               <User className="h-4 w-4" />
               {post.author}
@@ -77,7 +77,7 @@ function FeaturedPost({ post, content }: { post: BlogPost; content: SiteContent 
               {post.readingTime} min read
             </span>
           </div>
-          <span className="inline-flex items-center gap-2 text-ink font-semibold group-hover:gap-3 transition-all">
+          <span className="inline-flex items-center gap-2 text-bone font-semibold group-hover:gap-3 transition-all">
             {content?.blogReadMoreText || 'Read Article'}
             <ArrowRight className="h-4 w-4" />
           </span>
@@ -110,7 +110,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   return (
     <>
       {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-ink via-ink-dark to-ink-dark pt-16 pb-16 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-soil-2 via-soil to-soil pt-16 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -123,7 +123,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </section>
 
       {/* Content */}
-      <section className="bg-gray-50 pt-8 pb-20">
+      <section className="bg-soil-2 pt-8 pb-20">
         <div className="container mx-auto px-4">
           {posts.length > 0 ? (
             <>
@@ -139,12 +139,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 <>
                   {featuredPost && (
                     <div className="flex items-center justify-between mb-8">
-                      <h2 className="text-2xl font-bold text-ink-dark">
+                      <h2 className="text-2xl font-bold text-bone">
                         {siteContent?.blogMoreArticlesText || 'More Articles'}
                       </h2>
                       <Link
                         href="/blog/all"
-                        className="inline-flex items-center gap-2 text-ink hover:text-ink-dark font-semibold transition-colors"
+                        className="inline-flex items-center gap-2 text-bone hover:text-bone font-semibold transition-colors"
                       >
                         {siteContent?.blogViewAllText || 'View All Articles'}
                         <ArrowRight className="h-4 w-4" />
@@ -165,7 +165,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               />
             </>
           ) : (
-            <p className="text-center text-gray-600 text-lg py-20">
+            <p className="text-center text-bone-dim text-lg py-20">
               {siteContent?.blogEmptyText || 'No blog posts yet. Check back soon!'}
             </p>
           )}

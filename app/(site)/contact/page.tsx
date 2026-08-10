@@ -66,7 +66,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -84,10 +84,10 @@ export default async function ContactPage() {
 
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone mb-4 tracking-tight">
             Contact
           </h1>
-          <p className="text-xl text-gray-600 leading-relaxed mb-12">
+          <p className="text-xl text-bone-dim leading-relaxed mb-12">
             For rights, publicity, and press inquiries, please reach the
             appropriate representative below.
           </p>
@@ -96,16 +96,16 @@ export default async function ContactPage() {
             {REPRESENTATION.map((contact) => (
               <div
                 key={contact.category}
-                className="rounded-lg border border-gray-200 p-6"
+                className="rounded-lg border border-line p-6"
               >
-                <p className="text-sm font-semibold uppercase tracking-wide text-brand mb-3">
+                <p className="text-sm font-semibold uppercase tracking-wide text-moss mb-3">
                   {contact.category}
                 </p>
-                <p className="text-lg font-semibold text-ink-dark">{contact.name}</p>
-                <p className="text-gray-600">{contact.org}</p>
+                <p className="text-lg font-semibold text-bone">{contact.name}</p>
+                <p className="text-bone-dim">{contact.org}</p>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="mt-3 inline-flex items-center gap-2 text-ink font-medium hover:text-brand transition-colors break-all"
+                  className="mt-3 inline-flex items-center gap-2 text-bone font-medium hover:text-brand transition-colors break-all"
                 >
                   <Mail className="h-4 w-4 shrink-0" />
                   {contact.email}
@@ -113,12 +113,12 @@ export default async function ContactPage() {
               </div>
             ))}
 
-            <div className="rounded-lg border border-gray-200 p-6">
-              <p className="text-sm font-semibold uppercase tracking-wide text-brand mb-3">
+            <div className="rounded-lg border border-line p-6">
+              <p className="text-sm font-semibold uppercase tracking-wide text-moss mb-3">
                 Snail Mail for E.L.
               </p>
-              <div className="flex items-start gap-2 text-ink-dark">
-                <MapPin className="h-4 w-4 shrink-0 mt-1 text-gray-500" />
+              <div className="flex items-start gap-2 text-bone">
+                <MapPin className="h-4 w-4 shrink-0 mt-1 text-bone-dim" />
                 <address className="not-italic leading-relaxed">
                   P.O. Box 6125
                   <br />

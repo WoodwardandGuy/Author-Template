@@ -54,7 +54,7 @@ export default async function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateBreadcrumbSchema()) }}
       />
 
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -74,15 +74,15 @@ export default async function AboutPage() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_320px] gap-10 lg:gap-16 items-start">
             <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-6 tracking-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone mb-6 tracking-tight">
                 About {authorInfo.name}
               </h1>
               {/* Bios come from the CMS (Author Information). When absent, the section
                   simply hides — no placeholder copy can ship to production. */}
               {(authorInfo.shortBio || authorInfo.longBio) && (
-                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                <div className="space-y-4 text-lg text-bone-dim leading-relaxed">
                   {authorInfo.shortBio && (
-                    <p className="text-xl text-gray-800">{authorInfo.shortBio}</p>
+                    <p className="text-xl text-bone">{authorInfo.shortBio}</p>
                   )}
                   {authorInfo.longBio
                     ?.split('\n\n')
@@ -109,12 +109,12 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-ink/[0.03]">
+      <section className="py-16 bg-white/[0.03]">
         <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-ink mb-4 tracking-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-bone mb-4 tracking-tight">
             Stay in touch
           </h2>
-          <p className="text-gray-600 text-lg mb-8">
+          <p className="text-bone-dim text-lg mb-8">
             Join the mailing list for new releases and events, or send a note directly.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -127,7 +127,7 @@ export default async function AboutPage() {
             <Button
               asChild
               variant="outline"
-              className="h-12 px-8 text-lg border-ink text-ink hover:bg-ink hover:text-white"
+              className="h-12 px-8 text-lg border-line text-bone hover:bg-soil-2 hover:text-white"
             >
               <Link href="/contact">Get in touch</Link>
             </Button>

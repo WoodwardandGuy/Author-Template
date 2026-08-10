@@ -77,7 +77,20 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
+    @apply overflow-x-hidden bg-soil font-sans font-light text-bone;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+  /* Headings use Fraunces site-wide (the prototype pairing) without per-element edits. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-serif;
+  }
+  ::selection {
+    background: theme('colors.wine.DEFAULT');
+    color: theme('colors.bone.DEFAULT');
   }
 }
 

@@ -61,7 +61,7 @@ function BookCard({ book }: { book: Book }) {
     <article className="flex flex-col">
       <Link href={`/books/${book.slug}`} className="group block">
         {/* Covers are ~320×500 flats — cap display width so they don't soften. */}
-        <div className="relative aspect-[2/3] w-full max-w-[300px] rounded-lg overflow-hidden shadow-md bg-gray-100">
+        <div className="relative aspect-[2/3] w-full max-w-[300px] rounded-lg overflow-hidden shadow-md bg-soil-2">
           {coverUrl ? (
             <Image
               src={coverUrl}
@@ -71,7 +71,7 @@ function BookCard({ book }: { book: Book }) {
               sizes="300px"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-gray-400 text-sm px-3 text-center">
+            <div className="flex items-center justify-center h-full text-bone-dim text-sm px-3 text-center">
               {book.title}
             </div>
           )}
@@ -79,18 +79,18 @@ function BookCard({ book }: { book: Book }) {
       </Link>
       <div className="mt-4 max-w-[300px]">
         {book.series && (
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1">
+          <p className="text-xs font-semibold uppercase tracking-wide text-moss mb-1">
             {book.series}
             {book.seriesOrder ? ` · Book ${book.seriesOrder}` : ''}
           </p>
         )}
-        <h3 className="text-lg font-bold text-ink-dark">
-          <Link href={`/books/${book.slug}`} className="hover:text-ink transition-colors">
+        <h3 className="text-lg font-bold text-bone">
+          <Link href={`/books/${book.slug}`} className="hover:text-bone transition-colors">
             {book.title}
           </Link>
         </h3>
-        {book.subtitle && <p className="text-sm text-gray-500">{book.subtitle}</p>}
-        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mt-2">
+        {book.subtitle && <p className="text-sm text-bone-dim">{book.subtitle}</p>}
+        <p className="text-bone-dim text-sm leading-relaxed line-clamp-3 mt-2">
           {book.description}
         </p>
       </div>
@@ -110,7 +110,7 @@ export default async function BooksPage() {
 
   return (
     <>
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -130,11 +130,11 @@ export default async function BooksPage() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
             <div className="max-w-2xl">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone mb-4 tracking-tight">
                 {siteContent?.booksHeadline || 'Books'}
               </h1>
               {siteContent?.booksSubtext && (
-                <p className="text-xl text-gray-600 leading-relaxed">
+                <p className="text-xl text-bone-dim leading-relaxed">
                   {siteContent.booksSubtext}
                 </p>
               )}
@@ -156,7 +156,7 @@ export default async function BooksPage() {
             <div className="space-y-16">
               {grouped.map(([genre, genreBooks]) => (
                 <div key={genre}>
-                  <h2 className="text-2xl font-bold text-ink-dark mb-8 pb-3 border-b border-gray-200">
+                  <h2 className="text-2xl font-bold text-bone mb-8 pb-3 border-b border-line">
                     {genre}
                   </h2>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
@@ -168,7 +168,7 @@ export default async function BooksPage() {
               ))}
             </div>
           ) : (
-            <p className="text-gray-600 text-lg py-12">No books published yet.</p>
+            <p className="text-bone-dim text-lg py-12">No books published yet.</p>
           )}
         </div>
       </section>

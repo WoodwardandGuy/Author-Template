@@ -2,10 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { urlFor } from '@/lib/sanity.image';
+import { QuillSignature } from '@/components/home/QuillSignature';
 import type { AuthorInfo } from '@/lib/types';
 
 interface HeaderProps {
@@ -31,87 +29,67 @@ export function Header({ authorInfo }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const hasLogo = authorInfo.logo?.asset;
-
-  const renderLink = (link: { href: string; label: string }, onClick?: () => void) =>
-    link.href.startsWith('/#') ? (
-      <a
-        key={link.href}
-        href={link.href}
-        onClick={onClick}
-        className="text-gray-700 hover:text-ink font-medium transition-colors text-sm whitespace-nowrap"
-      >
-        {link.label}
-      </a>
-    ) : (
-      <Link
-        key={link.href}
-        href={link.href}
-        onClick={onClick}
-        className="text-gray-700 hover:text-ink font-medium transition-colors text-sm whitespace-nowrap"
-      >
-        {link.label}
-      </Link>
-    );
+  const linkClass =
+    'text-[0.78rem] uppercase tracking-[0.18em] text-bone-dim transition-colors hover:text-bone whitespace-nowrap';
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-3' : 'bg-white/95 backdrop-blur-sm py-4'
+      className={`sticky top-0 z-50 border-b border-line bg-soil/90 backdrop-blur-md transition-all ${
+        isScrolled ? 'py-2' : 'py-3'
       }`}
     >
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between flex-nowrap">
-          <Link href="/" className="flex items-center gap-2 group shrink-0">
-            {hasLogo ? (
-              <Image
-                src={urlFor(authorInfo.logo).width(160).height(160).url()}
-                alt={authorInfo.logo?.alt || authorInfo.name}
-                width={44}
-                height={44}
-                className="rounded-full"
-              />
-            ) : null}
-            <span className="text-xl font-bold text-ink group-hover:text-ink-dark transition-colors tracking-tight whitespace-nowrap">
-              {authorInfo.name}
-            </span>
+        <nav className="flex flex-nowrap items-center justify-between">
+          <Link
+            href="/"
+            aria-label={`${authorInfo.name} — home`}
+            className="shrink-0 text-bone transition-opacity hover:opacity-80"
+          >
+            <QuillSignature className="h-9 w-auto" title={authorInfo.name} />
           </Link>
 
-          <div className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => renderLink(link))}
+          <div className="hidden items-center gap-[clamp(0.9rem,2.5vw,1.8rem)] lg:flex">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href} className={linkClass}>
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href="/#newsletter"
+              className="rounded-full border border-wine px-4 py-2 text-[0.78rem] uppercase tracking-[0.18em] text-bone transition-colors hover:bg-wine"
+            >
+              Mailing list
+            </a>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <Button
-              asChild
-              className="hidden md:inline-flex bg-brand hover:bg-brand-dark text-white text-sm px-4"
-            >
-              <a href="/#newsletter">Mailing list</a>
-            </Button>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-gray-700 hover:text-ink transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-bone-dim transition-colors hover:text-bone lg:hidden"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </nav>
 
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-gray-200 pt-4 space-y-3">
-            {navLinks.map((link) =>
-              renderLink(link, () => setIsMobileMenuOpen(false)),
-            )}
-            <Button
-              asChild
-              className="w-full bg-brand hover:bg-brand-dark text-white"
+          <div className="mt-4 space-y-3 border-t border-line pt-4 lg:hidden">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-sm uppercase tracking-[0.18em] text-bone-dim transition-colors hover:text-bone"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <a
+              href="/#newsletter"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-2 inline-flex rounded-full border border-wine px-4 py-2 text-sm uppercase tracking-[0.18em] text-bone transition-colors hover:bg-wine"
             >
-              <a href="/#newsletter" onClick={() => setIsMobileMenuOpen(false)}>
-                Join the mailing list
-              </a>
-            </Button>
+              Mailing list
+            </a>
           </div>
         )}
       </div>

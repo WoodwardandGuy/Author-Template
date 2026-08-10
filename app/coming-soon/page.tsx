@@ -33,19 +33,19 @@ export default async function ComingSoonPage() {
   const instagram = author.socials?.instagram;
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ink-dark px-6 text-center text-white">
+    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-soil px-6 text-center text-white">
       {/* Soft gold wash behind the content */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-70"
         style={{
           background:
-            'radial-gradient(60% 50% at 50% 30%, rgba(154,123,79,0.28) 0%, rgba(26,24,34,0) 70%)',
+            'radial-gradient(60% 50% at 50% 30%, rgba(138,53,65,0.28) 0%, rgba(22,18,16,0) 70%)',
         }}
       />
 
       <div className="relative z-10 flex flex-col items-center">
-        <p className="mb-6 text-xs font-medium uppercase tracking-[0.35em] text-brand">
+        <p className="mb-6 text-xs font-medium uppercase tracking-[0.35em] text-moss">
           Coming Soon
         </p>
 
@@ -55,7 +55,7 @@ export default async function ComingSoonPage() {
 
         <p className="mt-4 text-base text-white/60 sm:text-lg">{tagline}</p>
 
-        <div className="mt-10 h-px w-16 bg-brand/50" />
+        <div className="mt-10 h-px w-16 bg-wine/50" />
 
         <p className="mt-10 max-w-md text-pretty text-sm leading-relaxed text-white/50 sm:text-base">
           The new site is on its way. Check back soon. There&rsquo;s something
@@ -67,7 +67,7 @@ export default async function ComingSoonPage() {
             href={instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-brand transition-colors hover:text-white"
+            className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-moss transition-colors hover:text-white"
           >
             Follow along on Instagram
             <span aria-hidden>&rarr;</span>

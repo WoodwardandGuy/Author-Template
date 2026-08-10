@@ -13,15 +13,15 @@ export function Books({ books, content }: BooksProps) {
   if (books.length === 0) return null;
 
   return (
-    <section id="books" className="py-20 bg-white">
+    <section id="books" className="py-20 border-t border-line">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-2xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-3 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-bone mb-3 tracking-tight">
               {content?.booksHeadline || 'The Books'}
             </h2>
             {content?.booksSubtext && (
-              <p className="text-gray-600 text-lg">{content.booksSubtext}</p>
+              <p className="text-bone-dim text-lg">{content.booksSubtext}</p>
             )}
           </div>
 
@@ -37,7 +37,7 @@ export function Books({ books, content }: BooksProps) {
                   href={`/books/${book.slug}`}
                   className="group flex flex-col w-full max-w-[300px] mx-auto"
                 >
-                  <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-md bg-gray-100 group-hover:shadow-xl transition-shadow">
+                  <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-md bg-soil-2 group-hover:shadow-xl transition-shadow">
                     {coverUrl ? (
                       <Image
                         src={coverUrl}
@@ -47,23 +47,23 @@ export function Books({ books, content }: BooksProps) {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
-                      <div className="flex items-center justify-center h-full text-gray-400 text-sm px-4 text-center">
+                      <div className="flex items-center justify-center h-full text-bone-dim text-sm px-4 text-center">
                         {book.title}
                       </div>
                     )}
                   </div>
                   <div className="mt-4">
                     {book.series && (
-                      <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-moss mb-1">
                         {book.series}
                         {book.seriesOrder ? ` · Book ${book.seriesOrder}` : ''}
                       </p>
                     )}
-                    <h3 className="font-semibold text-lg text-ink-dark flex items-center gap-1">
+                    <h3 className="font-semibold text-lg text-bone flex items-center gap-1">
                       {book.title}
                       <ChevronRight className="h-4 w-4 opacity-0 -translate-x-1 group-hover:opacity-50 group-hover:translate-x-0 transition-all" />
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mt-1">
+                    <p className="text-bone-dim text-sm leading-relaxed line-clamp-3 mt-1">
                       {book.description}
                     </p>
                   </div>
@@ -73,7 +73,7 @@ export function Books({ books, content }: BooksProps) {
           </div>
 
           {content?.booksFooterText && (
-            <p className="text-gray-600 mt-10 text-sm">{content.booksFooterText}</p>
+            <p className="text-bone-dim mt-10 text-sm">{content.booksFooterText}</p>
           )}
         </div>
       </div>

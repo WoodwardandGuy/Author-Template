@@ -22,7 +22,7 @@ const components: PortableTextComponents = {
             sizes="(max-width: 768px) 100vw, 800px"
           />
           {value.caption && (
-            <figcaption className="text-center text-sm text-gray-500 mt-2">
+            <figcaption className="text-center text-sm text-bone-dim mt-2">
               {value.caption}
             </figcaption>
           )}
@@ -32,37 +32,37 @@ const components: PortableTextComponents = {
   },
   block: {
     h2: ({ children }) => (
-      <h2 className="text-2xl md:text-3xl font-bold text-ink-dark mt-10 mb-4">
+      <h2 className="text-2xl md:text-3xl font-bold text-bone mt-10 mb-4">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-xl md:text-2xl font-semibold text-ink-dark mt-8 mb-3">
+      <h3 className="text-xl md:text-2xl font-semibold text-bone mt-8 mb-3">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-lg font-semibold text-gray-800 mt-6 mb-2">
+      <h4 className="text-lg font-semibold text-bone mt-6 mb-2">
         {children}
       </h4>
     ),
     normal: ({ children }) => (
-      <p className="text-gray-700 leading-relaxed mb-4">{children}</p>
+      <p className="text-bone-dim leading-relaxed mb-4">{children}</p>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-ink pl-4 italic text-gray-600 my-6">
+      <blockquote className="border-l-4 border-line pl-4 italic text-bone-dim my-6">
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
+      <ul className="list-disc list-inside space-y-2 mb-4 text-bone-dim">
         {children}
       </ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700">
+      <ol className="list-decimal list-inside space-y-2 mb-4 text-bone-dim">
         {children}
       </ol>
     ),
@@ -77,7 +77,7 @@ const components: PortableTextComponents = {
         href={value?.href}
         target={value?.href?.startsWith('http') ? '_blank' : undefined}
         rel={value?.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-        className="text-ink hover:text-ink-dark underline transition-colors"
+        className="text-bone hover:text-bone underline transition-colors"
       >
         {children}
       </a>

@@ -106,7 +106,7 @@ export default async function BookPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <div className="bg-ink/[0.04] py-4">
+      <div className="bg-white/[0.04] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>
@@ -130,7 +130,7 @@ export default async function BookPage({
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10 lg:gap-14">
             <div>
-              <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-xl bg-gray-100 md:sticky md:top-24">
+              <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-xl bg-soil-2 md:sticky md:top-24">
                 {coverUrl ? (
                   <Image
                     src={coverUrl}
@@ -141,7 +141,7 @@ export default async function BookPage({
                     sizes="(max-width: 768px) 100vw, 300px"
                   />
                 ) : (
-                  <div className="flex items-center justify-center h-full text-gray-400 px-4 text-center">
+                  <div className="flex items-center justify-center h-full text-bone-dim px-4 text-center">
                     {book.title}
                   </div>
                 )}
@@ -150,24 +150,24 @@ export default async function BookPage({
 
             <div>
               {book.editionNote && (
-                <span className="inline-block bg-brand/10 text-brand text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full mb-3">
+                <span className="inline-block bg-brand/10 text-moss text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full mb-3">
                   {book.editionNote}
                 </span>
               )}
               {book.series && (
-                <p className="text-sm font-semibold uppercase tracking-wide text-brand mb-2">
+                <p className="text-sm font-semibold uppercase tracking-wide text-moss mb-2">
                   {book.series}
                   {book.seriesOrder ? ` · Book ${book.seriesOrder}` : ''}
                 </p>
               )}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink-dark tracking-tight mb-2">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone tracking-tight mb-2">
                 {book.title}
               </h1>
               {book.subtitle && (
-                <p className="text-xl text-gray-500 mb-4">{book.subtitle}</p>
+                <p className="text-xl text-bone-dim mb-4">{book.subtitle}</p>
               )}
 
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 mb-6">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-bone-dim mb-6">
                 {book.genre && <span>{book.genre}</span>}
                 {book.publicationDate && (
                   <span>
@@ -179,7 +179,7 @@ export default async function BookPage({
                 )}
               </div>
 
-              <p className="text-lg text-gray-700 leading-relaxed mb-8 whitespace-pre-line">
+              <p className="text-lg text-bone-dim leading-relaxed mb-8 whitespace-pre-line">
                 {book.description}
               </p>
 
@@ -203,15 +203,15 @@ export default async function BookPage({
               {book.longDescription && (
                 <div className="prose prose-lg max-w-none">
                   {book.longDescription.split('\n\n').map((paragraph, i) => (
-                    <p key={i} className="text-gray-700 leading-relaxed mb-4">
+                    <p key={i} className="text-bone-dim leading-relaxed mb-4">
                       {paragraph}
                     </p>
                   ))}
                 </div>
               )}
 
-              <div className="mt-12 pt-8 border-t border-gray-200">
-                <Link href="/books" className="text-ink font-medium hover:text-brand transition-colors">
+              <div className="mt-12 pt-8 border-t border-line">
+                <Link href="/books" className="text-bone font-medium hover:text-brand transition-colors">
                   ← All books
                 </Link>
               </div>

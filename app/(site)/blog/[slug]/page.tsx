@@ -140,18 +140,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container mx-auto px-4">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-ink hover:text-ink-dark font-medium transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-bone hover:text-bone font-medium transition-colors mb-8"
           >
             <ArrowLeft className="h-4 w-4" />
             {siteContent?.blogBackText || 'Back to Blog'}
           </Link>
 
           <header className="max-w-3xl mx-auto text-center mb-10">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink-dark mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-bone mb-6">
               {post.title}
             </h1>
 
-            <div className="flex items-center justify-center gap-6 text-gray-500">
+            <div className="flex items-center justify-center gap-6 text-bone-dim">
               <span className="flex items-center gap-1">
                 <User className="h-4 w-4" />
                 {post.author}
@@ -186,10 +186,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <BlogContent body={post.body} />
           </div>
 
-          <div className="max-w-3xl mx-auto mt-12 pt-8 border-t border-gray-200">
+          <div className="max-w-3xl mx-auto mt-12 pt-8 border-t border-line">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-ink hover:text-ink-dark font-medium transition-colors"
+              className="inline-flex items-center gap-2 text-bone hover:text-bone font-medium transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               {siteContent?.blogBackText || 'Back to Blog'}

@@ -33,7 +33,7 @@ export default async function AllArticlesPage({
   return (
     <>
       {/* Hero Banner */}
-      <section className="relative bg-gradient-to-br from-ink via-ink-dark to-ink-dark pt-16 pb-12 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-soil-2 via-soil to-soil pt-16 pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <Link
@@ -53,7 +53,7 @@ export default async function AllArticlesPage({
       </section>
 
       {/* Content */}
-      <section className="bg-gray-50 pt-10 pb-20">
+      <section className="bg-soil-2 pt-10 pb-20">
         <div className="container mx-auto px-4">
           {posts.length > 0 ? (
             <>
@@ -70,7 +70,7 @@ export default async function AllArticlesPage({
               />
             </>
           ) : (
-            <p className="text-center text-gray-600 text-lg py-20">
+            <p className="text-center text-bone-dim text-lg py-20">
               {siteContent?.blogEmptyText || 'No blog posts yet. Check back soon!'}
             </p>
           )}

@@ -60,16 +60,35 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        // Brand palette — swap these two for the author's colors.
-        // (Named `brand`, not `accent`, to avoid clashing with the shadcn/ui `accent` token.)
+        // Brand palette — the "soil" design system (E.L. Westbury).
+        // `brand` is aliased to wine so existing bg-brand/hover:bg-brand-dark
+        // buttons pick up the accent with no per-component edits.
+        soil: {
+          DEFAULT: '#161210', // page background
+          2: '#221b16', // raised surface / cards
+        },
+        bone: {
+          DEFAULT: '#efe6d6', // primary text
+          dim: '#c9bda9', // secondary text
+        },
+        wine: {
+          DEFAULT: '#8a3541',
+          deep: '#5e232d',
+        },
+        moss: '#6b7257', // eyebrows / muted accent
+        line: '#3a2f27', // hairline borders
         ink: {
           DEFAULT: '#2A2733',
           dark: '#1A1822',
         },
         brand: {
-          DEFAULT: '#9A7B4F',
-          dark: '#7C6340',
+          DEFAULT: '#8a3541',
+          dark: '#5e232d',
         },
+      },
+      fontFamily: {
+        sans: ['var(--font-karla)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-fraunces)', 'ui-serif', 'Georgia', 'serif'],
       },
       keyframes: {
         'accordion-down': {

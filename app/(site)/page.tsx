@@ -33,11 +33,7 @@ export default async function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <Hero
-        content={heroContent}
-        logo={authorInfo.logo}
-        authorName={authorInfo.name}
-      />
+      <Hero content={heroContent} />
       {featuredRelease && <FeaturedRelease content={featuredRelease} />}
       <Books books={books} content={siteContent} />
       {brandStatement && (
