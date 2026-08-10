@@ -106,3 +106,47 @@
     animation: none !important;
   }
 }
+
+/* Hero background smoke drift (see components/home/Hero.tsx).
+   Layered gold/white gradient blobs on `screen` blend read as slow-curling
+   smoke over the dark hero. Purely decorative — aria-hidden, pointer-events off. */
+@keyframes hero-smoke-drift {
+  0% {
+    transform: translate3d(-6%, 2%, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(6%, -4%, 0) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(-6%, 2%, 0) scale(1);
+    opacity: 0.35;
+  }
+}
+.hero-smoke {
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(40px);
+  will-change: transform, opacity;
+  background:
+    radial-gradient(38% 38% at 22% 62%, rgba(154, 123, 79, 0.28), transparent 70%),
+    radial-gradient(32% 32% at 68% 38%, rgba(255, 255, 255, 0.1), transparent 70%),
+    radial-gradient(44% 44% at 52% 84%, rgba(154, 123, 79, 0.2), transparent 72%);
+  animation: hero-smoke-drift 20s ease-in-out infinite;
+}
+.hero-smoke.hero-smoke--slow {
+  filter: blur(56px);
+  animation-duration: 30s;
+  animation-direction: reverse;
+  background:
+    radial-gradient(40% 40% at 78% 70%, rgba(154, 123, 79, 0.22), transparent 72%),
+    radial-gradient(36% 36% at 30% 28%, rgba(255, 255, 255, 0.08), transparent 72%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-smoke {
+    animation: none;
+  }
+}

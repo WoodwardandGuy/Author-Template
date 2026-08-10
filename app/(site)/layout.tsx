@@ -34,14 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title: authorInfo.name,
       description: authorInfo.tagline,
     },
-    icons: {
-      icon: [
-        { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-        { url: '/favicon.ico', rel: 'shortcut icon' },
-      ],
-      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-    },
-    manifest: '/site.webmanifest',
+    // Icons + manifest are declared once in the root app/layout.tsx and
+    // inherited here — don't re-declare them or they duplicate.
     robots: {
       index: true,
       follow: true,
