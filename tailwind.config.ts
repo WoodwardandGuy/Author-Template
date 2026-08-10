@@ -76,7 +76,7 @@ const config: Config = {
           deep: '#5e232d', // button hover
           light: '#cf7f8b', // wine used as TEXT/links on dark — AA on soil (6.3:1) & soil-2 (5.7:1)
         },
-        moss: '#6b7257', // eyebrows / muted accent
+        moss: '#8a9472', // eyebrows / muted accent — lightened for AA (5.8:1 on soil)
         line: '#3a2f27', // hairline borders
         ink: {
           DEFAULT: '#2A2733',
