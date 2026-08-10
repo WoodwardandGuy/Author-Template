@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
-import { QuillSignature } from '@/components/home/QuillSignature';
 import type { AuthorInfo } from '@/lib/types';
 
 interface HeaderProps {
@@ -46,9 +46,24 @@ export function Header({ authorInfo, hasPress = true }: HeaderProps) {
           <Link
             href="/"
             aria-label={`${authorInfo.name} — home`}
-            className="shrink-0 text-bone transition-opacity hover:opacity-80"
+            className="flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-80 sm:gap-3"
           >
-            <QuillSignature className="h-9 w-auto" title={authorInfo.name} />
+            <Image
+              src="/elw-mark.png"
+              alt=""
+              width={208}
+              height={256}
+              priority
+              className="h-9 w-auto sm:h-10"
+            />
+            <span className="flex flex-col leading-none">
+              <span className="font-serif text-base tracking-tight text-bone sm:text-lg">
+                {authorInfo.name}
+              </span>
+              <span className="mt-1 text-[0.6rem] uppercase tracking-[0.3em] text-moss">
+                Author
+              </span>
+            </span>
           </Link>
 
           <div className="hidden items-center gap-[clamp(0.9rem,2.5vw,1.8rem)] lg:flex">

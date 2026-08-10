@@ -123,7 +123,7 @@
 .intro-tag {
   opacity: 0;
   animation: intro-tag-in 0.8s ease forwards;
-  animation-delay: 3.8s;
+  animation-delay: 3.4s;
 }
 /* Accessibility: reduced-motion users get the composed final mark, never the draw */
 @media (prefers-reduced-motion: reduce) {

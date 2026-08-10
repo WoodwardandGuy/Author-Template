@@ -19,10 +19,10 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { QuillSignature } from '@/components/home/QuillSignature';
+import { Signature } from '@/components/home/Signature';
 
 const DISMISS_KEY = 'elw-newsletter-popup-dismissed';
-const SHOW_DELAY_MS = 6000;
+const SHOW_DELAY_MS = 8000;
 
 export function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
@@ -104,7 +104,7 @@ export function NewsletterPopup() {
 
         {status === 'success' ? (
           <div className="py-2">
-            <QuillSignature className="mx-auto h-auto w-44 text-brand" />
+            <Signature className="mx-auto h-auto w-36 text-brand" />
             <h2 className="mt-4 font-bold text-2xl tracking-tight text-ink">
               Welcome in, Burier.
             </h2>
@@ -115,7 +115,7 @@ export function NewsletterPopup() {
           </div>
         ) : (
           <>
-            <QuillSignature className="mx-auto h-auto w-44 text-brand" />
+            <Signature className="mx-auto h-auto w-36 text-brand" />
             <h2
               id="newsletter-popup-title"
               className="mt-4 font-bold text-2xl tracking-tight text-ink"
