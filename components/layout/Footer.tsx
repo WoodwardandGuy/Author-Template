@@ -22,7 +22,7 @@ const quickLinks = [
   { href: '/events', label: 'Events' },
   { href: '/press', label: 'Press' },
   { href: '/book-club', label: 'Book Club' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export function Footer({ authorInfo, siteContent }: FooterProps) {

@@ -43,7 +43,7 @@ const books = [
 
 async function main() {
   console.log('Uploading author assets…');
-  const logoId = await uploadImage('_incoming/brand/elw-seal-logo-1024.png', 'elw-seal-logo.png');
+  const logoId = await uploadImage('_incoming/brand/elw-logo-transparent.png', 'elw-logo-transparent.png');
   const portraitId = await uploadImage('_incoming/author-photos/elw-headshot-cream-1600.jpg', 'elw-portrait.jpg');
 
   console.log('Seeding Author Information…');
@@ -77,6 +77,26 @@ async function main() {
       order: order++,
     });
     console.log(`  book: ${book.title}`);
+  }
+
+  console.log('Uploading + creating book club gallery…');
+  // The 8 staged reader photos. clubName is required and the gallery only shows
+  // approved entries, so we seed them approved with an on-brand placeholder name
+  // ("The Buriers" = her reader community) — refine names/captions in Studio.
+  for (let i = 1; i <= 8; i++) {
+    const n = String(i).padStart(2, '0');
+    const photoId = await uploadImage(
+      `_incoming/book-club-gallery/book-club-${n}.jpg`,
+      `book-club-${n}.jpg`,
+    );
+    await client.createIfNotExists({
+      _id: `bookClubPhoto-${n}`,
+      _type: 'bookClubPhoto',
+      image: imageRef(photoId, 'Reader book club photo'),
+      clubName: 'The Buriers', // PLACEHOLDER — set the real club / reader name in Studio
+      approved: true,
+    });
+    console.log(`  book club photo: ${n}`);
   }
 
   console.log('Uploading extra assets to the library (not attached)…');

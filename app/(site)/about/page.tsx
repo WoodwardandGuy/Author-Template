@@ -129,7 +129,7 @@ export default async function AboutPage() {
               variant="outline"
               className="h-12 px-8 text-lg border-ink text-ink hover:bg-ink hover:text-white"
             >
-              <Link href="/#contact">Get in touch</Link>
+              <Link href="/contact">Get in touch</Link>
             </Button>
           </div>
         </div>

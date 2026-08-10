@@ -18,7 +18,7 @@ const navLinks = [
   { href: '/events', label: 'Events' },
   { href: '/press', label: 'Press' },
   { href: '/book-club', label: 'Book Club' },
-  { href: '/#contact', label: 'Contact' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export function Header({ authorInfo }: HeaderProps) {
