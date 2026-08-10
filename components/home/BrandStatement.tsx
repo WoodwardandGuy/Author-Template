@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { urlFor } from '@/lib/sanity.image';
 import type { BrandStatementContent, SanityImage } from '@/lib/types';
 
@@ -8,37 +9,39 @@ interface BrandStatementProps {
 }
 
 export function BrandStatement({ content, image }: BrandStatementProps) {
-  const imageUrl = image?.asset
-    ? urlFor(image).width(1920).height(800).url()
-    : null;
+  const imageUrl = image?.asset ? urlFor(image).width(900).height(900).url() : null;
 
   return (
-    <section id="about" className="relative py-28 md:py-36 overflow-hidden">
-      {imageUrl ? (
-        <>
-          <Image
-            src={imageUrl}
-            alt={image?.alt || ''}
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-ink/75" />
-        </>
-      ) : (
-        <div className="absolute inset-0 bg-ink" />
-      )}
+    <section className="bg-smokyGreen text-ivory">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-x-20 gap-y-12 px-[clamp(20px,4vw,48px)] py-[clamp(64px,9vw,100px)]">
+        <div>
+          <h2 className="max-w-[600px] text-pretty font-display text-[clamp(30px,4.4vw,44px)] leading-[1.15]">
+            {content.headline}
+          </h2>
+          {content.body && (
+            <p className="mt-6 max-w-[520px] text-[16.5px] leading-[1.9] text-ivory/68">
+              {content.body}
+            </p>
+          )}
+          <Link
+            href="/book-club"
+            className="mt-8 inline-block border-b border-brass pb-[6px] text-[12px] uppercase tracking-[0.2em] text-ivory transition-colors hover:text-brass"
+          >
+            See the book clubs
+          </Link>
+        </div>
 
-      <div className="container mx-auto px-4 relative z-10 text-center">
-        <p className="text-brand font-semibold tracking-[0.2em] uppercase text-sm mb-4">
-          {content.tagline}
-        </p>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight max-w-3xl mx-auto mb-6 tracking-tight">
-          {content.headline}
-        </h2>
-        <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          {content.body}
-        </p>
+        {imageUrl && (
+          <div className="relative aspect-square w-full">
+            <Image
+              src={imageUrl}
+              alt={image?.alt || ''}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 560px"
+            />
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,17 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Send } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import type { SiteContent } from '@/lib/types';
 
 interface ContactFormProps {
@@ -19,158 +8,143 @@ interface ContactFormProps {
     SiteContent,
     'contactHeadline' | 'contactSubtext' | 'contactButtonText'
   > | null;
+  /** Preselects a subject (e.g. the Book Club page opens with "Book club submission"). */
+  defaultSubject?: string;
 }
 
-const SUBJECTS = ['General', 'Book club submission', 'Media & events'] as const;
+const SUBJECTS = [
+  'General',
+  'Book club submission',
+  'Media & events',
+  'Something else',
+] as const;
 
-export function ContactForm({ content }: ContactFormProps) {
+const FIELD =
+  'w-full border border-ink/25 bg-transparent px-4 py-4 text-[15px] text-ink outline-none transition-colors placeholder:text-ink/40 focus:border-smokyGreen focus-visible:ring-2 focus-visible:ring-smokyGreen/30';
+
+export function ContactForm({ content, defaultSubject }: ContactFormProps) {
+  const initialSubject =
+    defaultSubject && SUBJECTS.includes(defaultSubject as (typeof SUBJECTS)[number])
+      ? defaultSubject
+      : SUBJECTS[0];
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: SUBJECTS[0] as string,
+    subject: initialSubject,
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus('idle');
-
+    setStatus('idle');
     try {
-      const response = await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      if (!response.ok) throw new Error('Failed to send message');
-
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: SUBJECTS[0], message: '' });
-      setTimeout(() => setSubmitStatus('idle'), 6000);
-    } catch (error) {
-      console.error('Submission error:', error);
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus('idle'), 6000);
+      if (!res.ok) throw new Error('Failed to send message');
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: initialSubject, message: '' });
+    } catch {
+      setStatus('error');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const change = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
-    <section id="contact" className="py-20 bg-ink/[0.03]">
-      <div className="container mx-auto px-4">
-        <div className="max-w-xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink tracking-tight mb-4">
-              {content?.contactHeadline || 'Get in touch'}
-            </h2>
-            <p className="text-lg text-gray-600">
-              {content?.contactSubtext ||
-                'Questions, book club invitations, or just a hello — send a note and it will land in my inbox.'}
+    <section id="contact" className="bg-ivory">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-start gap-x-20 gap-y-12 px-[clamp(20px,4vw,48px)] py-[clamp(64px,8vw,92px)]">
+        <div>
+          <h2 className="font-display text-[clamp(30px,5vw,42px)] leading-[1.1] text-ink">
+            {content?.contactHeadline || 'Get in touch'}
+          </h2>
+          {content?.contactSubtext && (
+            <p className="mt-5 max-w-[380px] text-[16.5px] leading-[1.9] text-ink/68">
+              {content.contactSubtext}
             </p>
+          )}
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <input
+              name="name"
+              type="text"
+              required
+              value={formData.name}
+              onChange={change}
+              placeholder="Name"
+              aria-label="Name"
+              className={FIELD}
+            />
+            <input
+              name="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={change}
+              placeholder="Email"
+              aria-label="Email"
+              className={FIELD}
+            />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Name *
-              </label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className="h-12"
-              />
-            </div>
+          <select
+            name="subject"
+            value={formData.subject}
+            onChange={change}
+            aria-label="Subject"
+            className={FIELD}
+          >
+            {SUBJECTS.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email *
-              </label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="h-12"
-              />
-            </div>
+          <textarea
+            name="message"
+            required
+            rows={6}
+            value={formData.message}
+            onChange={change}
+            placeholder="Message"
+            aria-label="Message"
+            className={`${FIELD} resize-y`}
+          />
 
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                Subject
-              </label>
-              <Select
-                value={formData.subject}
-                onValueChange={(value) => setFormData({ ...formData, subject: value })}
-              >
-                <SelectTrigger className="h-12">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SUBJECTS.map((s) => (
-                    <SelectItem key={s} value={s}>
-                      {s}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="self-start bg-smokyGreen px-8 py-4 text-[12px] uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-ink disabled:opacity-70"
+          >
+            {isSubmitting ? 'Sending…' : content?.contactButtonText || 'Send'}
+          </button>
 
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                Message *
-              </label>
-              <Textarea
-                id="message"
-                name="message"
-                required
-                value={formData.message}
-                onChange={handleChange}
-                rows={6}
-              />
-            </div>
-
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-brand hover:bg-brand-dark text-white h-12 text-lg"
-            >
-              {isSubmitting ? (
-                'Sending…'
-              ) : (
-                <>
-                  <Send className="mr-2 h-5 w-5" />
-                  {content?.contactButtonText || 'Send message'}
-                </>
-              )}
-            </Button>
-
-            {submitStatus === 'success' && (
-              <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
-                Thank you! Your message is on its way.
-              </div>
+          <div aria-live="polite">
+            {status === 'success' && (
+              <p className="text-[14px] text-smokyGreen">
+                Thank you — your message is on its way.
+              </p>
             )}
-            {submitStatus === 'error' && (
-              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
+            {status === 'error' && (
+              <p className="text-[14px] text-red-700">
                 Something went wrong. Please try again in a moment.
-              </div>
+              </p>
             )}
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </section>
   );

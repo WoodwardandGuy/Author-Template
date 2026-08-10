@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { useState } from 'react';
 import type { FAQItem, SiteContent } from '@/lib/types';
 
 interface FAQProps {
@@ -14,35 +9,51 @@ interface FAQProps {
 }
 
 export function FAQ({ items, content }: FAQProps) {
+  // First item open by default; only one open at a time. -1 = all closed.
+  const [open, setOpen] = useState(0);
   if (items.length === 0) return null;
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-ink mb-3 text-center">
-            {content?.faqHeadline || 'Frequently Asked Questions'}
-          </h2>
-          <p className="text-gray-600 text-center mb-10">
-            {content?.faqSubtext || 'Answers to what readers ask most.'}
-          </p>
+    <section className="border-t border-ink/10 bg-ivory">
+      <div className="mx-auto max-w-[1000px] px-[clamp(20px,4vw,48px)] py-[clamp(64px,8vw,92px)]">
+        <h2 className="mb-10 font-display text-[clamp(30px,5vw,42px)] leading-tight text-ink">
+          {content?.faqHeadline || 'Questions'}
+        </h2>
 
-          <Accordion type="single" collapsible className="space-y-3">
-            {items.map((faq) => (
-              <AccordionItem
-                key={faq.id}
-                value={faq.id}
-                className="border border-gray-200 rounded-lg px-6 data-[state=open]:border-ink/30 transition-colors"
-              >
-                <AccordionTrigger className="text-left text-base font-semibold text-ink-dark hover:no-underline py-5">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-gray-600 leading-relaxed pb-5">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <div>
+          {items.map((faq, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={faq.id} className="border-t border-ink/[0.14]">
+                <button
+                  onClick={() => setOpen(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-6 py-[26px] text-left"
+                >
+                  <span className="text-[20px] text-ink">{faq.question}</span>
+                  <span
+                    aria-hidden
+                    className="shrink-0 font-display text-[24px] leading-none text-brass"
+                  >
+                    {isOpen ? '–' : '+'}
+                  </span>
+                </button>
+                <div
+                  className={`grid overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen
+                      ? 'grid-rows-[1fr] pb-[26px] opacity-100'
+                      : 'grid-rows-[0fr] opacity-0'
+                  }`}
+                >
+                  <div className="min-h-0">
+                    <p className="max-w-[660px] text-[16px] leading-[1.9] text-ink/68">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

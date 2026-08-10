@@ -1,16 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { urlFor } from '@/lib/sanity.image';
-import { getBookClubPhotos } from '@/lib/sanity.fetch';
+import { ContactForm } from '@/components/home/ContactForm';
+import { getBookClubPhotos, getSiteContent } from '@/lib/sanity.fetch';
 import { SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -26,72 +18,57 @@ export const metadata: Metadata = {
 };
 
 export default async function BookClubPage() {
-  const photos = await getBookClubPhotos();
+  const [photos, siteContent] = await Promise.all([
+    getBookClubPhotos(),
+    getSiteContent(),
+  ]);
 
   return (
     <>
-      <div className="bg-ink/[0.04] py-4">
-        <div className="container mx-auto px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Book Club</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+      {/* Header band */}
+      <section className="bg-smokyGreen text-ivory">
+        <div className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)] py-[84px]">
+          <h1 className="font-display text-[clamp(40px,7vw,58px)] leading-[1.05]">
+            Book Club
+          </h1>
+          <p className="mt-5 max-w-[560px] text-[17px] leading-[1.85] text-ivory/68">
+            Send me your photos. If your club read one of mine, I want to see the wine,
+            the snacks, and the person who guessed the ending on page nine.
+          </p>
+          <a
+            href="#contact"
+            className="mt-8 inline-flex bg-brass px-[30px] py-4 text-[12px] uppercase tracking-[0.16em] text-heroBlack transition-colors hover:bg-brassHover"
+          >
+            Submit your photos
+          </a>
         </div>
-      </div>
+      </section>
 
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="max-w-2xl mb-12">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
-              Book Club
-            </h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Read with your club? Share a photo and it might land here.
-            </p>
-          </div>
-
+      {/* Gallery */}
+      <section className="bg-ivory">
+        <div className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)] pb-24 pt-[76px]">
           {photos.length > 0 ? (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-[30px]">
               {photos.map((photo) => {
                 const url = photo.image?.asset
-                  ? urlFor(photo.image).width(700).url()
+                  ? urlFor(photo.image).width(640).height(480).url()
                   : null;
                 if (!url) return null;
-                const meta = [photo.location, photo.date
-                  ? new Date(photo.date).toLocaleDateString('en-US', {
-                      month: 'long',
-                      year: 'numeric',
-                    })
-                  : null]
-                  .filter(Boolean)
-                  .join(' · ');
                 return (
-                  <figure
-                    key={photo.id}
-                    className="mb-6 break-inside-avoid rounded-lg overflow-hidden shadow-md bg-white"
-                  >
-                    <Image
-                      src={url}
-                      alt={photo.image?.alt || `${photo.clubName} book club`}
-                      width={700}
-                      height={525}
-                      className="w-full h-auto"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    <figcaption className="p-4">
-                      <p className="font-semibold text-ink-dark">{photo.clubName}</p>
-                      {meta && <p className="text-sm text-gray-500">{meta}</p>}
-                      {photo.caption && (
-                        <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                          {photo.caption}
-                        </p>
+                  <figure key={photo.id}>
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-warmSand">
+                      <Image
+                        src={url}
+                        alt={photo.image?.alt || `${photo.clubName} book club`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, 300px"
+                      />
+                    </div>
+                    <figcaption>
+                      <p className="mt-[15px] text-[17px] text-ink">{photo.clubName}</p>
+                      {photo.location && (
+                        <p className="text-[13.5px] text-ink/55">{photo.location}</p>
                       )}
                     </figcaption>
                   </figure>
@@ -99,30 +76,15 @@ export default async function BookClubPage() {
               })}
             </div>
           ) : (
-            <p className="text-gray-600 text-lg py-8">
-              No photos yet — be the first to share one.
+            <p className="text-[16px] text-ink/60">
+              Reader photos will appear here — send yours and it might be featured.
             </p>
           )}
-
-          {/* Submission path — routes to the Resend contact form's book-club subject. */}
-          <div className="mt-16 bg-ink/[0.03] rounded-2xl p-8 md:p-10 text-center">
-            <h2 className="text-2xl font-bold text-ink mb-3 tracking-tight">
-              Share your book club photo
-            </h2>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Send your photo through the contact form — choose{' '}
-              <span className="font-medium">“Book club submission”</span> as the subject
-              and attach your image. With your OK, it may be featured here.
-            </p>
-            <Link
-              href="/#contact"
-              className="inline-flex items-center bg-brand hover:bg-brand-dark text-white font-medium px-7 py-3 rounded-lg transition-colors"
-            >
-              Submit a photo
-            </Link>
-          </div>
         </div>
       </section>
+
+      {/* Submission form, book-club subject preselected */}
+      <ContactForm content={siteContent} defaultSubject="Book club submission" />
     </>
   );
 }

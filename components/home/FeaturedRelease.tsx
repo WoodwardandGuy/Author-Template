@@ -1,10 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { urlFor } from '@/lib/sanity.image';
-import type { FeaturedRelease as FeaturedReleaseContent } from '@/lib/types';
+import type { FeaturedRelease as FeaturedReleaseContent, Retailer } from '@/lib/types';
 
 interface FeaturedReleaseProps {
   content: FeaturedReleaseContent;
+}
+
+/** Dedupe retailers by their displayed label so the buy row never repeats a store. */
+function dedupeRetailers(retailers: Retailer[]): Retailer[] {
+  const seen = new Set<string>();
+  return retailers.filter((r) => {
+    const key = (r.label || r.store).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export function FeaturedRelease({ content }: FeaturedReleaseProps) {
@@ -12,68 +23,70 @@ export function FeaturedRelease({ content }: FeaturedReleaseProps) {
   if (!content.enabled || !book) return null;
 
   const coverUrl = book.cover?.asset
-    ? urlFor(book.cover).width(600).height(900).url()
+    ? urlFor(book.cover).width(680).height(1020).url()
     : null;
-  const retailers = book.retailers || [];
+  const retailers = dedupeRetailers(book.retailers || []).slice(0, 3);
 
   return (
-    <section className="bg-ink text-white py-20 md:py-28">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center max-w-5xl mx-auto">
-          <div className="order-2 md:order-1">
-            {content.label && (
-              <p className="text-brand font-semibold tracking-[0.2em] uppercase text-sm mb-4">
-                {content.label}
+    <section className="overflow-hidden bg-aubergine text-ivory">
+      <div className="mx-auto grid max-w-[1160px] grid-cols-[repeat(auto-fit,minmax(280px,1fr))] items-center gap-[clamp(44px,6vw,84px)] px-[clamp(24px,4vw,48px)] py-[clamp(72px,9vw,116px)]">
+        {/* Cover with rotated gold frame */}
+        <div className="relative mx-auto w-full max-w-[340px] justify-self-center">
+          <span
+            aria-hidden
+            className="absolute inset-[-14px] border border-gold/35"
+            style={{ transform: 'rotate(-2.5deg)' }}
+          />
+          {coverUrl && (
+            <Link href={`/books/${book.slug}`} className="relative block">
+              <Image
+                src={coverUrl}
+                alt={book.cover?.alt || book.title}
+                width={680}
+                height={1020}
+                priority
+                className="aspect-[2/3] w-full object-cover [box-shadow:0_40px_90px_rgba(0,0,0,0.7)]"
+              />
+            </Link>
+          )}
+        </div>
+
+        {/* Text */}
+        <div>
+          <h2 className="font-display text-[clamp(34px,4.4vw,54px)] leading-[1.08]">
+            {book.title}
+          </h2>
+          <p className="mt-6 max-w-[46ch] whitespace-pre-line text-[16.5px] leading-[1.9] text-ivory/72">
+            {book.description}
+          </p>
+
+          <Link
+            href={`/books/${book.slug}`}
+            className="mt-8 inline-flex bg-brass px-[30px] py-4 text-[12px] uppercase tracking-[0.18em] text-heroBlack transition-colors hover:bg-brassHover"
+          >
+            {content.ctaText || 'Learn more'}
+          </Link>
+
+          {retailers.length > 0 && (
+            <div className="mt-[38px] border-t border-ivory/18 pt-[26px]">
+              <p className="mb-4 text-[11px] uppercase tracking-[0.26em] text-ivory/50">
+                Buy now
               </p>
-            )}
-            {content.headline && (
-              <p className="text-white/70 text-lg italic mb-3">{content.headline}</p>
-            )}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-2">
-              {book.title}
-            </h2>
-            {book.subtitle && (
-              <p className="text-xl text-white/60 mb-5">{book.subtitle}</p>
-            )}
-            <p className="text-white/80 leading-relaxed mb-8 line-clamp-4">
-              {book.description}
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href={`/books/${book.slug}`}
-                className="inline-flex items-center bg-brand hover:bg-brand-dark text-white font-semibold px-7 py-3 rounded-lg transition-colors"
-              >
-                {content.ctaText || 'Learn more'}
-              </Link>
-              {retailers.slice(0, 3).map((r, i) => (
-                <a
-                  key={i}
-                  href={r.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center border border-white/25 hover:border-white/60 text-white font-medium px-6 py-3 rounded-lg transition-colors"
-                >
-                  {r.label || r.store}
-                </a>
-              ))}
+              <div className="flex flex-wrap gap-3">
+                {retailers.map((r, i) => (
+                  <a
+                    key={i}
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-ivory/35 px-6 py-[15px] text-[12px] uppercase tracking-[0.16em] text-ivory transition-colors hover:border-gold hover:bg-gold/[0.08] hover:text-gold"
+                  >
+                    {r.label || r.store}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-
-          <div className="order-1 md:order-2 flex justify-center">
-            {coverUrl && (
-              <Link href={`/books/${book.slug}`} className="block">
-                <Image
-                  src={coverUrl}
-                  alt={book.cover?.alt || book.title}
-                  width={300}
-                  height={450}
-                  className="rounded-lg shadow-2xl w-auto h-auto max-w-[300px]"
-                  priority
-                />
-              </Link>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </section>

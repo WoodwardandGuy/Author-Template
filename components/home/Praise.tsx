@@ -1,13 +1,6 @@
 'use client';
 
-import { Quote } from 'lucide-react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from '@/components/ui/carousel';
+import { useState } from 'react';
 import type { Praise as PraiseItem, SiteContent } from '@/lib/types';
 
 interface PraiseProps {
@@ -15,44 +8,40 @@ interface PraiseProps {
   content?: Pick<SiteContent, 'praiseHeadline'> | null;
 }
 
-export function Praise({ praise, content }: PraiseProps) {
+export function Praise({ praise }: PraiseProps) {
+  const [active, setActive] = useState(0);
   if (praise.length === 0) return null;
 
-  return (
-    <section id="praise" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-ink tracking-tight">
-            {content?.praiseHeadline || 'Praise'}
-          </h2>
-        </div>
+  const item = praise[Math.min(active, praise.length - 1)];
 
-        <div className="max-w-3xl mx-auto">
-          <Carousel opts={{ loop: true }}>
-            <CarouselContent>
-              {praise.map((item) => (
-                <CarouselItem key={item.id}>
-                  <blockquote className="text-center px-4 md:px-12">
-                    <Quote className="h-10 w-10 text-ink/15 mx-auto mb-6" />
-                    <p className="text-xl md:text-2xl lg:text-3xl font-medium text-gray-800 italic leading-relaxed mb-8">
-                      &ldquo;{item.quote}&rdquo;
-                    </p>
-                    <footer>
-                      <p className="font-semibold text-ink-dark text-lg">
-                        {item.attribution}
-                      </p>
-                      {item.source && (
-                        <p className="text-sm text-gray-500">{item.source}</p>
-                      )}
-                    </footer>
-                  </blockquote>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex -left-4" />
-            <CarouselNext className="hidden md:flex -right-4" />
-          </Carousel>
-        </div>
+  return (
+    <section className="border-t border-ink/10 bg-ivory">
+      <div className="mx-auto max-w-[1000px] px-[clamp(20px,4vw,48px)] py-[clamp(64px,8vw,92px)] text-center">
+        <blockquote>
+          <p className="text-pretty font-display text-[clamp(22px,2.8vw,34px)] italic leading-[1.45] text-ink">
+            &ldquo;{item.quote}&rdquo;
+          </p>
+          <footer className="mt-7 text-[12px] uppercase tracking-[0.2em] text-ink/55">
+            {item.attribution}
+            {item.source ? ` · ${item.source}` : ''}
+          </footer>
+        </blockquote>
+
+        {praise.length > 1 && (
+          <div className="mt-[34px] flex justify-center gap-[10px]">
+            {praise.map((p, i) => (
+              <button
+                key={p.id}
+                onClick={() => setActive(i)}
+                aria-label={`Show praise ${i + 1}`}
+                aria-current={i === active}
+                className={`h-[7px] w-[7px] rounded-full transition-colors ${
+                  i === active ? 'bg-brass' : 'bg-ink/20 hover:bg-ink/40'
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -42,7 +42,8 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    /* Square corners are central to the editorial brand — 0 everywhere. */
+    --radius: 0px;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -77,32 +78,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
-  }
-}
-
-/* Brand color utilities (ink / brand) are generated from tailwind.config.ts. */
-
-/* Signature "shovel → ELW" hero animation (see components/home/SignatureAnimation.tsx) */
-@keyframes signature-draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-.signature .signature-stroke {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: signature-draw 0.7s ease forwards;
-}
-/* Already played this session → show final mark, no drawing */
-.signature.is-static .signature-stroke {
-  stroke-dashoffset: 0;
-  animation: none;
-}
-/* Accessibility: reduced-motion users get the composed final state, never the draw */
-@media (prefers-reduced-motion: reduce) {
-  .signature .signature-stroke {
-    stroke-dashoffset: 0 !important;
-    animation: none !important;
+    /* Ivory paper / ink text is the site default; dark sections opt in per-section. */
+    @apply bg-ivory text-ink font-body overflow-x-hidden;
   }
 }

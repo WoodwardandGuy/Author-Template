@@ -14,6 +14,7 @@ const bookFields = `
   seriesOrder,
   publicationDate,
   description,
+  order,
   retailers[] { store, label, url }
 `;
 
@@ -74,7 +75,8 @@ export const bookBySlugQuery = groq`
     ${bookFields},
     isbn,
     longDescription,
-    metaDescription
+    metaDescription,
+    themeWords
   }
 `;
 

@@ -80,6 +80,7 @@ export interface Book {
   seriesOrder?: number;
   publicationDate?: string;
   description: string;
+  order?: number;
   retailers?: Retailer[];
 }
 
@@ -87,6 +88,8 @@ export interface BookFull extends Book {
   isbn?: string;
   longDescription?: string;
   metaDescription?: string;
+  /** One short phrase per page of the book-page opening animation. */
+  themeWords?: string[];
 }
 
 export interface Praise {
@@ -116,7 +119,7 @@ export interface FeaturedRelease {
 }
 
 export interface BrandStatementContent {
-  tagline: string;
+  tagline?: string;
   headline: string;
   body: string;
 }

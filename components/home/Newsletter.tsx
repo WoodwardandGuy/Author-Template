@@ -1,24 +1,19 @@
 'use client';
 
 /**
- * Newsletter signup.
+ * Newsletter band.
  *
- * ⚠️ LAUNCH BLOCKER: this posts to /api/newsletter, which is a stub until an
- * email provider (Flodesk, MailerLite, Kit, etc.) is chosen and its API
- * details are set in the environment. See app/api/newsletter/route.ts.
+ * ⚠️ Posts to /api/newsletter, which is a stub until an email provider
+ * (Flodesk, MailerLite, Kit, etc.) is chosen. See app/api/newsletter/route.ts.
+ *
+ * Heading and submit label are client-verbatim — do not edit.
  */
 
 import { useState } from 'react';
-import { Send } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import type { SiteContent } from '@/lib/types';
 
 interface NewsletterProps {
-  content?: Pick<
-    SiteContent,
-    'newsletterHeadline' | 'newsletterSubtext' | 'newsletterButtonText'
-  > | null;
+  content?: Pick<SiteContent, 'newsletterSubtext'> | null;
 }
 
 export function Newsletter({ content }: NewsletterProps) {
@@ -32,7 +27,7 @@ export function Newsletter({ content }: NewsletterProps) {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, source: 'band' }),
       });
       if (!res.ok) throw new Error('Signup failed');
       setStatus('success');
@@ -43,56 +38,48 @@ export function Newsletter({ content }: NewsletterProps) {
   };
 
   return (
-    <section id="newsletter" className="py-20 bg-ink text-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-            {content?.newsletterHeadline || 'Join the mailing list'}
+    <section id="newsletter" className="bg-deepPlum text-ivory">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-x-20 gap-y-12 px-[clamp(20px,4vw,48px)] py-[clamp(64px,8vw,92px)]">
+        <div>
+          <h2 className="font-display text-[clamp(30px,4.4vw,44px)] leading-[1.14]">
+            Want to be a Burier?
           </h2>
-          <p className="text-white/70 text-lg mb-8">
-            {content?.newsletterSubtext ||
-              'New releases, events, and the occasional behind-the-scenes note. No spam, ever.'}
-          </p>
+          {content?.newsletterSubtext && (
+            <p className="mt-4 max-w-[420px] text-[16px] leading-[1.85] text-ivory/64">
+              {content.newsletterSubtext}
+            </p>
+          )}
+        </div>
 
+        <div>
           {status === 'success' ? (
-            <p className="text-brand font-medium text-lg">
-              You&rsquo;re on the list — thank you!
+            <p className="text-[16px] text-brass" role="status">
+              You&rsquo;re on the list — welcome, Burier.
             </p>
           ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
-              <Input
+            <form onSubmit={handleSubmit} className="flex flex-col gap-[14px]">
+              <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50"
                 aria-label="Email address"
+                className="w-full border border-ivory/28 bg-transparent px-[18px] py-[17px] text-[16px] text-ivory outline-none transition-colors placeholder:text-ivory/40 focus:border-brass focus-visible:ring-2 focus-visible:ring-brass/40"
               />
-              <Button
+              <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="bg-brand hover:bg-brand-dark text-white h-12 px-6 shrink-0"
+                className="bg-brass px-6 py-[17px] text-[12px] uppercase tracking-[0.2em] text-deepPlum transition-colors hover:bg-brassHover disabled:opacity-70"
               >
-                {status === 'submitting' ? (
-                  'Joining…'
-                ) : (
-                  <>
-                    <Send className="mr-2 h-4 w-4" />
-                    {content?.newsletterButtonText || 'Sign up'}
-                  </>
-                )}
-              </Button>
+                {status === 'submitting' ? 'Joining…' : 'Hand me a shovel.'}
+              </button>
+              {status === 'error' && (
+                <p className="text-[13px] text-ivory/55" role="alert">
+                  Signup isn&rsquo;t connected yet — please try again later.
+                </p>
+              )}
             </form>
-          )}
-
-          {status === 'error' && (
-            <p className="text-white/60 text-sm mt-4">
-              Newsletter signup isn&rsquo;t connected yet. Please try again later.
-            </p>
           )}
         </div>
       </div>

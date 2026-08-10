@@ -1,16 +1,5 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { urlFor } from '@/lib/sanity.image';
 import { getAuthorInfo } from '@/lib/sanity.fetch';
 import { SITE_URL } from '@/lib/site';
@@ -44,7 +33,7 @@ function generateBreadcrumbSchema() {
 export default async function AboutPage() {
   const authorInfo = await getAuthorInfo();
   const portraitUrl = authorInfo.portrait?.asset
-    ? urlFor(authorInfo.portrait).width(600).height(750).url()
+    ? urlFor(authorInfo.portrait).width(720).height(900).url()
     : null;
 
   return (
@@ -54,83 +43,45 @@ export default async function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateBreadcrumbSchema()) }}
       />
 
-      <div className="bg-ink/[0.04] py-4">
-        <div className="container mx-auto px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>About</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
-
-      <section className="py-16 md:py-20">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_320px] gap-10 lg:gap-16 items-start">
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-6 tracking-tight">
-                About {authorInfo.name}
-              </h1>
-              {/* Bios come from the CMS (Author Information). When absent, the section
-                  simply hides — no placeholder copy can ship to production. */}
-              {(authorInfo.shortBio || authorInfo.longBio) && (
-                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-                  {authorInfo.shortBio && (
-                    <p className="text-xl text-gray-800">{authorInfo.shortBio}</p>
-                  )}
-                  {authorInfo.longBio
-                    ?.split('\n\n')
-                    .filter(Boolean)
-                    .map((paragraph, i) => (
-                      <p key={i}>{paragraph}</p>
-                    ))}
-                </div>
-              )}
+      <section className="bg-ivory">
+        <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-start gap-x-20 gap-y-14 px-[clamp(20px,4vw,48px)] pb-24 pt-[88px]">
+          {portraitUrl && (
+            <div className="relative aspect-[4/5] w-full md:sticky md:top-[120px]">
+              <Image
+                src={portraitUrl}
+                alt={authorInfo.portrait?.alt || authorInfo.name}
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 520px"
+              />
             </div>
+          )}
 
-            {portraitUrl && (
-              <div className="relative aspect-[4/5] rounded-lg overflow-hidden shadow-lg">
-                <Image
-                  src={portraitUrl}
-                  alt={authorInfo.portrait?.alt || authorInfo.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 320px"
-                />
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.24em] text-brass">About</p>
+            <h1 className="mt-4 font-display text-[clamp(38px,6vw,54px)] leading-[1.1] text-ink">
+              {authorInfo.name}
+            </h1>
+
+            {authorInfo.shortBio && (
+              <p className="mt-6 max-w-[560px] font-display text-[23px] italic leading-[1.6] text-ink/78">
+                {authorInfo.shortBio}
+              </p>
+            )}
+
+            <div className="my-9 h-px w-[54px] bg-brass" />
+
+            {authorInfo.longBio && (
+              <div className="max-w-[600px] space-y-6 text-[16.5px] leading-[1.95] text-ink/74">
+                {authorInfo.longBio
+                  .split('\n\n')
+                  .filter(Boolean)
+                  .map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                  ))}
               </div>
             )}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-ink/[0.03]">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-ink mb-4 tracking-tight">
-            Stay in touch
-          </h2>
-          <p className="text-gray-600 text-lg mb-8">
-            Join the mailing list for new releases and events, or send a note directly.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="bg-brand hover:bg-brand-dark text-white h-12 px-8 text-lg">
-              <Link href="/#newsletter">
-                Join the mailing list
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-12 px-8 text-lg border-ink text-ink hover:bg-ink hover:text-white"
-            >
-              <Link href="/#contact">Get in touch</Link>
-            </Button>
           </div>
         </div>
       </section>

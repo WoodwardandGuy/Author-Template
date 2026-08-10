@@ -6,7 +6,7 @@ import { DisableDraftMode } from '@/components/DisableDraftMode';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { GoogleAnalytics } from '@/components/marketing/GoogleAnalytics';
-import { NewsletterPopup } from '@/components/home/NewsletterPopup';
+import { NewsletterModalProvider } from '@/components/newsletter/NewsletterModalProvider';
 import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema';
 import { getAuthorInfo, getSiteContent } from '@/lib/sanity.fetch';
 import { SITE_URL } from '@/lib/site';
@@ -80,10 +80,11 @@ export default async function SiteLayout({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
       <GoogleAnalytics />
-      <Header authorInfo={authorInfo} />
-      <main>{children}</main>
-      <Footer authorInfo={authorInfo} siteContent={siteContent} />
-      <NewsletterPopup />
+      <NewsletterModalProvider portrait={authorInfo.portrait}>
+        <Header authorInfo={authorInfo} />
+        <main>{children}</main>
+        <Footer authorInfo={authorInfo} siteContent={siteContent} />
+      </NewsletterModalProvider>
       <SanityLive />
       {(await draftMode()).isEnabled && (
         <>

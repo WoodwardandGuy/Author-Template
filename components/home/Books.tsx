@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import { urlFor } from '@/lib/sanity.image';
 import type { Book, SiteContent } from '@/lib/types';
 
@@ -13,68 +12,48 @@ export function Books({ books, content }: BooksProps) {
   if (books.length === 0) return null;
 
   return (
-    <section id="books" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-2xl mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-ink mb-3 tracking-tight">
-              {content?.booksHeadline || 'The Books'}
-            </h2>
-            {content?.booksSubtext && (
-              <p className="text-gray-600 text-lg">{content.booksSubtext}</p>
-            )}
-          </div>
+    <section id="books" className="bg-ivory">
+      <div className="mx-auto max-w-[1280px] px-[clamp(20px,4vw,48px)] py-[clamp(64px,9vw,96px)]">
+        <div className="mb-12 flex items-end justify-between gap-6">
+          <h2 className="font-display text-[clamp(30px,5vw,42px)] leading-tight text-ink">
+            {content?.booksHeadline || 'The Books'}
+          </h2>
+          <Link
+            href="/books"
+            className="whitespace-nowrap border-b border-brass pb-[5px] text-[12px] uppercase tracking-[0.18em] text-ink transition-colors hover:text-brass"
+          >
+            All titles
+          </Link>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {books.map((book) => {
-              const coverUrl = book.cover?.asset
-                ? urlFor(book.cover).width(500).height(750).url()
-                : null;
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-10">
+          {books.map((book) => {
+            const coverUrl = book.cover?.asset
+              ? urlFor(book.cover).width(520).height(780).url()
+              : null;
 
-              return (
-                <Link
-                  key={book.id}
-                  href={`/books/${book.slug}`}
-                  className="group flex flex-col w-full max-w-[300px] mx-auto"
-                >
-                  <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-md bg-gray-100 group-hover:shadow-xl transition-shadow">
-                    {coverUrl ? (
-                      <Image
-                        src={coverUrl}
-                        alt={book.cover?.alt || book.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full text-gray-400 text-sm px-4 text-center">
-                        {book.title}
-                      </div>
-                    )}
-                  </div>
-                  <div className="mt-4">
-                    {book.series && (
-                      <p className="text-xs font-semibold uppercase tracking-wide text-brand mb-1">
-                        {book.series}
-                        {book.seriesOrder ? ` · Book ${book.seriesOrder}` : ''}
-                      </p>
-                    )}
-                    <h3 className="font-semibold text-lg text-ink-dark flex items-center gap-1">
-                      {book.title}
-                      <ChevronRight className="h-4 w-4 opacity-0 -translate-x-1 group-hover:opacity-50 group-hover:translate-x-0 transition-all" />
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mt-1">
-                      {book.description}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-          {content?.booksFooterText && (
-            <p className="text-gray-600 mt-10 text-sm">{content.booksFooterText}</p>
-          )}
+            return (
+              <Link key={book.id} href={`/books/${book.slug}`} className="group block">
+                <div className="relative aspect-[2/3] overflow-hidden bg-warmSand [box-shadow:0_16px_40px_rgba(42,39,51,0.22)]">
+                  {coverUrl && (
+                    <Image
+                      src={coverUrl}
+                      alt={book.cover?.alt || book.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      sizes="(max-width: 640px) 100vw, 340px"
+                    />
+                  )}
+                </div>
+                <h3 className="mt-5 font-display text-[26px] leading-[1.2] text-ink transition-colors group-hover:text-brass">
+                  {book.title}
+                </h3>
+                <p className="mt-[10px] line-clamp-3 text-[14.5px] leading-[1.8] text-ink/60">
+                  {book.description}
+                </p>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

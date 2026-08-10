@@ -161,6 +161,17 @@ export default defineType({
       type: 'number',
       description: 'Controls the order books appear (lower shows first)',
     }),
+    defineField({
+      name: 'themeWords',
+      title: 'Page-Turn Words',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description:
+        'One short word or phrase per page of the opening animation on the book page, ' +
+        'in order. 3–5 works best. e.g. "THE LIE", "THE TRUTH", "THE NIGHTMARE", "THE BODY". ' +
+        'Set in caps.',
+      validation: (Rule) => Rule.max(6),
+    }),
   ],
   orderings: [
     {

@@ -9,8 +9,8 @@ export default defineType({
       name: 'tagline',
       title: 'Tagline',
       type: 'string',
-      description: 'Small uppercase text above the headline',
-      validation: (Rule) => Rule.required(),
+      description:
+        'Optional. The current design leads with the headline and does not render an eyebrow above it.',
     }),
     defineField({
       name: 'headline',

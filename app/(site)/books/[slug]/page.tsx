@@ -2,19 +2,17 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ExternalLink } from 'lucide-react';
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { urlFor } from '@/lib/sanity.image';
-import { getBookBySlug, getBookSlugs, getAuthorInfo } from '@/lib/sanity.fetch';
+import {
+  getBookBySlug,
+  getBookSlugs,
+  getBooks,
+  getPraise,
+  getAuthorInfo,
+} from '@/lib/sanity.fetch';
 import { generateBookSchema } from '@/lib/schema';
 import { SITE_URL } from '@/lib/site';
+import type { Retailer } from '@/lib/types';
 
 export async function generateStaticParams() {
   const slugs = await getBookSlugs();
@@ -74,23 +72,38 @@ function generateBreadcrumbSchema(book: { title: string; slug: string }) {
   };
 }
 
+function dedupeRetailers(retailers: Retailer[]): Retailer[] {
+  const seen = new Set<string>();
+  return retailers.filter((r) => {
+    const key = (r.label || r.store).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 export default async function BookPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [book, authorInfo] = await Promise.all([
+  const [book, authorInfo, allBooks, praise] = await Promise.all([
     getBookBySlug(slug),
     getAuthorInfo(),
+    getBooks(),
+    getPraise(),
   ]);
 
   if (!book) notFound();
 
   const coverUrl = book.cover?.asset
-    ? urlFor(book.cover).width(800).height(1200).url()
+    ? urlFor(book.cover).width(680).height(1020).url()
     : null;
-  const retailers = book.retailers || [];
+  const retailers = dedupeRetailers(book.retailers || []);
+  const prose = (book.longDescription || book.description).split('\n\n').filter(Boolean);
+  const featuredPraise = praise[0];
+  const moreBooks = allBooks.filter((b) => b.slug !== book.slug);
 
   const bookSchema = generateBookSchema(book, authorInfo.name);
   const breadcrumbSchema = generateBreadcrumbSchema(book);
@@ -106,119 +119,138 @@ export default async function BookPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <div className="bg-ink/[0.04] py-4">
-        <div className="container mx-auto px-4">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/books">Books</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{book.title}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </div>
-
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10 lg:gap-14">
-            <div>
-              <div className="relative aspect-[2/3] rounded-lg overflow-hidden shadow-xl bg-gray-100 md:sticky md:top-24">
-                {coverUrl ? (
-                  <Image
-                    src={coverUrl}
-                    alt={book.cover?.alt || book.title}
-                    fill
-                    priority
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 300px"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full text-gray-400 px-4 text-center">
-                    {book.title}
-                  </div>
-                )}
-              </div>
+      {/* Hero — aubergine stage. The animated page-turn will mount here later;
+          for now the cover is shown statically. */}
+      <section className="bg-aubergine text-ivory">
+        <div className="mx-auto max-w-[1180px] px-[clamp(24px,4vw,48px)] pb-[clamp(52px,6vw,80px)] pt-[clamp(36px,4.5vw,60px)]">
+          {coverUrl && (
+            <div className="mx-auto w-full max-w-[300px]">
+              <Image
+                src={coverUrl}
+                alt={book.cover?.alt || book.title}
+                width={680}
+                height={1020}
+                priority
+                className="aspect-[2/3] w-full object-cover [box-shadow:0_40px_90px_rgba(0,0,0,0.7)]"
+              />
             </div>
+          )}
 
-            <div>
-              {book.editionNote && (
-                <span className="inline-block bg-brand/10 text-brand text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full mb-3">
-                  {book.editionNote}
-                </span>
-              )}
-              {book.series && (
-                <p className="text-sm font-semibold uppercase tracking-wide text-brand mb-2">
-                  {book.series}
-                  {book.seriesOrder ? ` · Book ${book.seriesOrder}` : ''}
-                </p>
-              )}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink-dark tracking-tight mb-2">
-                {book.title}
-              </h1>
-              {book.subtitle && (
-                <p className="text-xl text-gray-500 mb-4">{book.subtitle}</p>
-              )}
-
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 mb-6">
-                {book.genre && <span>{book.genre}</span>}
-                {book.publicationDate && (
-                  <span>
-                    {new Date(book.publicationDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                    })}
-                  </span>
-                )}
-              </div>
-
-              <p className="text-lg text-gray-700 leading-relaxed mb-8 whitespace-pre-line">
-                {book.description}
+          <div className="mt-[clamp(26px,3.4vw,44px)] text-center">
+            <h1 className="mx-auto max-w-[16ch] font-display text-[clamp(34px,5vw,58px)] leading-[1.08]">
+              {book.title}
+            </h1>
+            {book.editionNote && (
+              <p className="mt-[14px] text-[12px] uppercase tracking-[0.24em] text-gold">
+                {book.editionNote}
               </p>
-
-              {retailers.length > 0 && (
-                <div className="flex flex-wrap gap-3 mb-10">
-                  {retailers.map((r, i) => (
-                    <a
-                      key={i}
-                      href={r.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 bg-brand hover:bg-brand-dark text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
-                    >
-                      {r.label || r.store}
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  ))}
-                </div>
-              )}
-
-              {book.longDescription && (
-                <div className="prose prose-lg max-w-none">
-                  {book.longDescription.split('\n\n').map((paragraph, i) => (
-                    <p key={i} className="text-gray-700 leading-relaxed mb-4">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              )}
-
-              <div className="mt-12 pt-8 border-t border-gray-200">
-                <Link href="/books" className="text-ink font-medium hover:text-brand transition-colors">
-                  ← All books
-                </Link>
-              </div>
-            </div>
+            )}
+            {book.subtitle && (
+              <p className="mx-auto mt-4 max-w-[42ch] font-display text-[clamp(19px,2.2vw,26px)] italic leading-[1.5] text-ivory/80">
+                {book.subtitle}
+              </p>
+            )}
           </div>
         </div>
       </section>
+
+      {/* Prose */}
+      {prose.length > 0 && (
+        <section className="bg-ivory">
+          <div className="mx-auto max-w-[760px] px-[clamp(24px,4vw,48px)] py-[clamp(64px,8vw,100px)]">
+            {prose.map((p, i) => (
+              <p
+                key={i}
+                className="mb-6 whitespace-pre-line text-[17px] leading-[1.95] text-ink/82"
+              >
+                {p}
+              </p>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Praise band */}
+      {featuredPraise && (
+        <section className="bg-smokyGreen text-ivory">
+          <div className="mx-auto max-w-[900px] px-[clamp(24px,4vw,48px)] py-[clamp(60px,7vw,88px)] text-center">
+            <p className="font-display text-[clamp(22px,2.8vw,32px)] italic leading-[1.5]">
+              &ldquo;{featuredPraise.quote}&rdquo;
+            </p>
+            <p className="mt-6 text-[12px] uppercase tracking-[0.2em] text-ivory/60">
+              {featuredPraise.attribution}
+              {featuredPraise.source ? ` · ${featuredPraise.source}` : ''}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* Get your copy */}
+      {retailers.length > 0 && (
+        <section className="bg-ivory">
+          <div className="mx-auto max-w-[1180px] px-[clamp(24px,4vw,48px)] pb-[clamp(40px,5vw,60px)]">
+            <div className="border border-ink/[0.18] px-[clamp(24px,4vw,48px)] py-[clamp(32px,4vw,48px)] text-center">
+              <h2 className="font-display text-[clamp(26px,3vw,34px)] leading-tight text-ink">
+                Get your copy
+              </h2>
+              <div className="mt-7 flex flex-wrap justify-center gap-3">
+                {retailers.map((r, i) => (
+                  <a
+                    key={i}
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border border-ink/35 px-[26px] py-[15px] text-[12px] uppercase tracking-[0.14em] text-ink transition-colors hover:border-brass hover:text-brass"
+                  >
+                    {r.label || r.store}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* More from */}
+      {moreBooks.length > 0 && (
+        <section className="bg-ivory">
+          <div className="mx-auto max-w-[1180px] px-[clamp(24px,4vw,48px)] pb-24">
+            <h2 className="mb-9 mt-[clamp(24px,4vw,40px)] font-display text-[clamp(28px,3.4vw,40px)] leading-tight text-ink">
+              More from {authorInfo.name}
+            </h2>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-9">
+              {moreBooks.map((b) => {
+                const cover = b.cover?.asset
+                  ? urlFor(b.cover).width(440).height(660).url()
+                  : null;
+                return (
+                  <Link key={b.id} href={`/books/${b.slug}`} className="group block">
+                    <div className="relative aspect-[2/3] overflow-hidden bg-warmSand [box-shadow:0_16px_40px_rgba(42,39,51,0.22)]">
+                      {cover && (
+                        <Image
+                          src={cover}
+                          alt={b.cover?.alt || b.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                          sizes="(max-width: 640px) 100vw, 260px"
+                        />
+                      )}
+                    </div>
+                    <h3 className="mt-4 font-display text-[24px] leading-[1.2] text-ink transition-colors group-hover:text-brass">
+                      {b.title}
+                    </h3>
+                    {b.genre && (
+                      <p className="mt-1 text-[12px] uppercase tracking-[0.2em] text-brass">
+                        {b.genre}
+                      </p>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

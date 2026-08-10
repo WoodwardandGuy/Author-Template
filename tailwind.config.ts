@@ -60,16 +60,33 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-        // Brand palette — swap these two for the author's colors.
-        // (Named `brand`, not `accent`, to avoid clashing with the shadcn/ui `accent` token.)
+        // E.L. Westbury brand palette (see design-assets/DESIGN-SPEC.md).
+        // Two dark backgrounds + one light is the whole system — do not add a third dark tone.
+        ivory: '#F6F2EA', // default page background; text on dark
         ink: {
-          DEFAULT: '#2A2733',
-          dark: '#1A1822',
+          DEFAULT: '#2A2733', // body text on light; dark button hover
+          dark: '#1A1822', // deep plum — footer / newsletter band (alias below)
         },
+        heroBlack: '#0A0A0B', // hero section background + scrim
+        aubergine: '#22202B', // featured release + book detail hero
+        deepPlum: '#1A1822', // footer, newsletter band
+        smokyGreen: '#3E4A42', // brand statement, book club header, praise band, primary buttons
+        brass: {
+          DEFAULT: '#9A7B4F', // primary accent: links, rules, CTA fill, active nav
+          hover: '#B08D5C', // CTA hover fill
+          dark: '#7C6340',
+        },
+        gold: '#C9A227', // hero subline, edition note, dark-section accents
+        warmSand: '#E9E2D4', // photo placeholder fill
+        // Back-compat alias so any lingering `brand` utility keeps resolving to brass.
         brand: {
           DEFAULT: '#9A7B4F',
           dark: '#7C6340',
         },
+      },
+      fontFamily: {
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        body: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {
@@ -88,10 +105,23 @@ const config: Config = {
             height: '0',
           },
         },
+        // Content rise-in (hero content, modal panel).
+        elwRise: {
+          from: { opacity: '0', transform: 'translateY(14px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        // Modal backdrop veil.
+        elwVeil: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'elw-rise': 'elwRise 0.8s ease both',
+        'elw-rise-fast': 'elwRise 0.4s ease both',
+        'elw-veil': 'elwVeil 0.3s ease both',
       },
     },
   },
