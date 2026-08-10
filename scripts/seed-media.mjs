@@ -4,15 +4,15 @@
  * content hash, and documents use fixed _ids with createIfNotExists so re-runs
  * don't clobber copy edited in Studio.
  *
- * Run:  SANITY_WRITE_TOKEN='...' node scripts/seed-media.mjs
+ * Run:  SANITY_API_WRITE_TOKEN='...' node scripts/seed-media.mjs
  * Token is read from the environment only — never hardcoded or written to disk.
  */
 import { createClient } from '@sanity/client';
 import { createReadStream } from 'node:fs';
 
-const token = process.env.SANITY_WRITE_TOKEN;
+const token = process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_WRITE_TOKEN;
 if (!token) {
-  console.error('Missing SANITY_WRITE_TOKEN in environment.');
+  console.error('Missing SANITY_API_WRITE_TOKEN in environment.');
   process.exit(1);
 }
 
