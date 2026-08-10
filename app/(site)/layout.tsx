@@ -7,6 +7,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { GoogleAnalytics } from '@/components/marketing/GoogleAnalytics';
 import { NewsletterPopup } from '@/components/home/NewsletterPopup';
+import { IntroSignature } from '@/components/home/IntroSignature';
 import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema';
 import { getAuthorInfo, getSiteContent } from '@/lib/sanity.fetch';
 import { SITE_URL } from '@/lib/site';
@@ -65,6 +66,7 @@ export default async function SiteLayout({
 
   return (
     <>
+      <IntroSignature />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

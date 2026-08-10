@@ -1,15 +1,17 @@
 'use client';
 
 /**
- * Newsletter popup.
+ * Newsletter popup — centered full-screen modal.
  *
  * Copy is hardcoded and character-exact per the client — DO NOT edit:
  *   Headline: "Want to be a Burier?"
  *   Accept:   "Hand me a shovel."
  *   Decline:  "Sounds like work."
  *
- * Signup posts to the single /api/newsletter integration point (Flodesk).
- * Behaviour: appears once on first visit after a short delay, dismissible, and
+ * Presentation follows the design prototype: a dimmed backdrop over the whole
+ * screen with a centered card (not a corner toast). Signup posts to the single
+ * /api/newsletter integration point (Flodesk). Appears once on first visit after
+ * a short delay, dismissible (X / Escape / backdrop / "Sounds like work."), and
  * remembers dismissal in localStorage so it never nags.
  */
 
@@ -17,13 +19,13 @@ import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { QuillSignature } from '@/components/home/QuillSignature';
 
 const DISMISS_KEY = 'elw-newsletter-popup-dismissed';
 const SHOW_DELAY_MS = 6000;
 
 export function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
-  const [step, setStep] = useState<'ask' | 'email'>('ask');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
@@ -47,6 +49,16 @@ export function NewsletterPopup() {
       /* ignore */
     }
   };
+
+  // Close on Escape while open.
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [visible]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,70 +86,82 @@ export function NewsletterPopup() {
   return (
     <div
       role="dialog"
-      aria-modal="false"
-      aria-label="Newsletter signup"
-      className="fixed bottom-4 right-4 z-[60] w-[calc(100%-2rem)] max-w-sm rounded-2xl bg-ink text-white shadow-2xl p-6 animate-in fade-in slide-in-from-bottom-4 duration-300"
+      aria-modal="true"
+      aria-labelledby="newsletter-popup-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) dismiss();
+      }}
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 p-5 animate-in fade-in duration-300"
     >
-      <button
-        onClick={dismiss}
-        aria-label="Close"
-        className="absolute top-3 right-3 text-white/60 hover:text-white transition-colors"
-      >
-        <X className="h-5 w-5" />
-      </button>
+      <div className="relative w-full max-w-md rounded-xl bg-white p-8 text-center shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-2 duration-300">
+        <button
+          onClick={dismiss}
+          aria-label="Close"
+          className="absolute right-3 top-3 text-gray-400 transition-colors hover:text-ink"
+        >
+          <X className="h-5 w-5" />
+        </button>
 
-      {status === 'success' ? (
-        <div className="pr-6">
-          <p className="text-xl font-bold">You&rsquo;re in.</p>
-          <p className="text-white/70 mt-1">Welcome, Burier.</p>
-        </div>
-      ) : (
-        <>
-          <h2 className="text-2xl font-bold tracking-tight pr-6">Want to be a Burier?</h2>
+        {status === 'success' ? (
+          <div className="py-2">
+            <QuillSignature className="mx-auto h-auto w-44 text-brand" />
+            <h2 className="mt-4 font-bold text-2xl tracking-tight text-ink">
+              Welcome in, Burier.
+            </h2>
+            <p className="mt-2 text-gray-600">
+              Your shovel is on its way — check your inbox to confirm, then start
+              digging.
+            </p>
+          </div>
+        ) : (
+          <>
+            <QuillSignature className="mx-auto h-auto w-44 text-brand" />
+            <h2
+              id="newsletter-popup-title"
+              className="mt-4 font-bold text-2xl tracking-tight text-ink"
+            >
+              Want to be a Burier?
+            </h2>
+            <p className="mt-2 text-gray-600 leading-relaxed">
+              First looks, release news, and the occasional shallow secret —
+              straight to your inbox. No spam.
+            </p>
 
-          {step === 'ask' ? (
-            <div className="mt-5 flex flex-col gap-3">
-              <Button
-                onClick={() => setStep('email')}
-                className="bg-brand hover:bg-brand-dark text-white w-full"
-              >
-                Hand me a shovel.
-              </Button>
-              <button
-                onClick={dismiss}
-                className="text-white/60 hover:text-white text-sm transition-colors"
-              >
-                Sounds like work.
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-3">
+            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
               <Input
                 type="email"
                 required
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                placeholder="Your email"
                 aria-label="Email address"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                className="h-12"
               />
               <Button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="bg-brand hover:bg-brand-dark text-white w-full"
+                className="h-12 w-full bg-brand text-white hover:bg-brand-dark"
               >
                 {status === 'submitting' ? 'Joining…' : 'Hand me a shovel.'}
               </Button>
-              {status === 'error' && (
-                <p className="text-white/60 text-xs">
-                  Signup isn&rsquo;t connected yet — please try again later.
-                </p>
-              )}
             </form>
-          )}
-        </>
-      )}
+
+            <button
+              onClick={dismiss}
+              className="mt-4 text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-ink"
+            >
+              Sounds like work.
+            </button>
+
+            {status === 'error' && (
+              <p className="mt-3 text-xs text-gray-500">
+                Signup isn&rsquo;t connected yet — please try again later.
+              </p>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

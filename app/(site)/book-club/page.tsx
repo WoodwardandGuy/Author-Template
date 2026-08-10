@@ -48,51 +48,53 @@ export default async function BookClubPage() {
 
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="max-w-2xl mb-12">
+          <div className="max-w-2xl mb-10">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-brand mb-3">
+              For the Buriers
+            </p>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4 tracking-tight">
-              Book Club
+              The Burier Book Club
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Read with your club? Share a photo and it might land here.
+              Reading one of my books with your club? I want to see it. Send your
+              book club photos and they might land right here — wine glasses,
+              snack spreads, and heated theories encouraged.
             </p>
           </div>
 
           {photos.length > 0 ? (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+            <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(220px,1fr))]">
               {photos.map((photo) => {
                 const url = photo.image?.asset
-                  ? urlFor(photo.image).width(700).url()
+                  ? urlFor(photo.image).width(600).height(450).url()
                   : null;
                 if (!url) return null;
-                const meta = [photo.location, photo.date
-                  ? new Date(photo.date).toLocaleDateString('en-US', {
-                      month: 'long',
-                      year: 'numeric',
-                    })
-                  : null]
+                const meta = [
+                  photo.location,
+                  photo.date
+                    ? new Date(photo.date).toLocaleDateString('en-US', {
+                        month: 'long',
+                        year: 'numeric',
+                      })
+                    : null,
+                ]
                   .filter(Boolean)
                   .join(' · ');
                 return (
                   <figure
                     key={photo.id}
-                    className="mb-6 break-inside-avoid rounded-lg overflow-hidden shadow-md bg-white"
+                    className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-ink/[0.04] shadow-sm"
                   >
                     <Image
                       src={url}
                       alt={photo.image?.alt || `${photo.clubName} book club`}
-                      width={700}
-                      height={525}
-                      className="w-full h-auto"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
                     />
-                    <figcaption className="p-4">
-                      <p className="font-semibold text-ink-dark">{photo.clubName}</p>
-                      {meta && <p className="text-sm text-gray-500">{meta}</p>}
-                      {photo.caption && (
-                        <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                          {photo.caption}
-                        </p>
-                      )}
+                    <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-3 pt-8 text-left opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <p className="text-sm font-semibold text-white">{photo.clubName}</p>
+                      {meta && <p className="text-xs text-white/70">{meta}</p>}
                     </figcaption>
                   </figure>
                 );
@@ -104,22 +106,18 @@ export default async function BookClubPage() {
             </p>
           )}
 
-          {/* Submission path — routes to the Resend contact form's book-club subject. */}
-          <div className="mt-16 bg-ink/[0.03] rounded-2xl p-8 md:p-10 text-center">
-            <h2 className="text-2xl font-bold text-ink mb-3 tracking-tight">
-              Share your book club photo
-            </h2>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Send your photo through the contact form — choose{' '}
-              <span className="font-medium">“Book club submission”</span> as the subject
-              and attach your image. With your OK, it may be featured here.
-            </p>
+          {/* Submission path — routes to the contact form's book-club subject. */}
+          <div className="mt-12 flex flex-wrap items-center gap-4">
             <Link
-              href="/#contact"
-              className="inline-flex items-center bg-brand hover:bg-brand-dark text-white font-medium px-7 py-3 rounded-lg transition-colors"
+              href="/contact"
+              className="inline-flex items-center rounded-full border border-ink px-6 py-3 font-medium text-ink transition-colors hover:bg-ink hover:text-white"
             >
-              Submit a photo
+              Send your book club photos
             </Link>
+            <p className="max-w-sm text-sm text-gray-500 leading-relaxed">
+              By sending a photo, you&rsquo;re giving E.L. the okay to share it
+              here and on her socials.
+            </p>
           </div>
         </div>
       </section>

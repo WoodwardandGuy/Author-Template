@@ -83,27 +83,44 @@
 
 /* Brand color utilities (ink / brand) are generated from tailwind.config.ts. */
 
-/* Signature "shovel → ELW" hero animation (see components/home/SignatureAnimation.tsx) */
-@keyframes signature-draw {
+/* Signature intro (see components/home/IntroSignature.tsx).
+   A full-screen mark draws itself once per session, then the overlay fades to
+   reveal the site. The React component owns the fade-out (.is-leaving) + unmount;
+   CSS owns the stroke-draw and tagline reveal. */
+@keyframes intro-draw {
   to {
     stroke-dashoffset: 0;
   }
 }
-.signature .signature-stroke {
+@keyframes intro-tag-in {
+  to {
+    opacity: 1;
+  }
+}
+/* Each segment sets its own duration + delay inline (see QuillSignature) so the
+   spade → feather → script draws as one continuous, staggered stroke. */
+.intro-stroke {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: signature-draw 0.7s ease forwards;
+  animation-name: intro-draw;
+  animation-duration: 3.4s;
+  animation-timing-function: cubic-bezier(0.5, 0.05, 0.35, 1);
+  animation-fill-mode: forwards;
 }
-/* Already played this session → show final mark, no drawing */
-.signature.is-static .signature-stroke {
-  stroke-dashoffset: 0;
-  animation: none;
+.intro-tag {
+  opacity: 0;
+  animation: intro-tag-in 0.8s ease forwards;
+  animation-delay: 3.8s;
 }
-/* Accessibility: reduced-motion users get the composed final state, never the draw */
+/* Accessibility: reduced-motion users get the composed final mark, never the draw */
 @media (prefers-reduced-motion: reduce) {
-  .signature .signature-stroke {
-    stroke-dashoffset: 0 !important;
-    animation: none !important;
+  .intro-stroke {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .intro-tag {
+    opacity: 1;
+    animation: none;
   }
 }
 
