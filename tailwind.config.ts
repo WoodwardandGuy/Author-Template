@@ -71,20 +71,19 @@ const config: Config = {
           DEFAULT: '#efe6d6', // primary text
           dim: '#c9bda9', // secondary text
         },
-        wine: {
-          DEFAULT: '#8a3541', // button / accent background (bone text on top = AA)
-          deep: '#5e232d', // button hover
-          light: '#cf7f8b', // wine used as TEXT/links on dark — AA on soil (6.3:1) & soil-2 (5.7:1)
-        },
-        moss: '#8a9472', // eyebrows / muted accent — lightened for AA (5.8:1 on soil)
+        moss: '#8a9472', // eyebrows / muted accent — AA (5.8:1 on soil)
         line: '#3a2f27', // hairline borders
         ink: {
           DEFAULT: '#2A2733',
           dark: '#1A1822',
         },
+        // Brand accent = the quill/logo olive green (per Erika — replaces the red).
+        // DEFAULT/dark are button fills (bone label on olive = 5.4:1 AA); `light`
+        // is the AA-safe olive for TEXT/links on the dark theme (6.9:1 on soil).
         brand: {
-          DEFAULT: '#8a3541',
-          dark: '#5e232d',
+          DEFAULT: '#595E48',
+          dark: '#474b39',
+          light: '#98a37a',
         },
       },
       fontFamily: {

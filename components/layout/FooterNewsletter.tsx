@@ -27,7 +27,7 @@ export function FooterNewsletter() {
   };
 
   if (status === 'success') {
-    return <p className="text-wine-light font-medium">You&rsquo;re on the list — thank you!</p>;
+    return <p className="text-brand-light font-medium">You&rsquo;re on the list — thank you!</p>;
   }
 
   return (

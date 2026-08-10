@@ -11,14 +11,14 @@ export function Hero({ content, eyebrow }: HeroProps) {
   const ctaLink = content.ctaLink || '/books';
 
   return (
-    <section className="relative flex min-h-[78vh] flex-col items-center justify-center px-6 py-20 text-center">
+    <section className="relative flex min-h-[88vh] flex-col items-center justify-center px-6 py-24 text-center">
       {eyebrow && (
         <p className="mb-5 text-xs font-medium uppercase tracking-[0.42em] text-moss">
           {eyebrow}
         </p>
       )}
 
-      <h1 className="max-w-[15ch] text-balance text-4xl font-normal leading-[1.05] tracking-tight text-bone sm:text-5xl lg:text-6xl">
+      <h1 className="max-w-[15ch] text-balance text-5xl font-normal leading-[1.05] tracking-tight text-bone sm:text-6xl lg:text-7xl">
         {content.headline}
       </h1>
 
@@ -29,7 +29,7 @@ export function Hero({ content, eyebrow }: HeroProps) {
       <Button
         asChild
         size="lg"
-        className="mt-9 h-auto rounded-full bg-wine px-8 py-4 text-base font-medium tracking-wide text-bone transition-colors hover:bg-wine-deep"
+        className="mt-9 h-auto rounded-full bg-brand px-8 py-4 text-base font-medium tracking-wide text-bone transition-colors hover:bg-brand-dark"
       >
         {ctaLink.startsWith('/') ? (
           <Link href={ctaLink}>{content.ctaText}</Link>

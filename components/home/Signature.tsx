@@ -39,7 +39,7 @@ export function Signature({
       aria-label={title}
       fill="none"
       stroke="currentColor"
-      strokeWidth={3}
+      strokeWidth={2.25}
       strokeLinecap="round"
       strokeLinejoin="round"
     >

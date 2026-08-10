@@ -55,7 +55,7 @@ export default async function ComingSoonPage() {
 
         <p className="mt-4 text-base text-white/60 sm:text-lg">{tagline}</p>
 
-        <div className="mt-10 h-px w-16 bg-wine/50" />
+        <div className="mt-10 h-px w-16 bg-brand/50" />
 
         <p className="mt-10 max-w-md text-pretty text-sm leading-relaxed text-white/50 sm:text-base">
           The new site is on its way. Check back soon. There&rsquo;s something

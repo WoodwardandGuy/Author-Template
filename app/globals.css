@@ -89,7 +89,7 @@
     @apply font-serif;
   }
   ::selection {
-    background: theme('colors.wine.DEFAULT');
+    background: theme('colors.brand.DEFAULT');
     color: theme('colors.bone.DEFAULT');
   }
 }

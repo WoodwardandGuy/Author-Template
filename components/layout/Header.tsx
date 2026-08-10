@@ -54,7 +54,7 @@ export function Header({ authorInfo, hasPress = true }: HeaderProps) {
               width={208}
               height={256}
               priority
-              className="h-9 w-auto sm:h-10"
+              className="h-12 w-auto sm:h-14"
             />
             <span className="flex flex-col leading-none">
               <span className="font-serif text-base tracking-tight text-bone sm:text-lg">
@@ -74,7 +74,7 @@ export function Header({ authorInfo, hasPress = true }: HeaderProps) {
             ))}
             <Link
               href="/#newsletter"
-              className="rounded-full border border-wine px-4 py-2 text-[0.78rem] uppercase tracking-[0.18em] text-bone transition-colors hover:bg-wine"
+              className="rounded-full border border-brand px-4 py-2 text-[0.78rem] uppercase tracking-[0.18em] text-bone transition-colors hover:bg-brand"
             >
               Mailing list
             </Link>
@@ -104,7 +104,7 @@ export function Header({ authorInfo, hasPress = true }: HeaderProps) {
             <Link
               href="/#newsletter"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-2 inline-flex rounded-full border border-wine px-4 py-2 text-sm uppercase tracking-[0.18em] text-bone transition-colors hover:bg-wine"
+              className="mt-2 inline-flex rounded-full border border-brand px-4 py-2 text-sm uppercase tracking-[0.18em] text-bone transition-colors hover:bg-brand"
             >
               Mailing list
             </Link>

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
  * Professional representation directory. Static per the author — these are
  * agency/publicity contacts, not CMS content, so they live in the page.
  */
-const REPRESENTATION: { category: string; name: string; org: string; email: string }[] = [
+const REPRESENTATION: { category: string; name?: string; org: string; email: string }[] = [
   {
     category: 'US Literary Agent',
     name: 'Haley Heidemann',
@@ -58,6 +58,11 @@ const REPRESENTATION: { category: string; name: string; org: string; email: stri
     name: 'Gena Lanzi',
     org: 'Publicity Manager, Atria Books',
     email: 'AtriaPublicity@simonandschuster.com',
+  },
+  {
+    category: 'UK Publicity',
+    org: 'Orion Books',
+    email: 'publicity.enquiries@orionbooks.co.uk',
   },
 ];
 
@@ -101,11 +106,13 @@ export default async function ContactPage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-moss mb-3">
                   {contact.category}
                 </p>
-                <p className="text-lg font-semibold text-bone">{contact.name}</p>
+                {contact.name && (
+                  <p className="text-lg font-semibold text-bone">{contact.name}</p>
+                )}
                 <p className="text-bone-dim">{contact.org}</p>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="mt-3 inline-flex items-center gap-2 text-bone font-medium hover:text-wine-light transition-colors break-all"
+                  className="mt-3 inline-flex items-center gap-2 text-bone font-medium hover:text-brand-light transition-colors break-all"
                 >
                   <Mail className="h-4 w-4 shrink-0" />
                   {contact.email}

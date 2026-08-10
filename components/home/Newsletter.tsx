@@ -54,7 +54,7 @@ export function Newsletter({ content }: NewsletterProps) {
           </p>
 
           {status === 'success' ? (
-            <p className="text-wine-light font-medium text-lg">
+            <p className="text-brand-light font-medium text-lg">
               You&rsquo;re on the list — thank you!
             </p>
           ) : (

@@ -98,7 +98,7 @@ export default async function PressPage() {
                       <div className="flex items-center gap-3 text-sm text-bone-dim mt-2">
                         {dateLabel && <span>{dateLabel}</span>}
                         {item.url && (
-                          <span className="inline-flex items-center gap-1 text-bone font-medium group-hover:text-wine-light transition-colors">
+                          <span className="inline-flex items-center gap-1 text-bone font-medium group-hover:text-brand-light transition-colors">
                             Read
                             <ExternalLink className="h-3.5 w-3.5" />
                           </span>
