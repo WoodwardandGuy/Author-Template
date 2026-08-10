@@ -3,9 +3,8 @@
 /**
  * Newsletter signup.
  *
- * ⚠️ LAUNCH BLOCKER: this posts to /api/newsletter, which is a stub until an
- * email provider (Flodesk, MailerLite, Kit, etc.) is chosen and its API
- * details are set in the environment. See app/api/newsletter/route.ts.
+ * Posts to the single /api/newsletter integration point (Flodesk). Requires
+ * NEWSLETTER_API_KEY in the environment. See app/api/newsletter/route.ts.
  */
 
 import { useState } from 'react';

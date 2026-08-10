@@ -8,9 +8,9 @@
  *   Accept:   "Hand me a shovel."
  *   Decline:  "Sounds like work."
  *
- * Signup posts to the single /api/newsletter integration point (stubbed until
- * the email platform is chosen). Behaviour: appears once on first visit after a
- * short delay, dismissible, and remembers dismissal in localStorage so it never nags.
+ * Signup posts to the single /api/newsletter integration point (Flodesk).
+ * Behaviour: appears once on first visit after a short delay, dismissible, and
+ * remembers dismissal in localStorage so it never nags.
  */
 
 import { useEffect, useState } from 'react';
