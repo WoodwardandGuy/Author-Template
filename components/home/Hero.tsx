@@ -11,32 +11,14 @@ interface HeroProps {
 }
 
 export function Hero({ content, logo, authorName }: HeroProps) {
-  const hasImage = content.backgroundImage?.asset;
-  const imageUrl = hasImage
-    ? urlFor(content.backgroundImage).width(1920).height(1080).url()
-    : null;
   const hasLogo = logo?.asset;
   const ctaLink = content.ctaLink || '/books';
 
   return (
     <section className="relative min-h-[600px] md:min-h-[720px] flex items-center overflow-hidden">
-      {imageUrl ? (
-        <>
-          <Image
-            src={imageUrl}
-            alt={content.backgroundImage?.alt || ''}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30" />
-        </>
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-ink via-ink-dark to-ink" />
-      )}
-
-      {/* Drifting smoke — decorative, sits above the background, below the content */}
+      {/* Smoky animated background — the hero has no photo; the drifting smoke
+          over the dark ink gradient is the whole backdrop. */}
+      <div className="absolute inset-0 bg-gradient-to-br from-ink via-ink-dark to-ink" />
       <div aria-hidden className="hero-smoke" />
       <div aria-hidden className="hero-smoke hero-smoke--slow" />
 
