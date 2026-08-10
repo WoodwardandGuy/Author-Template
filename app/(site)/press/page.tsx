@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
 import {
@@ -27,6 +28,9 @@ export const metadata: Metadata = {
 
 export default async function PressPage() {
   const press = await getPress();
+
+  // Hidden until there's coverage — the page 404s and drops out of the nav/sitemap.
+  if (press.length === 0) notFound();
 
   return (
     <>

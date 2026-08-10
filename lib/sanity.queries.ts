@@ -217,6 +217,10 @@ export const blogPostCountQuery = groq`
   count(*[_type == "blogPost"])
 `;
 
+export const pressCountQuery = groq`
+  count(*[_type == "press"])
+`;
+
 export const blogPostSlugsQuery = groq`
   *[_type == "blogPost"] { "slug": slug.current }
 `;

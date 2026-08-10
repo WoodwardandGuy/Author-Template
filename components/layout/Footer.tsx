@@ -13,6 +13,8 @@ import type { AuthorInfo, SiteContent } from '@/lib/types';
 interface FooterProps {
   authorInfo: AuthorInfo;
   siteContent?: SiteContent | null;
+  /** Press is hidden from the footer nav when there are no press items. */
+  hasPress?: boolean;
 }
 
 const quickLinks = [
@@ -24,9 +26,10 @@ const quickLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export function Footer({ authorInfo, siteContent }: FooterProps) {
+export function Footer({ authorInfo, siteContent, hasPress = true }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const s = authorInfo.socials || {};
+  const links = quickLinks.filter((l) => l.href !== '/press' || hasPress);
 
   const socialLinks: { url?: string; label: string; Icon: LucideIcon }[] = [
     { url: s.instagram, label: 'Instagram', Icon: Instagram },
@@ -72,7 +75,7 @@ export function Footer({ authorInfo, siteContent }: FooterProps) {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-bone">Explore</h3>
             <ul className="space-y-2">
-              {quickLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}

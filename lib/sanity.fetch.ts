@@ -12,6 +12,7 @@ import {
   featuredReleaseQuery,
   bookClubQuery,
   pressQuery,
+  pressCountQuery,
   blogPostsQuery,
   blogPostBySlugQuery,
   blogPostCountQuery,
@@ -146,4 +147,9 @@ export async function getBookClubPhotos(): Promise<BookClubPhoto[]> {
 export async function getPress(): Promise<PressItem[]> {
   const { data } = await sanityFetch({ query: pressQuery });
   return data as PressItem[];
+}
+
+export async function getPressCount(): Promise<number> {
+  const { data } = await sanityFetch({ query: pressCountQuery });
+  return (data as number) ?? 0;
 }

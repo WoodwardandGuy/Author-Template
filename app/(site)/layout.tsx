@@ -9,7 +9,7 @@ import { GoogleAnalytics } from '@/components/marketing/GoogleAnalytics';
 import { NewsletterPopup } from '@/components/home/NewsletterPopup';
 import { IntroSignature } from '@/components/home/IntroSignature';
 import { generatePersonSchema, generateWebsiteSchema } from '@/lib/schema';
-import { getAuthorInfo, getSiteContent } from '@/lib/sanity.fetch';
+import { getAuthorInfo, getSiteContent, getPressCount } from '@/lib/sanity.fetch';
 import { SITE_URL } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -56,10 +56,12 @@ export default async function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [authorInfo, siteContent] = await Promise.all([
+  const [authorInfo, siteContent, pressCount] = await Promise.all([
     getAuthorInfo(),
     getSiteContent(),
+    getPressCount(),
   ]);
+  const hasPress = pressCount > 0;
 
   const personSchema = generatePersonSchema(authorInfo);
   const websiteSchema = generateWebsiteSchema(authorInfo);
@@ -76,9 +78,9 @@ export default async function SiteLayout({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
       <GoogleAnalytics />
-      <Header authorInfo={authorInfo} />
+      <Header authorInfo={authorInfo} hasPress={hasPress} />
       <main>{children}</main>
-      <Footer authorInfo={authorInfo} siteContent={siteContent} />
+      <Footer authorInfo={authorInfo} siteContent={siteContent} hasPress={hasPress} />
       <NewsletterPopup />
       <SanityLive />
       {(await draftMode()).isEnabled && (

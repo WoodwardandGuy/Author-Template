@@ -8,6 +8,8 @@ import type { AuthorInfo } from '@/lib/types';
 
 interface HeaderProps {
   authorInfo: AuthorInfo;
+  /** Press is hidden from the nav when there are no press items. */
+  hasPress?: boolean;
 }
 
 const navLinks = [
@@ -19,9 +21,10 @@ const navLinks = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export function Header({ authorInfo }: HeaderProps) {
+export function Header({ authorInfo, hasPress = true }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const links = navLinks.filter((l) => l.href !== '/press' || hasPress);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -49,7 +52,7 @@ export function Header({ authorInfo }: HeaderProps) {
           </Link>
 
           <div className="hidden items-center gap-[clamp(0.9rem,2.5vw,1.8rem)] lg:flex">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link key={link.href} href={link.href} className={linkClass}>
                 {link.label}
               </Link>
@@ -73,7 +76,7 @@ export function Header({ authorInfo }: HeaderProps) {
 
         {isMobileMenuOpen && (
           <div className="mt-4 space-y-3 border-t border-line pt-4 lg:hidden">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
