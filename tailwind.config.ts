@@ -72,8 +72,9 @@ const config: Config = {
           dim: '#c9bda9', // secondary text
         },
         wine: {
-          DEFAULT: '#8a3541',
-          deep: '#5e232d',
+          DEFAULT: '#8a3541', // button / accent background (bone text on top = AA)
+          deep: '#5e232d', // button hover
+          light: '#cf7f8b', // wine used as TEXT/links on dark — AA on soil (6.3:1) & soil-2 (5.7:1)
         },
         moss: '#6b7257', // eyebrows / muted accent
         line: '#3a2f27', // hairline borders

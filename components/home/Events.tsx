@@ -6,6 +6,8 @@ interface EventsProps {
   content?: Pick<SiteContent, 'eventsHeadline' | 'eventsSubtext' | 'eventsEmptyText'> | null;
   /** When false (home page), the section is hidden entirely if there are no events. */
   showWhenEmpty?: boolean;
+  /** 'h2' as a home section (under the hero h1); 'h1' when it's the /events page. */
+  headingAs?: 'h1' | 'h2';
 }
 
 function formatDate(iso: string) {
@@ -17,7 +19,12 @@ function formatDate(iso: string) {
   });
 }
 
-export function Events({ events, content, showWhenEmpty = false }: EventsProps) {
+export function Events({
+  events,
+  content,
+  showWhenEmpty = false,
+  headingAs: Heading = 'h2',
+}: EventsProps) {
   if (events.length === 0 && !showWhenEmpty) return null;
 
   return (
@@ -25,9 +32,9 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-bone tracking-tight mb-3">
+            <Heading className="text-3xl md:text-4xl font-bold text-bone tracking-tight mb-3">
               {content?.eventsHeadline || 'Events & Appearances'}
-            </h2>
+            </Heading>
             {content?.eventsSubtext && (
               <p className="text-bone-dim text-lg">{content.eventsSubtext}</p>
             )}
@@ -41,7 +48,7 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
                   .join(', ');
                 return (
                   <li key={event.id} className="py-6 flex flex-col sm:flex-row sm:items-start gap-4">
-                    <div className="flex items-center gap-2 text-brand font-medium shrink-0 sm:w-56">
+                    <div className="flex items-center gap-2 text-wine-light font-medium shrink-0 sm:w-56">
                       <Calendar className="h-5 w-5" />
                       <time dateTime={event.date}>{formatDate(event.date)}</time>
                     </div>
@@ -65,7 +72,7 @@ export function Events({ events, content, showWhenEmpty = false }: EventsProps) 
                           href={event.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-bone font-medium text-sm mt-2 hover:text-brand transition-colors"
+                          className="inline-flex items-center gap-1 text-bone font-medium text-sm mt-2 hover:text-wine-light transition-colors"
                         >
                           Details & tickets
                           <ExternalLink className="h-3.5 w-3.5" />

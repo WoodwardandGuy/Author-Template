@@ -18,6 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/events`, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${SITE_URL}/press`, changeFrequency: 'weekly', priority: 0.6 },
     { url: `${SITE_URL}/book-club`, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${SITE_URL}/contact`, changeFrequency: 'monthly', priority: 0.6 },
   ];
 
   return [...staticPages, ...books];

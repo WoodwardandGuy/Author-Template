@@ -54,12 +54,12 @@ export function Header({ authorInfo }: HeaderProps) {
                 {link.label}
               </Link>
             ))}
-            <a
+            <Link
               href="/#newsletter"
               className="rounded-full border border-wine px-4 py-2 text-[0.78rem] uppercase tracking-[0.18em] text-bone transition-colors hover:bg-wine"
             >
               Mailing list
-            </a>
+            </Link>
           </div>
 
           <button
@@ -83,13 +83,13 @@ export function Header({ authorInfo }: HeaderProps) {
                 {link.label}
               </Link>
             ))}
-            <a
+            <Link
               href="/#newsletter"
               onClick={() => setIsMobileMenuOpen(false)}
               className="mt-2 inline-flex rounded-full border border-wine px-4 py-2 text-sm uppercase tracking-[0.18em] text-bone transition-colors hover:bg-wine"
             >
               Mailing list
-            </a>
+            </Link>
           </div>
         )}
       </div>

@@ -47,7 +47,7 @@ export default async function EventsPage() {
         </div>
       </div>
 
-      <Events events={events} content={siteContent} showWhenEmpty />
+      <Events events={events} content={siteContent} showWhenEmpty headingAs="h1" />
     </>
   );
 }

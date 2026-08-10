@@ -39,6 +39,9 @@ export function IntroSignature() {
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Intentional: reveal the intro once on mount after reading the sessionStorage
+    // guard (which can't run during SSR / in a lazy initializer).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPhase('playing');
     // Staggered draw finishes ~3.85s, tagline in at 3.8s, brief hold, then fade.
     const total = reduced ? 1600 : 5200;

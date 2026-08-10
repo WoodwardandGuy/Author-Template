@@ -211,7 +211,7 @@ export default async function BookPage({
               )}
 
               <div className="mt-12 pt-8 border-t border-line">
-                <Link href="/books" className="text-bone font-medium hover:text-brand transition-colors">
+                <Link href="/books" className="text-bone font-medium hover:text-wine-light transition-colors">
                   ← All books
                 </Link>
               </div>

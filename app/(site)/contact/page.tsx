@@ -105,7 +105,7 @@ export default async function ContactPage() {
                 <p className="text-bone-dim">{contact.org}</p>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="mt-3 inline-flex items-center gap-2 text-bone font-medium hover:text-brand transition-colors break-all"
+                  className="mt-3 inline-flex items-center gap-2 text-bone font-medium hover:text-wine-light transition-colors break-all"
                 >
                   <Mail className="h-4 w-4 shrink-0" />
                   {contact.email}
