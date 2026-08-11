@@ -42,7 +42,7 @@ export function FeaturedRelease({ content }: FeaturedReleaseProps) {
             <div className="flex flex-wrap gap-3">
               <Link
                 href={`/books/${book.slug}`}
-                className="inline-flex items-center bg-brand hover:bg-brand-dark text-white font-semibold px-7 py-3 rounded-lg transition-colors"
+                className="inline-flex items-center border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone font-semibold px-7 py-3 rounded-lg transition-colors"
               >
                 {content.ctaText || 'Learn more'}
               </Link>

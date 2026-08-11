@@ -9,8 +9,25 @@ interface BooksProps {
   content?: Pick<SiteContent, 'booksHeadline' | 'booksSubtext' | 'booksFooterText'> | null;
 }
 
+// Display the two genre sections (Erika: NOT a flat cross-genre list).
+const GENRE_LABEL: Record<string, string> = { Thriller: 'Thrillers' };
+
+function groupByGenre(books: Book[]): [string, Book[]][] {
+  const groups = new Map<string, Book[]>();
+  books.forEach((book) => {
+    const key = book.genre || 'More Books';
+    const list = groups.get(key);
+    if (list) list.push(book);
+    else groups.set(key, [book]);
+  });
+  groups.forEach((list) => list.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+  return Array.from(groups.entries());
+}
+
 export function Books({ books, content }: BooksProps) {
   if (books.length === 0) return null;
+
+  const grouped = groupByGenre(books);
 
   return (
     <section id="books" className="py-20 border-t border-line">
@@ -25,8 +42,14 @@ export function Books({ books, content }: BooksProps) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {books.map((book) => {
+          <div className="space-y-14">
+            {grouped.map(([genre, genreBooks]) => (
+              <div key={genre}>
+                <h3 className="text-xl font-bold text-bone mb-6 pb-2 border-b border-line">
+                  {GENRE_LABEL[genre] || genre}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                  {genreBooks.map((book) => {
               const coverUrl = book.cover?.asset
                 ? urlFor(book.cover).width(500).height(750).url()
                 : null;
@@ -68,8 +91,11 @@ export function Books({ books, content }: BooksProps) {
                     </p>
                   </div>
                 </Link>
-              );
-            })}
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
           </div>
 
           {content?.booksFooterText && (

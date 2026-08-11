@@ -118,7 +118,7 @@ export default async function AboutPage() {
             Join the mailing list for new releases and events, or send a note directly.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="bg-brand hover:bg-brand-dark text-white h-12 px-8 text-lg">
+            <Button asChild className="border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone h-12 px-8 text-lg">
               <Link href="/#newsletter">
                 Join the mailing list
                 <ArrowRight className="ml-2 h-5 w-5" />

@@ -147,7 +147,7 @@ export function ContactForm({ content }: ContactFormProps) {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-brand hover:bg-brand-dark text-white h-12 text-lg"
+              className="w-full border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone h-12 text-lg"
             >
               {isSubmitting ? (
                 'Sending…'

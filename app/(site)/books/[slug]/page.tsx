@@ -191,7 +191,7 @@ export default async function BookPage({
                       href={r.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 bg-brand hover:bg-brand-dark text-white font-medium px-5 py-2.5 rounded-lg transition-colors"
+                      className="inline-flex items-center gap-1.5 border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone font-medium px-5 py-2.5 rounded-lg transition-colors"
                     >
                       {r.label || r.store}
                       <ExternalLink className="h-4 w-4" />

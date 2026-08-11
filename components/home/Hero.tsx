@@ -29,7 +29,7 @@ export function Hero({ content, eyebrow }: HeroProps) {
       <Button
         asChild
         size="lg"
-        className="mt-9 h-auto rounded-full bg-brand px-8 py-4 text-base font-medium tracking-wide text-bone transition-colors hover:bg-brand-dark"
+        className="mt-9 h-auto rounded-full border border-brand bg-transparent px-8 py-4 text-base font-medium tracking-wide text-brand-light transition-colors hover:bg-brand hover:text-bone"
       >
         {ctaLink.startsWith('/') ? (
           <Link href={ctaLink}>{content.ctaText}</Link>

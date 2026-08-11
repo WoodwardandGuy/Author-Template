@@ -145,7 +145,7 @@ export default async function BooksPage() {
                 href={bookBub}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-brand hover:bg-brand-dark text-white font-medium px-5 py-2.5 rounded-lg transition-colors shrink-0"
+                className="inline-flex items-center gap-2 border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone font-medium px-5 py-2.5 rounded-lg transition-colors shrink-0"
               >
                 Follow on BookBub
                 <ExternalLink className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default async function BooksPage() {
               {grouped.map(([genre, genreBooks]) => (
                 <div key={genre}>
                   <h2 className="text-2xl font-bold text-bone mb-8 pb-3 border-b border-line">
-                    {genre}
+                    {genre === 'Thriller' ? 'Thrillers' : genre}
                   </h2>
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                     {genreBooks.map((book) => (

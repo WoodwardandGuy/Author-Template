@@ -44,7 +44,7 @@ export function FooterNewsletter() {
       <Button
         type="submit"
         disabled={status === 'submitting'}
-        className="bg-brand hover:bg-brand-dark text-white shrink-0"
+        className="border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone shrink-0"
       >
         {status === 'submitting' ? 'Joining…' : 'Sign up'}
       </Button>

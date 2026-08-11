@@ -8,6 +8,7 @@
  */
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -45,6 +46,15 @@ export function Newsletter({ content }: NewsletterProps) {
     <section id="newsletter" className="py-20 bg-soil-2 text-white">
       <div className="container mx-auto px-4">
         <div className="max-w-xl mx-auto text-center">
+          <span className="mx-auto mb-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-[#fbf9f6]">
+            <Image
+              src="/elw-seal.png"
+              alt=""
+              width={180}
+              height={180}
+              className="h-[88%] w-[88%] object-contain"
+            />
+          </span>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
             {content?.newsletterHeadline || 'Join the mailing list'}
           </h2>
@@ -74,7 +84,7 @@ export function Newsletter({ content }: NewsletterProps) {
               <Button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="bg-brand hover:bg-brand-dark text-white h-12 px-6 shrink-0"
+                className="border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone h-12 px-6 shrink-0"
               >
                 {status === 'submitting' ? (
                   'Joining…'

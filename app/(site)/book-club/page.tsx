@@ -56,9 +56,14 @@ export default async function BookClubPage() {
               The Burier Book Club
             </h1>
             <p className="text-xl text-bone-dim leading-relaxed">
-              Reading one of my books with your club? I want to see it. Send your
-              book club photos and they might land right here — wine glasses,
-              snack spreads, and heated theories encouraged.
+              It started with a last name. Then things got a little… shovel-y.
+            </p>
+            <p className="mt-4 text-lg text-bone-dim leading-relaxed">
+              The Buriers are E.L. Westbury&rsquo;s reader community: a place to
+              talk books, share theories, celebrate new releases, and connect
+              with other readers. Whether you&rsquo;ve been here from the
+              beginning or just picked up your shovel, there&rsquo;s always room
+              for one more Burier.
             </p>
           </div>
 
