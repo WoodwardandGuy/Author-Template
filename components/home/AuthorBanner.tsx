@@ -5,9 +5,10 @@ import Image from 'next/image';
  *
  * Brand target: sage green #AAB1A9 + blush ivory #FBF3F1. Both are light (~2:1
  * against each other), so a banner in those exact hexes can't hold legible text
- * OR show the sage logo. To read strongly as GREEN AND WHITE, this uses a deeper
- * sage-green ground (#5e665c) with ivory text and a white seal (the transparent
- * mark filtered to white). #AAB1A9 stays as the "Author" rule accent.
+ * OR show the sage logo. This uses a desaturated sage-GREY ground (#6d746c — the
+ * brand sage darkened, ~7% saturation, deliberately far from army green) with
+ * ivory text and a white seal (the transparent mark filtered to white).
+ * #AAB1A9 stays as the "Author" rule accent.
  * The nav keeps its small mark for inner pages; this is the homepage headline.
  */
 
@@ -17,7 +18,7 @@ interface AuthorBannerProps {
 
 export function AuthorBanner({ name }: AuthorBannerProps) {
   return (
-    <section className="w-full bg-[#5f7052]">
+    <section className="w-full bg-[#6d746c]">
       <div className="container mx-auto px-4 py-10 md:py-16">
         <div className="flex flex-col items-center gap-6 text-center md:flex-row md:justify-center md:gap-12 md:text-left">
           <Image
