@@ -34,7 +34,7 @@ export default async function PressPage() {
 
   return (
     <>
-      <div className="bg-white/[0.04] py-4">
+      <div className="bg-[#6d746c] py-4">
         <div className="container mx-auto px-4">
           <Breadcrumb>
             <BreadcrumbList>

@@ -47,10 +47,7 @@ export function Footer({ authorInfo, siteContent, hasPress = true }: FooterProps
       <div className="container mx-auto px-4 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
-            <Signature className="mb-4 h-9 w-auto text-bone" title={authorInfo.name} />
-            <p className="text-bone-dim">
-              {siteContent?.footerTagline || authorInfo.tagline}
-            </p>
+            <Signature className="mb-6 h-10 w-auto text-bone" title={authorInfo.name} />
 
             {activeSocials.length > 0 && (
               <div className="flex gap-4 mt-6">
