@@ -1,3 +1,4 @@
+import { AuthorBanner } from '@/components/home/AuthorBanner';
 import { Hero } from '@/components/home/Hero';
 import { FeaturedRelease } from '@/components/home/FeaturedRelease';
 import { Books } from '@/components/home/Books';
@@ -33,6 +34,7 @@ export default async function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
+      <AuthorBanner name={authorInfo.name} />
       <Hero content={heroContent} />
       {featuredRelease && <FeaturedRelease content={featuredRelease} />}
       <Books books={books} content={siteContent} />

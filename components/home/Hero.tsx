@@ -18,9 +18,9 @@ export function Hero({ content, eyebrow }: HeroProps) {
         </p>
       )}
 
-      <h1 className="max-w-[15ch] text-balance text-5xl font-normal leading-[1.05] tracking-tight text-bone sm:text-6xl lg:text-7xl">
+      <h2 className="max-w-[15ch] text-balance text-5xl font-normal leading-[1.05] tracking-tight text-bone sm:text-6xl lg:text-7xl">
         {content.headline}
-      </h1>
+      </h2>
 
       <p className="mt-6 max-w-[44ch] text-pretty text-base leading-relaxed text-bone-dim sm:text-lg">
         {content.subheadline}

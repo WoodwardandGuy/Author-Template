@@ -96,15 +96,13 @@ export function Footer({ authorInfo, siteContent, hasPress = true }: FooterProps
         </div>
 
         <div className="border-t border-line mt-10 pt-8 text-center text-bone-dim">
-          <span className="mx-auto mb-5 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[#fbf9f6]">
-            <Image
-              src="/elw-seal.png"
-              alt={`${authorInfo.name} seal`}
-              width={180}
-              height={180}
-              className="h-[88%] w-[88%] object-contain"
-            />
-          </span>
+          <Image
+            src="/elw-logo-transparent.png"
+            alt={`${authorInfo.name} seal`}
+            width={200}
+            height={200}
+            className="mx-auto mb-5 h-24 w-auto object-contain"
+          />
           <p>
             &copy; {currentYear} {authorInfo.name}. All rights reserved.
           </p>

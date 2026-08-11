@@ -67,13 +67,9 @@ const books = [
       isbn: '9781668270769',
       publicationDate: '2026-08-11',
       description: DROWNING_DESC,
+      // Single "Order Here" CTA → Simon & Schuster (per client — replaced the retailer list).
       retailers: [
-        r('ss', 'Other', 'Simon & Schuster', 'https://www.simonandschuster.com/books/Drowning-in-Paper-Flowers/E-L-Westbury/9781668270769'),
-        r('amz-pb', 'Amazon', 'Amazon (Paperback)', 'https://www.amazon.com/Drowning-Paper-Flowers-L-Westbury/dp/1668270765'),
-        r('amz-kdl', 'Amazon', 'Amazon (Kindle)', 'https://us.amazon.com/Drowning-Paper-Flowers-L-Westbury-ebook/dp/B0H2FCS3WT'),
-        r('bam', 'Other', 'Books-A-Million', 'https://www.booksamillion.com/p/Drowning-Paper-Flowers/E-L-Westbury/9781668270769'),
-        r('interabang', 'Other', 'Interabang Books', 'https://interabangbooks.com/book/9781668270769'),
-        r('apple-audio', 'Apple Books', 'Apple Books (Audio)', 'https://books.apple.com/us/audiobook/drowning-in-paper-flowers-unabridged/id1818621846'),
+        r('order-ss', 'Other', 'Order Here', 'https://www.simonandschuster.com/books/Drowning-in-Paper-Flowers/E-L-Westbury/9781668270769'),
       ],
     },
   },

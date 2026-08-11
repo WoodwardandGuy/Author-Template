@@ -46,15 +46,13 @@ export function Newsletter({ content }: NewsletterProps) {
     <section id="newsletter" className="py-20 bg-soil-2 text-white">
       <div className="container mx-auto px-4">
         <div className="max-w-xl mx-auto text-center">
-          <span className="mx-auto mb-6 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-[#fbf9f6]">
-            <Image
-              src="/elw-seal.png"
-              alt=""
-              width={180}
-              height={180}
-              className="h-[88%] w-[88%] object-contain"
-            />
-          </span>
+          <Image
+            src="/elw-logo-transparent.png"
+            alt=""
+            width={220}
+            height={220}
+            className="mx-auto mb-6 h-28 w-auto object-contain"
+          />
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
             {content?.newsletterHeadline || 'Join the mailing list'}
           </h2>

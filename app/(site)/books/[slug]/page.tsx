@@ -185,18 +185,26 @@ export default async function BookPage({
 
               {retailers.length > 0 && (
                 <div className="flex flex-wrap gap-3 mb-10">
-                  {retailers.map((r, i) => (
-                    <a
-                      key={i}
-                      href={r.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone font-medium px-5 py-2.5 rounded-lg transition-colors"
-                    >
-                      {r.label || r.store}
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  ))}
+                  {retailers.map((r, i) => {
+                    const label = r.label || r.store;
+                    const isOrder = label === 'Order Here';
+                    return (
+                      <a
+                        key={i}
+                        href={r.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={
+                          isOrder
+                            ? 'inline-flex items-center gap-1.5 rounded-lg bg-[#AAB1A9] px-8 py-3 font-semibold text-[#2A2622] transition-colors hover:bg-[#bcc3ba]'
+                            : 'inline-flex items-center gap-1.5 border border-brand bg-transparent text-brand-light hover:bg-brand hover:text-bone font-medium px-5 py-2.5 rounded-lg transition-colors'
+                        }
+                      >
+                        {label}
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    );
+                  })}
                 </div>
               )}
 

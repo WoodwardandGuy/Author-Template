@@ -46,17 +46,25 @@ export function FeaturedRelease({ content }: FeaturedReleaseProps) {
               >
                 {content.ctaText || 'Learn more'}
               </Link>
-              {retailers.slice(0, 3).map((r, i) => (
-                <a
-                  key={i}
-                  href={r.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center border border-white/25 hover:border-white/60 text-white font-medium px-6 py-3 rounded-lg transition-colors"
-                >
-                  {r.label || r.store}
-                </a>
-              ))}
+              {retailers.slice(0, 3).map((r, i) => {
+                const label = r.label || r.store;
+                const isOrder = label === 'Order Here';
+                return (
+                  <a
+                    key={i}
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={
+                      isOrder
+                        ? 'inline-flex items-center rounded-lg bg-[#AAB1A9] px-8 py-3 font-semibold text-[#2A2622] transition-colors hover:bg-[#bcc3ba]'
+                        : 'inline-flex items-center border border-white/25 hover:border-white/60 text-white font-medium px-6 py-3 rounded-lg transition-colors'
+                    }
+                  >
+                    {label}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
