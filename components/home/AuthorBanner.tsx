@@ -10,6 +10,9 @@ import Image from 'next/image';
  * ivory text and a white seal (the transparent mark filtered to white).
  * #AAB1A9 stays as the "Author" rule accent.
  * The nav keeps its small mark for inner pages; this is the homepage headline.
+ *
+ * The B&W author portrait (public/author-portrait.jpg) sits centered beneath the
+ * logo + name masthead, closing the band with her face.
  */
 
 interface AuthorBannerProps {
@@ -38,6 +41,18 @@ export function AuthorBanner({ name }: AuthorBannerProps) {
               Author
             </p>
           </div>
+        </div>
+
+        <div className="mt-10 flex justify-center md:mt-14">
+          <Image
+            src="/author-portrait.jpg"
+            alt={name}
+            width={1000}
+            height={800}
+            priority
+            sizes="(max-width: 768px) 20rem, 32rem"
+            className="w-80 rounded-xl object-cover shadow-lg sm:w-96 md:w-[32rem]"
+          />
         </div>
       </div>
     </section>
